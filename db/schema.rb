@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
-  create_table "category_of_playlists_channels_playlists_join", force: :cascade do |t|
-    t.uuid "category_of_playlists_channel_id"
-    t.uuid "playlist_id"
+  create_table "category_of_playlists_channels_playlists", id: false, force: :cascade do |t|
+    t.integer "category_of_playlists_channel_id", null: false
+    t.uuid    "playlist_id",                      null: false
   end
 
   create_table "channels", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150219120843) do
   end
 
   create_table "events", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "user_id"
     t.string   "title"
     t.string   "address"
     t.string   "zip_code"
@@ -92,12 +93,12 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
-  create_table "events_medias_join", force: :cascade do |t|
+  create_table "events_medias", id: false, force: :cascade do |t|
     t.uuid "event_id"
     t.uuid "media_id"
   end
 
-  create_table "events_playlists_join", force: :cascade do |t|
+  create_table "events_playlists", id: false, force: :cascade do |t|
     t.uuid "event_id"
     t.uuid "playlist_id"
   end
@@ -115,7 +116,6 @@ ActiveRecord::Schema.define(version: 20150219120843) do
   end
 
   create_table "media_categories", force: :cascade do |t|
-    t.uuid     "media_id"
     t.string   "name"
     t.string   "genre"
     t.string   "type"
@@ -124,7 +124,8 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
-  create_table "media_processes", force: :cascade do |t|
+  create_table "media_treatments", force: :cascade do |t|
+    t.uuid     "media_id"
     t.string   "subtitle"
     t.string   "name"
     t.string   "error"
@@ -134,8 +135,8 @@ ActiveRecord::Schema.define(version: 20150219120843) do
   end
 
   create_table "medias", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.integer  "system_profil_id",     null: false
-    t.integer  "media_category_id_id"
+    t.integer  "system_profil_id",  null: false
+    t.integer  "media_category_id"
     t.string   "title"
     t.string   "authors"
     t.string   "file"
@@ -151,7 +152,7 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
-  create_table "medias_playlists_join", force: :cascade do |t|
+  create_table "medias_playlists", id: false, force: :cascade do |t|
     t.uuid "media_id"
     t.uuid "playlist_id"
   end
@@ -180,6 +181,14 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
+  create_table "user_on_hold_videos", force: :cascade do |t|
+    t.uuid     "user_id"
+    t.uuid     "media_id"
+    t.boolean  "seen",       default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_subscriptions", force: :cascade do |t|
     t.uuid     "channel_id"
     t.uuid     "user_id"
@@ -187,21 +196,13 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
-  create_table "user_video_seens", force: :cascade do |t|
+  create_table "user_video_views", force: :cascade do |t|
     t.uuid     "user_id"
     t.uuid     "media_id"
     t.datetime "last_time_seen"
     t.string   "category"
     t.string   "genre"
     t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "user_watch_later", force: :cascade do |t|
-    t.uuid     "user_id"
-    t.uuid     "media_id"
-    t.boolean  "seen",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

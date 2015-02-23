@@ -29,7 +29,7 @@ class Initial < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :user_watch_later do |t|
+    create_table :user_on_hold_videos do |t|
       t.uuid  :user_id
       t.uuid  :media_id
       t.boolean :seen, default: false
@@ -42,7 +42,7 @@ class Initial < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :user_video_seens do |t|
+    create_table :user_video_views do |t|
       t.uuid        :user_id
       t.uuid        :media_id
       t.datetime    :last_time_seen
@@ -54,6 +54,7 @@ class Initial < ActiveRecord::Migration
 
     #events
     create_table  :events, id: :uuid do |t|
+      t.uuid      :user_id
       t.string    :title
       t.string    :address
       t.string    :zip_code
@@ -67,12 +68,12 @@ class Initial < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :events_playlists_join do |t|
+    create_table :events_playlists, id: false do |t|
       t.uuid  :event_id
       t.uuid  :playlist_id
     end
 
-    create_table :events_medias_join do |t|
+    create_table :events_medias, id: false do  |t|
       t.uuid  :event_id
       t.uuid  :media_id
     end
@@ -88,22 +89,23 @@ class Initial < ActiveRecord::Migration
     #medias
     create_table  :medias, id: :uuid do |t|
       t.references :system_profil, null: false
-      t.references  :media_category_id
-      t.string    :title
-      t.string    :authors
-      t.string    :file
-      t.time      :duration
-      t.string    :added_by
-      t.string    :status
-      t.string    :img
-      t.string    :is_live
-      t.boolean   :is_available
-      t.integer   :nb_views
-      t.text      :tags
+      t.references :media_category
+      t.string     :title
+      t.string     :authors
+      t.string     :file
+      t.time       :duration
+      t.string     :added_by
+      t.string     :status
+      t.string     :img
+      t.string     :is_live
+      t.boolean    :is_available
+      t.integer    :nb_views
+      t.text       :tags
       t.timestamps
     end
 
-    create_table :media_processes do |t|
+    create_table :media_treatments do |t|
+      t.uuid    :media_id
       t.string  :subtitle
       t.string  :name
       t.string  :error
@@ -112,7 +114,6 @@ class Initial < ActiveRecord::Migration
     end
 
     create_table :media_categories do |t|
-      t.uuid    :media_id
       t.string  :name
       t.string  :genre
       t.string  :type
@@ -120,7 +121,7 @@ class Initial < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :medias_playlists_join do |t|
+    create_table :medias_playlists, id: false do  |t|
       t.uuid  :media_id
       t.uuid  :playlist_id
     end
@@ -142,9 +143,9 @@ class Initial < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :category_of_playlists_channels_playlists_join do |t|
-      t.uuid  :category_of_playlists_channel_id
-      t.uuid  :playlist_id
+    create_table :category_of_playlists_channels_playlists, id: false do |t|
+      t.references  :category_of_playlists_channel, null: false
+      t.uuid  :playlist_id, null: false
     end
 
     #channels
