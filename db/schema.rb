@@ -18,9 +18,11 @@ ActiveRecord::Schema.define(version: 20150219120843) do
   enable_extension "uuid-ossp"
 
   create_table "bins", force: :cascade do |t|
-    t.string  "title"
-    t.uuid    "event_id"
-    t.boolean "is_display"
+    t.string   "title"
+    t.uuid     "event_id"
+    t.boolean  "is_display"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "category_of_playlists_channels", force: :cascade do |t|
@@ -37,21 +39,6 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.uuid "playlist_id"
   end
 
-  create_table "channel_comments", force: :cascade do |t|
-    t.uuid     "user_id"
-    t.uuid     "channel_id"
-    t.text     "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "channel_comments_users_join", force: :cascade do |t|
-    t.uuid     "channel_comment_id"
-    t.uuid     "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "channels", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "title"
     t.integer  "nb_views"
@@ -66,6 +53,18 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
+  create_table "comments", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "initial_comment_id"
+    t.uuid     "user_id"
+    t.text     "content"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+
   create_table "documents", force: :cascade do |t|
     t.string   "title"
     t.integer  "bin_id"
@@ -79,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150219120843) do
   end
 
   create_table "events", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "title"
     t.string   "address"
     t.string   "zip_code"
     t.string   "city"
@@ -124,25 +124,9 @@ ActiveRecord::Schema.define(version: 20150219120843) do
     t.datetime "updated_at"
   end
 
-  create_table "media_comments", force: :cascade do |t|
-    t.uuid     "user_id"
-    t.uuid     "media_id"
-    t.text     "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "media_comments_users_join", force: :cascade do |t|
-    t.uuid     "media_comment_id"
-    t.uuid     "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "media_processes", force: :cascade do |t|
     t.string   "subtitle"
     t.string   "name"
-    t.uuid     "media_id"
     t.string   "error"
     t.float    "progression"
     t.datetime "created_at"
@@ -150,7 +134,8 @@ ActiveRecord::Schema.define(version: 20150219120843) do
   end
 
   create_table "medias", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.integer  "system_profil_id", null: false
+    t.integer  "system_profil_id",     null: false
+    t.integer  "media_category_id_id"
     t.string   "title"
     t.string   "authors"
     t.string   "file"

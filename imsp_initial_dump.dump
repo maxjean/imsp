@@ -1,0 +1,1554 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: bins; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE bins (
+    id integer NOT NULL,
+    title character varying,
+    event_id uuid,
+    is_display boolean
+);
+
+
+ALTER TABLE bins OWNER TO maxclifordjean;
+
+--
+-- Name: bins_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE bins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE bins_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: bins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE bins_id_seq OWNED BY bins.id;
+
+
+--
+-- Name: category_of_playlists_channels; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE category_of_playlists_channels (
+    id integer NOT NULL,
+    title character varying,
+    description text,
+    cover character varying,
+    channel_uid uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE category_of_playlists_channels OWNER TO maxclifordjean;
+
+--
+-- Name: category_of_playlists_channels_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE category_of_playlists_channels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE category_of_playlists_channels_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: category_of_playlists_channels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE category_of_playlists_channels_id_seq OWNED BY category_of_playlists_channels.id;
+
+
+--
+-- Name: category_of_playlists_channels_playlists_join; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE category_of_playlists_channels_playlists_join (
+    id integer NOT NULL,
+    category_of_playlists_channel_id uuid,
+    playlist_id uuid
+);
+
+
+ALTER TABLE category_of_playlists_channels_playlists_join OWNER TO maxclifordjean;
+
+--
+-- Name: category_of_playlists_channels_playlists_join_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE category_of_playlists_channels_playlists_join_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE category_of_playlists_channels_playlists_join_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: category_of_playlists_channels_playlists_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE category_of_playlists_channels_playlists_join_id_seq OWNED BY category_of_playlists_channels_playlists_join.id;
+
+
+--
+-- Name: channel_comments; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE channel_comments (
+    id integer NOT NULL,
+    user_id uuid,
+    channel_id uuid,
+    comment text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE channel_comments OWNER TO maxclifordjean;
+
+--
+-- Name: channel_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE channel_comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE channel_comments_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: channel_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE channel_comments_id_seq OWNED BY channel_comments.id;
+
+
+--
+-- Name: channel_comments_users_join; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE channel_comments_users_join (
+    id integer NOT NULL,
+    channel_comment_id uuid,
+    user_id uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE channel_comments_users_join OWNER TO maxclifordjean;
+
+--
+-- Name: channel_comments_users_join_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE channel_comments_users_join_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE channel_comments_users_join_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: channel_comments_users_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE channel_comments_users_join_id_seq OWNED BY channel_comments_users_join.id;
+
+
+--
+-- Name: channels; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE channels (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    title character varying,
+    nb_views integer,
+    nb_subscribers integer,
+    profil character varying,
+    cover character varying,
+    presentation_text text,
+    presentation_video character varying,
+    user_id uuid,
+    tags text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE channels OWNER TO maxclifordjean;
+
+--
+-- Name: documents; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE documents (
+    id integer NOT NULL,
+    title character varying,
+    bin_id integer,
+    is_display boolean,
+    authors character varying,
+    file character varying,
+    added_by character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE documents OWNER TO maxclifordjean;
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE documents_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE documents_id_seq OWNED BY documents.id;
+
+
+--
+-- Name: events; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE events (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    address character varying,
+    zip_code character varying,
+    city character varying,
+    states character varying,
+    country character varying,
+    beginning_datetime timestamp without time zone,
+    finishing_datetime timestamp without time zone,
+    is_live boolean DEFAULT true,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE events OWNER TO maxclifordjean;
+
+--
+-- Name: events_medias_join; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE events_medias_join (
+    id integer NOT NULL,
+    event_id uuid,
+    media_id uuid
+);
+
+
+ALTER TABLE events_medias_join OWNER TO maxclifordjean;
+
+--
+-- Name: events_medias_join_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE events_medias_join_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE events_medias_join_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: events_medias_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE events_medias_join_id_seq OWNED BY events_medias_join.id;
+
+
+--
+-- Name: events_playlists_join; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE events_playlists_join (
+    id integer NOT NULL,
+    event_id uuid,
+    playlist_id uuid
+);
+
+
+ALTER TABLE events_playlists_join OWNER TO maxclifordjean;
+
+--
+-- Name: events_playlists_join_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE events_playlists_join_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE events_playlists_join_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: events_playlists_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE events_playlists_join_id_seq OWNED BY events_playlists_join.id;
+
+
+--
+-- Name: labels; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE labels (
+    id integer NOT NULL,
+    title character varying,
+    bin_id integer,
+    is_display boolean,
+    authors character varying,
+    file character varying,
+    added_by character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE labels OWNER TO maxclifordjean;
+
+--
+-- Name: labels_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE labels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE labels_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: labels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE labels_id_seq OWNED BY labels.id;
+
+
+--
+-- Name: media_categories; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE media_categories (
+    id integer NOT NULL,
+    media_id uuid,
+    name character varying,
+    genre character varying,
+    type character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE media_categories OWNER TO maxclifordjean;
+
+--
+-- Name: media_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE media_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_categories_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: media_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE media_categories_id_seq OWNED BY media_categories.id;
+
+
+--
+-- Name: media_comments; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE media_comments (
+    id integer NOT NULL,
+    user_id uuid,
+    media_id uuid,
+    comment text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE media_comments OWNER TO maxclifordjean;
+
+--
+-- Name: media_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE media_comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_comments_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: media_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE media_comments_id_seq OWNED BY media_comments.id;
+
+
+--
+-- Name: media_comments_users_join; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE media_comments_users_join (
+    id integer NOT NULL,
+    media_comment_id uuid,
+    user_id uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE media_comments_users_join OWNER TO maxclifordjean;
+
+--
+-- Name: media_comments_users_join_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE media_comments_users_join_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_comments_users_join_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: media_comments_users_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE media_comments_users_join_id_seq OWNED BY media_comments_users_join.id;
+
+
+--
+-- Name: media_processes; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE media_processes (
+    id integer NOT NULL,
+    subtitle character varying,
+    name character varying,
+    media_id uuid,
+    error character varying,
+    progression double precision,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE media_processes OWNER TO maxclifordjean;
+
+--
+-- Name: media_processes_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE media_processes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_processes_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: media_processes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE media_processes_id_seq OWNED BY media_processes.id;
+
+
+--
+-- Name: medias; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE medias (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    system_profil_id integer NOT NULL,
+    title character varying,
+    authors character varying,
+    file character varying,
+    duration time without time zone,
+    added_by character varying,
+    status character varying,
+    img character varying,
+    is_live character varying,
+    is_available boolean,
+    nb_views integer,
+    tags text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE medias OWNER TO maxclifordjean;
+
+--
+-- Name: medias_playlists_join; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE medias_playlists_join (
+    id integer NOT NULL,
+    media_id uuid,
+    playlist_id uuid
+);
+
+
+ALTER TABLE medias_playlists_join OWNER TO maxclifordjean;
+
+--
+-- Name: medias_playlists_join_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE medias_playlists_join_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE medias_playlists_join_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: medias_playlists_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE medias_playlists_join_id_seq OWNED BY medias_playlists_join.id;
+
+
+--
+-- Name: playlists; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE playlists (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    title character varying,
+    user_id uuid,
+    cover character varying,
+    tags text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE playlists OWNER TO maxclifordjean;
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE schema_migrations OWNER TO maxclifordjean;
+
+--
+-- Name: system_profils; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE system_profils (
+    id integer NOT NULL,
+    title character varying,
+    parameters character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE system_profils OWNER TO maxclifordjean;
+
+--
+-- Name: system_profils_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE system_profils_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE system_profils_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: system_profils_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE system_profils_id_seq OWNED BY system_profils.id;
+
+
+--
+-- Name: user_abouts; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_abouts (
+    id integer NOT NULL,
+    user_id uuid,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE user_abouts OWNER TO maxclifordjean;
+
+--
+-- Name: user_abouts_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_abouts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_abouts_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_abouts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_abouts_id_seq OWNED BY user_abouts.id;
+
+
+--
+-- Name: user_subscriptions; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_subscriptions (
+    id integer NOT NULL,
+    channel_id uuid,
+    user_id uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE user_subscriptions OWNER TO maxclifordjean;
+
+--
+-- Name: user_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_subscriptions_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_subscriptions_id_seq OWNED BY user_subscriptions.id;
+
+
+--
+-- Name: user_video_seens; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_video_seens (
+    id integer NOT NULL,
+    user_id uuid,
+    media_id uuid,
+    last_time_seen timestamp without time zone,
+    category character varying,
+    genre character varying,
+    type character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE user_video_seens OWNER TO maxclifordjean;
+
+--
+-- Name: user_video_seens_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_video_seens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_video_seens_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_video_seens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_video_seens_id_seq OWNED BY user_video_seens.id;
+
+
+--
+-- Name: user_watch_later; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_watch_later (
+    id integer NOT NULL,
+    user_id uuid,
+    media_id uuid,
+    seen boolean DEFAULT false,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE user_watch_later OWNER TO maxclifordjean;
+
+--
+-- Name: user_watch_later_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_watch_later_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_watch_later_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_watch_later_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_watch_later_id_seq OWNED BY user_watch_later.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE users (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    email character varying,
+    firstname character varying,
+    lastname character varying,
+    channel_name character varying,
+    pseudo character varying,
+    phone character varying,
+    address character varying,
+    zip_code character varying,
+    city character varying,
+    states character varying,
+    country character varying,
+    "isAdmin" character varying,
+    profil character varying,
+    cover character varying,
+    last_connexion character varying,
+    last_device_used character varying,
+    tags text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE users OWNER TO maxclifordjean;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY bins ALTER COLUMN id SET DEFAULT nextval('bins_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY category_of_playlists_channels ALTER COLUMN id SET DEFAULT nextval('category_of_playlists_channels_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY category_of_playlists_channels_playlists_join ALTER COLUMN id SET DEFAULT nextval('category_of_playlists_channels_playlists_join_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY channel_comments ALTER COLUMN id SET DEFAULT nextval('channel_comments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY channel_comments_users_join ALTER COLUMN id SET DEFAULT nextval('channel_comments_users_join_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY documents ALTER COLUMN id SET DEFAULT nextval('documents_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY events_medias_join ALTER COLUMN id SET DEFAULT nextval('events_medias_join_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY events_playlists_join ALTER COLUMN id SET DEFAULT nextval('events_playlists_join_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY labels ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY media_categories ALTER COLUMN id SET DEFAULT nextval('media_categories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY media_comments ALTER COLUMN id SET DEFAULT nextval('media_comments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY media_comments_users_join ALTER COLUMN id SET DEFAULT nextval('media_comments_users_join_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY media_processes ALTER COLUMN id SET DEFAULT nextval('media_processes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY medias_playlists_join ALTER COLUMN id SET DEFAULT nextval('medias_playlists_join_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY system_profils ALTER COLUMN id SET DEFAULT nextval('system_profils_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_abouts ALTER COLUMN id SET DEFAULT nextval('user_abouts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_subscriptions ALTER COLUMN id SET DEFAULT nextval('user_subscriptions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_video_seens ALTER COLUMN id SET DEFAULT nextval('user_video_seens_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_watch_later ALTER COLUMN id SET DEFAULT nextval('user_watch_later_id_seq'::regclass);
+
+
+--
+-- Data for Name: bins; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY bins (id, title, event_id, is_display) FROM stdin;
+\.
+
+
+--
+-- Name: bins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('bins_id_seq', 1, false);
+
+
+--
+-- Data for Name: category_of_playlists_channels; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY category_of_playlists_channels (id, title, description, cover, channel_uid, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: category_of_playlists_channels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('category_of_playlists_channels_id_seq', 1, false);
+
+
+--
+-- Data for Name: category_of_playlists_channels_playlists_join; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY category_of_playlists_channels_playlists_join (id, category_of_playlists_channel_id, playlist_id) FROM stdin;
+\.
+
+
+--
+-- Name: category_of_playlists_channels_playlists_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('category_of_playlists_channels_playlists_join_id_seq', 1, false);
+
+
+--
+-- Data for Name: channel_comments; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY channel_comments (id, user_id, channel_id, comment, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: channel_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('channel_comments_id_seq', 1, false);
+
+
+--
+-- Data for Name: channel_comments_users_join; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY channel_comments_users_join (id, channel_comment_id, user_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: channel_comments_users_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('channel_comments_users_join_id_seq', 1, false);
+
+
+--
+-- Data for Name: channels; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY channels (id, title, nb_views, nb_subscribers, profil, cover, presentation_text, presentation_video, user_id, tags, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: documents; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY documents (id, title, bin_id, is_display, authors, file, added_by, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('documents_id_seq', 1, false);
+
+
+--
+-- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY events (id, address, zip_code, city, states, country, beginning_datetime, finishing_datetime, is_live, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: events_medias_join; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY events_medias_join (id, event_id, media_id) FROM stdin;
+\.
+
+
+--
+-- Name: events_medias_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('events_medias_join_id_seq', 1, false);
+
+
+--
+-- Data for Name: events_playlists_join; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY events_playlists_join (id, event_id, playlist_id) FROM stdin;
+\.
+
+
+--
+-- Name: events_playlists_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('events_playlists_join_id_seq', 1, false);
+
+
+--
+-- Data for Name: labels; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY labels (id, title, bin_id, is_display, authors, file, added_by, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: labels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('labels_id_seq', 1, false);
+
+
+--
+-- Data for Name: media_categories; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY media_categories (id, media_id, name, genre, type, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: media_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('media_categories_id_seq', 1, false);
+
+
+--
+-- Data for Name: media_comments; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY media_comments (id, user_id, media_id, comment, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: media_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('media_comments_id_seq', 1, false);
+
+
+--
+-- Data for Name: media_comments_users_join; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY media_comments_users_join (id, media_comment_id, user_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: media_comments_users_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('media_comments_users_join_id_seq', 1, false);
+
+
+--
+-- Data for Name: media_processes; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY media_processes (id, subtitle, name, media_id, error, progression, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: media_processes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('media_processes_id_seq', 1, false);
+
+
+--
+-- Data for Name: medias; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY medias (id, system_profil_id, title, authors, file, duration, added_by, status, img, is_live, is_available, nb_views, tags, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: medias_playlists_join; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY medias_playlists_join (id, media_id, playlist_id) FROM stdin;
+\.
+
+
+--
+-- Name: medias_playlists_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('medias_playlists_join_id_seq', 1, false);
+
+
+--
+-- Data for Name: playlists; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY playlists (id, title, user_id, cover, tags, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY schema_migrations (version) FROM stdin;
+20150219113336
+20150219120843
+\.
+
+
+--
+-- Data for Name: system_profils; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY system_profils (id, title, parameters, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: system_profils_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('system_profils_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_abouts; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_abouts (id, user_id, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: user_abouts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_abouts_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_subscriptions; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_subscriptions (id, channel_id, user_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: user_subscriptions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_subscriptions_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_video_seens; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_video_seens (id, user_id, media_id, last_time_seen, category, genre, type, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: user_video_seens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_video_seens_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_watch_later; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_watch_later (id, user_id, media_id, seen, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: user_watch_later_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_watch_later_id_seq', 1, false);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY users (id, email, firstname, lastname, channel_name, pseudo, phone, address, zip_code, city, states, country, "isAdmin", profil, cover, last_connexion, last_device_used, tags, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: bins_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY bins
+    ADD CONSTRAINT bins_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: category_of_playlists_channels_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY category_of_playlists_channels
+    ADD CONSTRAINT category_of_playlists_channels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: category_of_playlists_channels_playlists_join_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY category_of_playlists_channels_playlists_join
+    ADD CONSTRAINT category_of_playlists_channels_playlists_join_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: channel_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY channel_comments
+    ADD CONSTRAINT channel_comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: channel_comments_users_join_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY channel_comments_users_join
+    ADD CONSTRAINT channel_comments_users_join_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: channels_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY channels
+    ADD CONSTRAINT channels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: documents_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY documents
+    ADD CONSTRAINT documents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events_medias_join_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY events_medias_join
+    ADD CONSTRAINT events_medias_join_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events_playlists_join_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY events_playlists_join
+    ADD CONSTRAINT events_playlists_join_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: labels_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY labels
+    ADD CONSTRAINT labels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY media_categories
+    ADD CONSTRAINT media_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY media_comments
+    ADD CONSTRAINT media_comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_comments_users_join_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY media_comments_users_join
+    ADD CONSTRAINT media_comments_users_join_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_processes_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY media_processes
+    ADD CONSTRAINT media_processes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: medias_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY medias
+    ADD CONSTRAINT medias_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: medias_playlists_join_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY medias_playlists_join
+    ADD CONSTRAINT medias_playlists_join_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: playlists_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY playlists
+    ADD CONSTRAINT playlists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_profils_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY system_profils
+    ADD CONSTRAINT system_profils_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_abouts_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_abouts
+    ADD CONSTRAINT user_abouts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_subscriptions
+    ADD CONSTRAINT user_subscriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_video_seens_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_video_seens
+    ADD CONSTRAINT user_video_seens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_watch_later_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_watch_later
+    ADD CONSTRAINT user_watch_later_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: maxclifordjean
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM maxclifordjean;
+GRANT ALL ON SCHEMA public TO maxclifordjean;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

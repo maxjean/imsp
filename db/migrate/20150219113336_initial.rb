@@ -54,6 +54,7 @@ class Initial < ActiveRecord::Migration
 
     #events
     create_table  :events, id: :uuid do |t|
+      t.string    :title
       t.string    :address
       t.string    :zip_code
       t.string    :city
@@ -87,6 +88,7 @@ class Initial < ActiveRecord::Migration
     #medias
     create_table  :medias, id: :uuid do |t|
       t.references :system_profil, null: false
+      t.references  :media_category_id
       t.string    :title
       t.string    :authors
       t.string    :file
@@ -104,7 +106,6 @@ class Initial < ActiveRecord::Migration
     create_table :media_processes do |t|
       t.string  :subtitle
       t.string  :name
-      t.uuid    :media_id
       t.string  :error
       t.float   :progression
       t.timestamps
@@ -116,19 +117,6 @@ class Initial < ActiveRecord::Migration
       t.string  :genre
       t.string  :type
       t.text    :description
-      t.timestamps
-    end
-
-    create_table :media_comments do |t|
-      t.uuid    :user_id
-      t.uuid    :media_id
-      t.text    :comment
-      t.timestamps
-    end
-
-    create_table :media_comments_users_join do |t|
-      t.uuid  :media_comment_id
-      t.uuid  :user_id
       t.timestamps
     end
 
@@ -173,24 +161,12 @@ class Initial < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :channel_comments do |t|
-      t.uuid  :user_id
-      t.uuid  :channel_id
-      t.text  :comment
-      t.timestamps
-    end
-
-    create_table :channel_comments_users_join do |t|
-      t.uuid :channel_comment_id
-      t.uuid :user_id
-      t.timestamps
-    end
-
     #bins
     create_table :bins do |t|
       t.string  :title
       t.uuid    :event_id
       t.boolean :is_display
+      t.timestamps
     end
 
     create_table :documents do |t|
@@ -214,6 +190,15 @@ class Initial < ActiveRecord::Migration
       t.text        :description
       t.timestamps
     end
+
+    create_table :comments, id: :uuid do |t|
+      t.uuid    :initial_comment_id  #initial comment_id => response
+      t.uuid    :user_id #sender
+      t.text    :content
+      t.belongs_to :commentable, polymorphic: true
+      t.timestamps
+    end
+    add_index :comments, [:commentable_id, :commentable_type]
 
     puts "All initial tables have been created!!!"
 
