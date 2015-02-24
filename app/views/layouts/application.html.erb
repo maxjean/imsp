@@ -7,6 +7,24 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <div id="container">
+      <div id="user_nav">
+        <div class="user_cover"><img src=<%= current_user.cover unless current_user.nil? %>></img></div>
+        <% if current_user %>
+        Login in as <strong><%= "#{current_user.firstname.capitalize} #{current_user.lastname.capitalize}" %></strong>!
+            <%= link_to "Sign out", signout_path, id: "sign_out" %>
+        <% else %>
+            <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %> <br>
+            <%= link_to "Sign in with Twitter", "/auth/twitter", id: "sign_in" %> <br>
+            <%= link_to "Sign in with my personal account", "/sign_in", id: "sign_in" %>
+            <br>
+            Create an account?
+            <%= link_to "Sign up", "/sign_up", id: "sign_up" %>
+      <% end %>
+        <div class="user-last_connexion"><%= "Last connexion: #{current_user.last_connexion}" unless current_user.nil? %></div>
+      </div>
+    </div>
+
 
 <%= yield %>
 

@@ -306,7 +306,6 @@ ALTER SEQUENCE labels_id_seq OWNED BY labels.id;
 
 CREATE TABLE media_categories (
     id integer NOT NULL,
-    media_id uuid,
     name character varying,
     genre character varying,
     type character varying,
@@ -340,11 +339,12 @@ ALTER SEQUENCE media_categories_id_seq OWNED BY media_categories.id;
 
 
 --
--- Name: media_processes; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+-- Name: media_treatments; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
 --
 
-CREATE TABLE media_processes (
+CREATE TABLE media_treatments (
     id integer NOT NULL,
+    media_id uuid,
     subtitle character varying,
     name character varying,
     error character varying,
@@ -354,13 +354,13 @@ CREATE TABLE media_processes (
 );
 
 
-ALTER TABLE media_processes OWNER TO maxclifordjean;
+ALTER TABLE media_treatments OWNER TO maxclifordjean;
 
 --
--- Name: media_processes_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+-- Name: media_treatments_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
 --
 
-CREATE SEQUENCE media_processes_id_seq
+CREATE SEQUENCE media_treatments_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -368,13 +368,13 @@ CREATE SEQUENCE media_processes_id_seq
     CACHE 1;
 
 
-ALTER TABLE media_processes_id_seq OWNER TO maxclifordjean;
+ALTER TABLE media_treatments_id_seq OWNER TO maxclifordjean;
 
 --
--- Name: media_processes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+-- Name: media_treatments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
 --
 
-ALTER SEQUENCE media_processes_id_seq OWNED BY media_processes.id;
+ALTER SEQUENCE media_treatments_id_seq OWNED BY media_treatments.id;
 
 
 --
@@ -698,7 +698,7 @@ ALTER TABLE ONLY media_categories ALTER COLUMN id SET DEFAULT nextval('media_cat
 -- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
 --
 
-ALTER TABLE ONLY media_processes ALTER COLUMN id SET DEFAULT nextval('media_processes_id_seq'::regclass);
+ALTER TABLE ONLY media_treatments ALTER COLUMN id SET DEFAULT nextval('media_treatments_id_seq'::regclass);
 
 
 --
@@ -848,7 +848,7 @@ SELECT pg_catalog.setval('labels_id_seq', 1, false);
 -- Data for Name: media_categories; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
 --
 
-COPY media_categories (id, media_id, name, genre, type, description, created_at, updated_at) FROM stdin;
+COPY media_categories (id, name, genre, type, description, created_at, updated_at) FROM stdin;
 \.
 
 
@@ -860,18 +860,18 @@ SELECT pg_catalog.setval('media_categories_id_seq', 1, false);
 
 
 --
--- Data for Name: media_processes; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+-- Data for Name: media_treatments; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
 --
 
-COPY media_processes (id, subtitle, name, error, progression, created_at, updated_at) FROM stdin;
+COPY media_treatments (id, media_id, subtitle, name, error, progression, created_at, updated_at) FROM stdin;
 \.
 
 
 --
--- Name: media_processes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+-- Name: media_treatments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
 --
 
-SELECT pg_catalog.setval('media_processes_id_seq', 1, false);
+SELECT pg_catalog.setval('media_treatments_id_seq', 1, false);
 
 
 --
@@ -903,8 +903,8 @@ COPY playlists (id, title, user_id, cover, tags, created_at, updated_at) FROM st
 --
 
 COPY schema_migrations (version) FROM stdin;
-20150219113336
 20150219120843
+20150219113336
 \.
 
 
@@ -1056,11 +1056,11 @@ ALTER TABLE ONLY media_categories
 
 
 --
--- Name: media_processes_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+-- Name: media_treatments_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
 --
 
-ALTER TABLE ONLY media_processes
-    ADD CONSTRAINT media_processes_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY media_treatments
+    ADD CONSTRAINT media_treatments_pkey PRIMARY KEY (id);
 
 
 --

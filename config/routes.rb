@@ -53,7 +53,23 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-     resources :documents do
 
-     end
+  root :to => "application#home"
+
+  resources :documents do
+  end
+
+  get 'sign_up', to: 'users#new', :as => "sign_up"
+
+
+  match "sign_in", :to => 'sessions#login', via: ['get','post']
+  match '/auth/:provider/callback', :to => 'sessions#create', via: 'get'
+
+  match 'auth/failure', to: redirect('/'), via: 'get'
+
+  match 'signout', to: 'sessions#destroy', as: 'signout', via: 'get'
+
+  resources :users do
+  end
+
 end
