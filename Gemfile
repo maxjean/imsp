@@ -52,5 +52,7 @@ group :development, :test do
   
   #Generate model & controller UML diagrams
   gem 'railroady'
+
+  gem 'devise'
 end
 

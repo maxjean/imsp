@@ -1,44 +1,11 @@
 class User < ActiveRecord::Base
-  has_one :channel
-  has_many :events
-  has_many :user_subscriptions
-  has_many :playlists
-  has_one :user_about
-  has_many :comments
-  has_many :medias
-  has_many :user_on_hold_videos
-  has_many :user_video_views
-  has_many :authorizations
-
-  attr_accessor :password
-  before_save :encrypt_password
-
-  validates_confirmation_of :password
-  validates_presence_of :password, :on => :create
-  validates_presence_of :firstname
-  validates_presence_of :lastname
-  validates_presence_of :email
-  validates_uniqueness_of :email
-
-  def self.authenticate(email, password)
-    user = find_by_email(email)
-    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
-      user
-    else
-      nil
-    end
-  end
-
-  def encrypt_password
-    if password.present?
-      self.password_salt = BCrypt::Engine.generate_salt
-      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
-    end
-  end
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable, :omniauthable,
+         :recoverable, :rememberable, :trackable, :validatable
 
   def self.from_omniauth(auth)
     Rails.logger.debug {"FROM_OMNIAUTH::auth => #{auth.inspect}"}
-
     where(:uid => auth.uid).first_or_initialize do |user|
       user.provider = auth.provider
       user.uid = auth.uid
@@ -53,4 +20,22 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.new_with_session(params, session)
+    if session["devise.user_attributes"]
+      new(session["devise.user_attributes"], without_protection: true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end
+  end
+
+  def password_required?
+    super && provider.blank?
+  end
+
+  def email_required?
+    super && provider.blank?
+  end
 end

@@ -11,19 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150224210452) do
+ActiveRecord::Schema.define(version: 20150225135606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  create_table "authorizations", force: :cascade do |t|
-    t.string   "provider"
-    t.string   "uid"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "bins", force: :cascade do |t|
     t.string   "title"
@@ -217,8 +209,18 @@ ActiveRecord::Schema.define(version: 20150224210452) do
 
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "email"
+    t.string   "encrypted_password"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
     t.string   "firstname"
     t.string   "lastname"
+    t.string   "name"
     t.string   "channel_name"
     t.string   "pseudo"
     t.string   "phone"
@@ -227,22 +229,21 @@ ActiveRecord::Schema.define(version: 20150224210452) do
     t.string   "city"
     t.string   "states"
     t.string   "country"
-    t.string   "isAdmin"
+    t.boolean  "isAdmin"
     t.string   "profil"
     t.string   "cover"
-    t.string   "last_connexion"
     t.string   "last_device_used"
     t.text     "tags"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "provider"
     t.string   "uid"
-    t.string   "name"
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
-    t.string   "password_salt"
-    t.string   "password_hash"
     t.string   "genre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

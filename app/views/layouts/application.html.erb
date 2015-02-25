@@ -10,23 +10,24 @@
     <div id="container">
       <div id="user_nav">
         <div class="user_cover"><img src=<%= current_user.cover unless current_user.nil? %>></img></div>
-        <% if current_user %>
-        Login in as <strong><%= "#{current_user.firstname.capitalize} #{current_user.lastname.capitalize}" %></strong>!
-            <%= link_to "Sign out", signout_path, id: "sign_out" %>
+        <% if user_signed_in? %>
+            Logged in as <strong><%= current_user.name %></strong>!
+            <%= link_to 'Edit profile', edit_user_registration_path %> |
+            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
         <% else %>
-            <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %> <br>
-            <%= link_to "Sign in with Twitter", "/auth/twitter", id: "sign_in" %> <br>
-            <%= link_to "Sign in with my personal account", "/sign_in", id: "sign_in" %>
-            <br>
-            Create an account?
-            <%= link_to "Sign up", "/sign_up", id: "sign_up" %>
+            <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %> <br>
+            <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter) %> <br>
+            <%= link_to "Sign up", new_user_registration_path %>
+            <%= link_to "Login", new_user_session_path %>
       <% end %>
-        <div class="user-last_connexion"><%= "Last connexion: #{current_user.last_connexion}" unless current_user.nil? %></div>
+
       </div>
+      <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, id: "flash_#{name}" %>
+      <% end %>
+
+      <%= yield %>
     </div>
-
-
-<%= yield %>
 
 </body>
 </html>

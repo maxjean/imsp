@@ -1,28 +1,6 @@
 class Initial < ActiveRecord::Migration
   def self.up
 
-    #users
-    create_table :users, id: :uuid  do |t|
-      t.string    :email
-      t.string    :firstname
-      t.string    :lastname
-      t.string    :channel_name
-      t.string    :pseudo
-      t.string    :phone
-      t.string    :address
-      t.string    :zip_code
-      t.string    :city
-      t.string    :states
-      t.string    :country
-      t.boolean   :isAdmin
-      t.string    :profil
-      t.string    :cover
-      t.datetime  :last_connexion
-      t.string    :last_device_used
-      t.text      :tags
-      t.timestamps
-    end
-
     create_table :user_subscriptions do |t|
       t.uuid  :channel_id
       t.uuid  :user_id
