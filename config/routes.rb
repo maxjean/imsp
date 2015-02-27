@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"},
-                      controllers: {omniauth_callbacks: "omniauth_callbacks"}
+                      controllers: {omniauth_callbacks: "omniauth_callbacks", :registrations => "registrations"}
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -72,7 +73,13 @@ Rails.application.routes.draw do
 
   #match 'signout', to: 'sessions#destroy', as: 'signout', via: 'get'
 
-  #resources :users do
+  resources :users, only: :show do
+    get "about", to: 'users#about', :as => "about"
+  end
+
+  #resources :channels, :path => "channel" do
+   # get "videos", to: 'medias#show', :as => "videos"
   #end
 
+  match "channel/:id", :to => 'users#show', as: "channel", via: 'get'
 end

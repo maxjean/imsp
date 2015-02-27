@@ -11,7 +11,9 @@
       <div id="user_nav">
         <div class="user_cover"><img src=<%= current_user.cover unless current_user.nil? %>></img></div>
         <% if user_signed_in? %>
-            Logged in as <strong><%= current_user.name %></strong>!
+            Logged in as <strong><%= link_to "#{current_user.pseudo}",user_path(current_user) %></strong>
+            <%= link_to 'My profile', user_path(current_user) %> |
+            <%= link_to 'My Channel', channel_path(current_user) %> |
             <%= link_to 'Edit profile', edit_user_registration_path %> |
             <%= link_to "Logout", destroy_user_session_path, method: :delete %>
         <% else %>

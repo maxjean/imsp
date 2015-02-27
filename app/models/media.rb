@@ -7,5 +7,4 @@ class Media < ActiveRecord::Base
   belongs_to :system_profil
   belongs_to :media_category
   has_one    :media_treatment
-
 end

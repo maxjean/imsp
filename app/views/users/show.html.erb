@@ -1,4 +1,10 @@
 <p id="notice"><%= notice %></p>
+<p><strong>THIS IS USER CHANNEL</strong></p>
+
+<p>
+  <strong>Channel:</strong>
+  <%= @channel.title unless nil? %>
+</p>
 
 <p>
   <strong>Firstname:</strong>
@@ -44,6 +50,4 @@
   <strong>States:</strong>
   <%= @user.states %>
 </p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', root_url %>

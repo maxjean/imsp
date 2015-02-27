@@ -1,4 +1,18 @@
 class User < ActiveRecord::Base
+  has_one :channel
+  has_many :events
+  has_many :user_subscriptions
+  has_many :playlists
+  has_one  :user_about
+  has_many :comments, as: :commentable
+  has_many :medias
+  has_many :user_on_hold_videos
+  has_many :user_video_views
+  has_many :authorizations
+
+  validates_presence_of :pseudo
+  validates_uniqueness_of :pseudo
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
@@ -16,7 +30,7 @@ class User < ActiveRecord::Base
       user.cover = auth.info.image
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at) if auth.provider == "facebook"
-      user.save!
+     # user.save! unless !nil?  #TODO LATER!!!!!!!
     end
   end
 

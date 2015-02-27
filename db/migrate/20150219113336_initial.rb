@@ -66,6 +66,7 @@ class Initial < ActiveRecord::Migration
 
     #medias
     create_table  :medias, id: :uuid do |t|
+      t.uuid       :user_id
       t.references :system_profil, null: false
       t.references :media_category
       t.string     :title

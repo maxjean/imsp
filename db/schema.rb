@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225135606) do
+ActiveRecord::Schema.define(version: 20150227084741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20150225135606) do
   end
 
   create_table "medias", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "user_id"
     t.integer  "system_profil_id",  null: false
     t.integer  "media_category_id"
     t.string   "title"
@@ -241,6 +242,7 @@ ActiveRecord::Schema.define(version: 20150225135606) do
     t.string   "genre"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "limit_pseudo_change"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
