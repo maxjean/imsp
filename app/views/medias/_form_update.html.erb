@@ -32,6 +32,11 @@
               <%= f.label :title %><br>
               <%= f.text_field :title %>
             </div>
+          <div class="field">
+            <p>Select a category for your video...</p>
+            <%= f.label :media_category_id %><br>
+            <%= f.select :media_category_id, MediaCategory.all.map {|mc| [mc.name,mc.id]},{prompt: 'Select Category'}%>
+          </div> <br>
             <div class="field">
               <%= f.label :authors %><br>
               <%= f.text_field :authors %>

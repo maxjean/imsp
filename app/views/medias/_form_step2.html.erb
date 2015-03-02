@@ -34,8 +34,18 @@
     <div class="field">
       <%= f.hidden_field :form_step, value: "step2" %>
     </div>
+    <div class="field">
+      <p>Give some descriptions about your video...</p>
+      <%= f.label :description %><br>
+      <%= f.text_field :description, :size => "40", :maxlength => "100" %>
+    </div> <br>
+    <div class="field">
+      <p>Select a category for your video...</p>
+      <%= f.label :media_category_id %><br>
+      <%= f.select :media_category_id, MediaCategory.all.map {|mc| [mc.name,mc.id]},{prompt: 'Select Category'}%>
+    </div> <br>
 
     <div class="actions">
       <%= f.submit "Done" %>
-    </div>
+    </div><br>
 <% end %>

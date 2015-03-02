@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Title </th>
+      <th>Category </th>
       <th>Authors</th>
       <th>Duration</th>
       <th>Is Live</th>
@@ -19,6 +20,7 @@
     <% @medias.each do |media| %>
       <tr>
         <td><%= media.title %></td>
+        <td><%= media.media_category.name if !media.media_category_id.nil? %></td>
         <td><%= media.authors %></td>
         <td><%= media.duration %></td>
         <td><%= media.is_live %></td>
