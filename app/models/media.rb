@@ -7,4 +7,16 @@ class Media < ActiveRecord::Base
   belongs_to :system_profil
   belongs_to :media_category
   has_one    :media_treatment
+
+  def next_step
+    if self.form_step.blank?
+      "step1"
+    elsif self.form_step == "step1"
+      "step2"
+    elsif self.form_step == "step2"
+      "done"
+    else
+      raise "internal error!"
+    end
+  end
 end

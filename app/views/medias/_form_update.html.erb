@@ -1,0 +1,59 @@
+<div class="#1" style="height:210px">
+    <div class="#1a" style="width:100%">
+      <iframe style="float:left" width="260" height="200" src=<%= current_user.channel.presentation_video.to_s %>></iframe>
+    </div>
+    <%= render partial: "form_informations" %>
+</div>
+<div class="#3" style="margin:15px">
+    <%= form_for(@media) do |f| %>
+        <% if @media.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@media.errors.count, "error") %> prohibited this media from being saved:</h2>
+
+              <ul>
+                <% @media.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="#">
+            <!--What kind of stream do you want?-->
+            <h4>How do you want to stream the video?</h4>
+            <p>You can change the kind of stream for your media</p>
+            <div class="field">
+              <%= f.label :Live? %><br>
+              <%= f.check_box :is_live %>
+            </div>
+            <h4>Media informations</h4>
+            <p>Please fill the informations about your media.</p>
+            <div class="field">
+              <%= f.label :title %><br>
+              <%= f.text_field :title %>
+            </div>
+            <div class="field">
+              <%= f.label :authors %><br>
+              <%= f.text_field :authors %>
+            </div>
+            <p>Please upload an image if you want to change...</p>
+            <div class="field">
+              <%= f.label :img %><br>
+              <%= f.file_field :img %>
+            </div>
+            <div class="field">
+              <p>In other to find your media by people, please enter tags separate by comma to facilitate research...</p>
+              <%= f.label :tags %><br>
+              <%= f.text_field :tags %>
+            </div>
+            <div class="field">
+              <p>Give some descriptions about your video...</p>
+              <%= f.label :description %><br>
+              <%= f.text_field :description, :size => "40", :maxlength => "100" %>
+            </div> <br>
+            <div class="actions">
+              <%= f.submit %>
+            </div>
+        </div>
+</div>
+    <% end %>

@@ -1,53 +1,24 @@
 <p id="notice"><%= notice %></p>
 <p><strong>THIS IS USER CHANNEL</strong></p>
 
-<p>
-  <strong>Channel:</strong>
-  <%= @channel.title unless nil? %>
+<p><strong><%= link_to @user.pseudo, channel_path(current_user) %></strong></p>
+<div class="channel-menu">
+  <strong><%= link_to "Presentation video", "#" %></strong> |
+  <strong><%= link_to "Videos", "#" %></strong> |
+  <strong><%= link_to "Comments", "#" %></strong> |
+  <strong><%= link_to "About", "#" %></strong
+</div>
+
+<div class="presentation" style="height:auto;min-height:250px;margin-bottom:13px;">
+    <p><iframe style="float:left" width="260" height="200" src=<%= @channel.presentation_video.to_s %>></iframe></p>
+    <%= @channel.presentation_text %>
+</div>
+<p style="color:red">
+  ALL CATEGORIES OF PLAYLIST WITH BEST LIMIT OF MEDIAS GO HERE...
 </p>
-
-<p>
-  <strong>Firstname:</strong>
-  <%= @user.firstname %>
-</p>
-
-<p>
-  <strong>Lastname:</strong>
-  <%= @user.lastname %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<div class="">
+  <%= link_to 'Back', root_url %>
+</div>
 
 
 
-
-<p>
-  <strong>Cover:</strong>
-  <img src=<%= @user.cover %>></img>
-</p>
-
-
-<p>
-  <strong>Phone:</strong>
-  <%= @user.phone %>
-</p>
-
-
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @user.country %>
-</p>
-
-<p>
-  <strong>States:</strong>
-  <%= @user.states %>
-</p>
-<%= link_to 'Back', root_url %>

@@ -4,7 +4,7 @@ class MediasController < ApplicationController
   # GET /medias
   # GET /medias.json
   def index
-    @medias = Media.all
+    @medias = current_user.medias
   end
 
   # GET /medias/1
@@ -19,36 +19,32 @@ class MediasController < ApplicationController
 
   # GET /medias/1/edit
   def edit
+    @media = Media.find(params[:id])
   end
 
   # POST /medias
   # POST /medias.json
   def create
-    @media = Media.new(media_params)
-
-    respond_to do |format|
-      if @media.save
-        format.html { redirect_to @media, notice: 'Media was successfully created.' }
-        format.json { render :show, status: :created, location: @media }
-      else
-        format.html { render :new }
-        format.json { render json: @media.errors, status: :unprocessable_entity }
-      end
+    @media = current_user.medias.new(media_params)
+    if @media.save
+      redirect_to edit_media_path @media
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /medias/1
   # PATCH/PUT /medias/1.json
   def update
-    respond_to do |format|
-      if @media.update(media_params)
-        format.html { redirect_to @media, notice: 'Media was successfully updated.' }
-        format.json { render :show, status: :ok, location: @media }
+    @media = Media.find(params[:id])
+    if @media.update_attributes(media_params)
+      if @media.form_step == "step2"
+        redirect_to medias_path
       else
-        format.html { render :edit }
-        format.json { render json: @media.errors, status: :unprocessable_entity }
+        redirect_to edit_media_path @media
       end
     end
+
   end
 
   # DELETE /medias/1

@@ -1,0 +1,41 @@
+<%= form_for(@media) do |f| %>
+    <% if @media.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@media.errors.count, "error") %> prohibited this media from being saved:</h2>
+
+          <ul>
+            <% @media.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <!--Medias Informations?-->
+    <h4>Media informations</h4>
+    <p>Please fill the informations about your media.</p>
+    <div class="field">
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </div>
+    <div class="field">
+      <%= f.label :authors %><br>
+      <%= f.text_field :authors %>
+    </div>
+    <div class="field">
+      <%= f.label :img %><br>
+      <%= f.file_field :img %>
+    </div>
+    <div class="field">
+      <p>In other to find your media by people, please enter tags separate by comma to facilitate research...</p>
+      <%= f.label :tags %><br>
+      <%= f.text_field :tags %>
+    </div>
+    <div class="field">
+      <%= f.hidden_field :form_step, value: "step2" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Done" %>
+    </div>
+<% end %>

@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
   resources :users, only: :show do
     get "about", to: 'users#about', :as => "about"
+    get "videos", to: 'users#videos', :as => "videos"
   end
 
   #resources :channels, :path => "channel" do
@@ -82,4 +83,9 @@ Rails.application.routes.draw do
   #end
 
   match "channel/:id", :to => 'users#show', as: "channel", via: 'get'
+
+  resources :medias
+  resources :media_steps
+
+
 end

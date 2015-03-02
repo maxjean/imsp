@@ -56,5 +56,7 @@ group :development, :test do
   gem 'devise'
 
   gem 'arel'
+
+  gem 'wicked'
 end
 

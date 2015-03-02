@@ -1,0 +1,15 @@
+<%= form_for @media do |f| %>
+    <!--Upload the video-->
+    <h4>Upload your video</h4>
+    <p>Please select a video from your computer</p>
+    <p>Files supported: mp4,mpeg,avi,mov,mkv</p>
+    <div class="field">
+      <%= f.label :file %><br>
+      <%= f.file_field :file %>
+    </div>
+      <%= f.hidden_field :form_step, value: "step1" %>
+    <br>
+    <div class="actions">
+      <%= f.submit "Next" %>
+    </div>
+<% end %>
