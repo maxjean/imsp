@@ -87,5 +87,8 @@ Rails.application.routes.draw do
   resources :medias
   resources :media_steps
 
+  get "playlists_management", :to => "playlists_management#show", as: "playlists_management", via: 'get'
 
+  resources :playlists
+  resources :category_of_playlists_channels
 end

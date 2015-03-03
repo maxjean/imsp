@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Category Of Playlists Channels</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Cover</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @category_of_playlists_channels.each do |categ_playlist| %>
+      <tr>
+        <td><%= categ_playlist.title %></td>
+        <td><%= categ_playlist.description %></td>
+        <td><img src=<%= categ_playlist.cover %>></img></td>
+        <td><%= link_to 'Edit', edit_category_of_playlists_channel_path(categ_playlist) %></td>
+        <td><%= link_to 'Destroy', categ_playlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Category of playlists channel', new_category_of_playlists_channel_path %>
