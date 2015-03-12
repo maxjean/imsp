@@ -5,6 +5,10 @@ class PlaylistsController < ApplicationController
   # GET /playlists.json
   def index
     @playlists = current_user.playlists
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: {:selected_categories => CategoryOfPlaylistsChannel.userSelectedCategories(current_user_channel)}}
+    end
 
   end
 
