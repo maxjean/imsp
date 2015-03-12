@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302102723) do
+ActiveRecord::Schema.define(version: 20150303182258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20150302102723) do
     t.uuid     "channel_uid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid     "channel_id"
   end
 
   create_table "category_of_playlists_channels_playlists", id: false, force: :cascade do |t|

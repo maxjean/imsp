@@ -4,7 +4,7 @@ class CategoryOfPlaylistsChannelsController < ApplicationController
   # GET /category_of_playlists_channels
   # GET /category_of_playlists_channels.json
   def index
-    @category_of_playlists_channels = CategoryOfPlaylistsChannel.all
+    @category_of_playlists_channels = current_user_category_of_playlists
   end
 
   # GET /category_of_playlists_channels/1

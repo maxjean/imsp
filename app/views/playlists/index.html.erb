@@ -8,6 +8,7 @@
         <th>Title</th>
         <th>Tags</th>
         <th>Cover</th>
+        <th>Categories</th>
       </tr>
   </thead>
 
@@ -17,7 +18,9 @@
         <td><%= playlist.title %></td>
         <td><%= playlist.tags %></td>
         <td><img src=<%= playlist.cover %>></img></td>
+        <td><%= select_tag :category, options_for_select(current_user_category_of_playlists.map {|c| [c.title,c.id]}),:multiple => true, :data => {url: playlist_path(playlist)}%></td>
         <td><%= link_to 'Edit', edit_playlist_path(playlist) %></td>
+        <td><%= link_to 'Show', playlist %></td>
         <td><%= link_to 'Destroy', playlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
@@ -27,3 +30,4 @@
 <br>
 
 <%= link_to 'New Playlist', new_playlist_path %>
+

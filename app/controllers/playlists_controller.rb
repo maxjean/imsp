@@ -4,13 +4,15 @@ class PlaylistsController < ApplicationController
   # GET /playlists
   # GET /playlists.json
   def index
-    @playlists = Playlist.all
+    @playlists = current_user.playlists
+
   end
 
   # GET /playlists/1
   # GET /playlists/1.json
   def show
     set_playlist
+    @playlists = Playlist.all
   end
 
   # GET /playlists/new
@@ -41,13 +43,31 @@ class PlaylistsController < ApplicationController
   # PATCH/PUT /playlists/1
   # PATCH/PUT /playlists/1.json
   def update
-    respond_to do |format|
-      if @playlist.update(playlist_params)
-        format.html { redirect_to @playlist, notice: 'Playlist was successfully updated.' }
-        format.json { render :show, status: :ok, location: @playlist }
-      else
-        format.html { render :edit }
-        format.json { render json: @playlist.errors, status: :unprocessable_entity }
+
+    if request.xhr?
+      category_ids = params[:category_ids]
+      category_ids.each do |c|
+        @category = CategoryOfPlaylistsChannel.find(c)
+        @playlist = Playlist.find(params[:id])
+
+        if @category.playlists.find_by(id: @playlist.id).nil?
+          CategoryOfPlaylistsChannel.addPlaylist(@category,@playlist)
+        else
+          CategoryOfPlaylistsChannel.removePlaylist(@category,@playlist)
+        end
+
+      end
+
+      render :nothing => true
+    else
+      respond_to do |format|
+        if @playlist.update(playlist_params)
+          format.html { redirect_to @playlist, notice: 'Playlist was successfully updated.' }
+          format.json { render :show, status: :ok, location: @playlist }
+        else
+          format.html { render :edit }
+          format.json { render json: @playlist.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

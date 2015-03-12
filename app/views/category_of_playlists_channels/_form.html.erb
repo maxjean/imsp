@@ -23,7 +23,7 @@
       <%= f.text_field :description %>
     </div><br>
 
-    <%= f.hidden_field :channel_uid, :value => current_user.channel.id %>
+    <%= f.hidden_field :channel_id, :value => current_user.channel.id %>
 
     <div class="actions">
       <%= f.submit %>
