@@ -14,7 +14,7 @@
 
   <tbody>
   <% @playlists.each do |playlist| %>
-      <tr>
+      <tr class=<%= playlist.id %>>
         <td><%= playlist.title %></td>
         <td><%= playlist.tags %></td>
         <td><img src=<%= playlist.cover %>></img></td>
