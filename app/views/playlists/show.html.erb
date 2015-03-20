@@ -1,6 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<%= @playlist.title %>
+<h3><%= @playlist.title %></h3>
+<table>
+    <tbody>
+        <% @playlist.medias.each_with_index do |playlist,i| %>
+            <tr class="">
+              <td><%= i+1 %></td>
+              <td><%= playlist.title %></td>
+              <td><%= link_to 'Show', playlist %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<p>Total: <%= @playlist.medias.count %></p>
 
 <div class="">
   <%= link_to 'Back', root_url %>

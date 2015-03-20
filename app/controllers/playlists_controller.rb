@@ -16,7 +16,8 @@ class PlaylistsController < ApplicationController
   # GET /playlists/1.json
   def show
     set_playlist
-    @playlists = Playlist.all
+    @playlists = current_user.playlists
+
   end
 
   # GET /playlists/new

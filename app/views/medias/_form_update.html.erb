@@ -35,7 +35,7 @@
           <div class="field">
             <p>Select a category for your video...</p>
             <%= f.label :media_category_id %><br>
-            <%= f.select :media_category_id, MediaCategory.all.map {|mc| [mc.name,mc.id]},{prompt: 'Select Category'}%>
+            <%= f.select :media_category_id, MediaCategory.all.map {|mc| [mc.name,mc.id]},{prompt: ''}%>
           </div> <br>
             <div class="field">
               <%= f.label :authors %><br>
@@ -55,6 +55,10 @@
               <p>Give some descriptions about your video...</p>
               <%= f.label :description %><br>
               <%= f.text_field :description, :size => "40", :maxlength => "100" %>
+            </div> <br>
+            <div class="field">
+              <p>Select any playlist in which you want to add your video...</p>
+              <%= f.select :playlist_ids, current_user.playlists.map{|c|[c.title, c.id]},{prompt: ''}, :multiple => true %>
             </div> <br>
             <div class="actions">
               <%= f.submit %>
