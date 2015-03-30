@@ -1,0 +1,8 @@
+<span>Please fill the form to modify your bin for your event: <span class="my_bin_title"><%#=@your_event.title.capitalize %></span></span>
+<%= form_tag(controller: "events", action: "modify_bin", method: "get", class: "modify_bin_form") do %>
+    <span><%= text_field_tag(:title,"",:value => @my_bin.title)%></span><br>
+    <%= hidden_field_tag(:event_id, params[:my_event])%>
+    <%= hidden_field_tag(:my_bin, params[:my_bin])%>
+    <span>Is display? <%= check_box_tag(:is_display)%></span><br>
+    <%= submit_tag("Modify") %>
+<% end %>

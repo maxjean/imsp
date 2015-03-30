@@ -91,4 +91,11 @@ Rails.application.routes.draw do
 
   resources :playlists
   resources :category_of_playlists_channels
+
+  resources :events
+
+  match "create_bin", controller: "events", via: ['get','post']
+  match "modify_bin", controller: "events", via: ['get','post']
+
+  resources :bins, only: [:destroy]
 end

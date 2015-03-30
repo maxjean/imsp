@@ -1,0 +1,7 @@
+<span>Please create a bin for your event: <span class="your_event_title"><%#=@your_event.title.capitalize %></span></span>
+<%= form_tag(controller: "events", action: "create_bin", method: "get", class: "create_bin_form") do %>
+    <span><%= text_field_tag(:title,"",:placeholder => "Name your bin")%></span><br>
+    <span>Is current?<%= hidden_field_tag(:event_id, params[:your_event])%></span>
+    <%= check_box_tag(:is_display)%><br>
+    <%= submit_tag("Create", :name=> "my_event[#{params[@your_event]}]") %>
+<% end %>

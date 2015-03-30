@@ -4,12 +4,13 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = current_user.events
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
+    @event = set_event
   end
 
   # GET /events/new
@@ -24,7 +25,7 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
+    @event = current_user.events.new(event_params)
 
     respond_to do |format|
       if @event.save
@@ -60,6 +61,35 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def create_bin
+    if params[:your_event]
+      @your_event = params[:your_event]
+    elsif params[:event_id]
+      @bin = Bin.create!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display])
+      if @bin.save
+        respond_to do |format|
+          format.html { redirect_to("/events/#{params[:event_id]}", notice: 'Bin was succesfully created.') }
+        end
+      end
+    end
+  end
+
+  def modify_bin
+    if params[:my_event]
+      @my_event = Event.find(params[:my_event])
+      @my_bin = Bin.find(params[:my_bin])
+    elsif params[:event_id]
+      @bin = Bin.find(params[:my_bin])
+      @bin.update_attributes!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display])
+      if @bin.save
+        respond_to do |format|
+          format.html { redirect_to("/events/#{params[:event_id]}", notice: 'Bin was successfully updated.')}
+        end
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

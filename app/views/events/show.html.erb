@@ -1,4 +1,52 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
+
+<h2><u><%= @event.title.capitalize %></u></h2>
+
+<div class="#">
+  <span><%= @event.beginning_datetime.strftime('%a %d %b %Y')%> From: <%=@event.beginning_datetime.strftime('%T') %> To: <%=@event.finishing_datetime.strftime('%T')%></span><br>
+  <span><%= "#{@event.states}, #{@event.country}" %></span>
+</div>
+
+<div class="#">
+  <fieldset>
+    <legend>Informations</legend>
+    Live?: <%= @event.is_live %> <br>
+    Description: <%= @event.description %> <br>
+    Created at: <%= @event.created_at.strftime('%a %d %b %Y') %> <br>
+    Last modification: <%= @event.updated_at.strftime('%a %d %b %Y') %> <br>
+  </fieldset>
+  <%= link_to 'Modify this event', edit_event_path(@event) %>
+</div>
+
+<div>
+    <h3><u>Bins associated</u></h3>
+    <table>
+      <thead>
+      <tr>
+        <th colspan="#">#</th>
+        <th colspan="#">Title</th>
+        <th colspan="#">Is Diplay?</th>
+        <th colspan="#">Created at</th>
+        <th colspan="#">Last modification</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @event.bins.each_with_index do |bin, i| %>
+          <tr>
+            <td colspan="#"><%= i+1 %></td>
+            <td colspan="#"><%= bin.title %></td>
+            <td colspan="#"><%= bin.is_display %></td>
+            <td colspan="#"><%= bin.created_at %></td>
+            <td colspan="#"><%= bin.updated_at %></td>
+            <td><%= link_to 'Modify', modify_bin_path(my_bin: "#{bin.id}", my_event: "#{params[:id]}") %></td>
+            <td><%= link_to 'Destroy', bin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <%= link_to 'Create bin', create_bin_path(your_event: "#{params[:id]}") %>
+</div>
+
