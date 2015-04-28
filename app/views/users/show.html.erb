@@ -19,28 +19,36 @@
       <div class="settings-gray"></div>
     </a>
   </div>
-  <div class="row" ng-if="datas">
-    <div class="tools col-xs-12 col-sm-8 col-sm-offset-2">
-      <ul class="nav nav-pills">
-        <li ng-class="{active:$index==activeToolIndex}" ng-repeat="data in datas track by $index" ng-click="setTool($index)">
-          <a href="#">{{data["title"]}}</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+
   <div class="slideshow" ng-controller="SliderController" ng-show="slideshowLoad" ng-class="{'slideshow-blur' : showSettings == true }">
 <!--    <div class="displayNewUserConnected" ng-show="true">
       <span class="userInfos">{{UsersDatas.pseudo}} has join the session.</span>
     </div>-->
+    <div class="row" ng-if="datas">
+      <div class="tools col-xs-8 col-sm-8 col-xs-offset-2">
+        <ul class="nav nav-pills">
+          <li ng-class="{active:$index==activeToolIndex}" ng-repeat="data in datas track by $index" ng-click="setTool($index)">
+            <a href="#">{{data["title"]}}</a>
+          </li>
+        </ul>
+      </div>
+      <div showonhoverparent>
+        <div class="slider-nav" ng-click="countClicks()" on-doubletap="actionOnDoubletap()">
+          <a href="#" ng-click="prev()"><span class="glyphicon glyphicon-chevron-left previousButton"></span></a>
+          <a href="#" ng-click="next()"><span class="glyphicon glyphicon-chevron-right nextButton"></span></a>
+        </div>
+      </div>
+    </div>
     <div class="slide" ng-repeat="(key, data) in datas" ng-class="{active: key == activeToolIndex}" ng-hide="key != activeToolIndex">
       <div ng-repeat="liquidConfiguration in liquidConfigurations" class="liquidConfigurations">
         <div liquid="liquidConfiguration" class="imgLiquidFill imgLiquid liquidConfiguration">
           <img ng-src="{{data.background}}"/>
           <figcaption>
             <div class="serverInfo">
-              <span class="serverInfo-serverName-label"></span><span class="serverInfo-serverName-field">{{data.title}}</span>
-              <span class="serverInfo-nbServers-label"></span><a href="#">See</a>
-              <span class="slideshow-currentSlide-number-label"></span><span class="slideshow-currentSlide-number-field">{{key+1}}/{{datas.length}}</span>
+              <span class="serverInfo-serverName-field">{{data.title}}</span>
+              <span class="slideshow-description-field">{{data.description}}</span><br>
+              <span class="see-link"><a href={{window.location.origin}}/category_of_playlists_channels/{{data.id}}>See</a></span>
+              <span class="slideshow-currentSlide-number-field">{{key+1}}/{{datas.length}}</span>
             </div>
           </figcaption>
         </div>
@@ -49,12 +57,6 @@
     <div class="slide-play-pause" ng-show="showPlayPause">
       <div class="slide-play" ng-show="showPlay"><a href="#" ng-click="play()"><span class="glyphicon glyphicon-play"></span></a></div>
       <div class="slide-pause" ng-show="showPause"><a href="#" ng-click="pause()"><span class="glyphicon glyphicon-pause"></span></a></div>
-    </div>
-    <div showonhoverparent>
-      <div class="slider-nav" ng-click="countClicks()" on-doubletap="actionOnDoubletap()">
-        <a href="#" ng-click="prev()"><span class="glyphicon glyphicon-chevron-left previousButton"></span></a>
-        <a href="#" ng-click="next()"><span class="glyphicon glyphicon-chevron-right nextButton"></span></a>
-      </div>
     </div>
   </div>
   <div onsettings class="my-settings">

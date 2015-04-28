@@ -67,20 +67,18 @@ app.controller('SliderController', function($scope,$rootScope, InfoFactory, User
 */
 
 
-    var slidesTimeIntervalInMs = 3000;
+    var slidesTimeIntervalInMs = 5000;
     $scope.currentSlide = 0;
     $scope.activeToolIndex = 0;
     $scope.setTool = function(index){
         $scope.activeToolIndex = index;
-        $scope.activeToolIndex < $scope.datas.slidesInSlideshow - 1 ? $scope.activeToolIndex++ : $scope.activeToolIndex = 0;
-
     }
-
+/*
     var slideTimer =
         $timeout(function interval() {
-            $scope.activeToolIndex = ($scope.activeToolIndex % $scope.datas.slidesInSlideshow) + 1;
+            $scope.activeToolIndex < $scope.datas.slidesInSlideshow - 1 ? $scope.activeToolIndex++ : $scope.activeToolIndex = 0;
             slideTimer = $timeout(interval, slidesTimeIntervalInMs);
-        }, slidesTimeIntervalInMs);
+        }, slidesTimeIntervalInMs);*/
 
     /*debugger;*/
     $scope.next = function() {
@@ -255,19 +253,19 @@ app.directive('onsettings', function () {
         link: function (scope, element, attr) {
             
             function showRow(){
-                $(".row").fadeIn(1000);
+                $(".my-settings .row").fadeIn(1000);
             }
 
             function hideRow(){
-                $(".row").fadeOut(800);
+                $(".my-settings .row").fadeOut(800);
             }
 
             function showRow2(){
-                $(".row2").fadeIn(1000);
+                $(".my-settings .row2").fadeIn(1000);
             }
 
             function hideRow2(speed){
-                $(".row2").fadeOut(speed);
+                $(".my-settings .row2").fadeOut(speed);
             }
 
             function showSettings(){
@@ -297,7 +295,6 @@ app.directive('onsettings', function () {
             }
 
             function openSettingSection(){
-                console.log("UUUU",scope);
                 slideshowBackgroundEffect();
                 showSettings();
                 showNavigation();
@@ -318,17 +315,17 @@ app.directive('onsettings', function () {
                 openSettingSection();
             })
 
-            $(".row").bind('click', function(){
+            $(".my-settings .row").bind('click', function(){
                 showRow2();
                 hideRow();
             })
 
             $(".previous-section").bind('click', function(){
-                if(($(".row2").is(":visible")) == true){
+                if(($(".my-settings .row2").is(":visible")) == true){
                     hideRow2(800);
                     showSettings();
                     showRow();
-                }else if(($(".row").is(":visible")) == true){
+                }else if(($(".my-settings .row").is(":visible")) == true){
                     closeSettingSection();
                 }
             })          
