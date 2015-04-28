@@ -10,8 +10,31 @@
       </ul>
     </div>
   <% end %>
+    <div class="field">
+      <%= f.label :title %><br>
+      <%= f.text_field :title %><br>
+    </div>
+    <div class="field">
+      <%= f.label :is_display %>
+      <%= f.check_box :is_display %><br>
+    </div>
+    <div class="field">
+      <%= f.label :authors  %><br>
+      <%= f.text_field :authors %><br>
+    </div>
+    <div class="field">
+      <%= f.label :file %><br>
+      <%= f.file_field :file %><br>
+    </div>
+    <div class="field">
+      <%= f.label :description %><br>
+      <%= f.text_field :description %><br>
+    </div>
+    <%= f.hidden_field :added_by, :value => current_user.name %><br>
+    <%= f.hidden_field :bin_id, :value => params[:my_bin] %><br>
 
-  <div class="actions">
+
+    <div class="actions">
     <%= f.submit %>
-  </div>
+    </div>
 <% end %>

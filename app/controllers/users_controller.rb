@@ -1,11 +1,18 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  respond_to :json
   def videos
 
   end
 
   def about
   end
+
+  def category_plist_channels_api
+    @category_plist_channel = session[:category_plist_channel]
+    render :json => @category_plist_channel
+  end
+
   # GET /users
   # GET /users.json
   def index
@@ -16,7 +23,16 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @channel = User.find(params[:id]).channel
+    @playlist_categories = @channel.category_of_playlists_channels
+    session[:category_plist_channel] = @channel.category_of_playlists_channels
+
+    respond_to do |format|
+        format.html
+        format.json { render json: @playlist_categories }
+    end
   end
+
+
 
   # GET /users/new
   def new
@@ -30,7 +46,6 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    puts "AJKLFDSJLFDMS"
     @user = User.new(user_params)
     @user.provider = "imsp"
     @user.name = "#{params[:user][:firstname].capitalize} #{params[:user][:lastname].capitalize}"

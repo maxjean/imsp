@@ -97,5 +97,11 @@ Rails.application.routes.draw do
   match "create_bin", controller: "events", via: ['get','post']
   match "modify_bin", controller: "events", via: ['get','post']
 
+  resources :labels
+
   resources :bins, only: [:destroy]
+
+  get "channel", controller: "application"
+
+  get "category_plist_channels_api", controller: "users", :only => [:show], :defaults => { :format => 'json' }
 end

@@ -16,6 +16,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/new
   def new
+    puts "IN PARAMS NEW:#{params}"
     @document = Document.new
   end
 
@@ -26,15 +27,17 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(document_params)
+    puts "IN PARAMS CREATE:#{params}"
+    @my_bin = Bin.find(params[:my_bin])
+    @my_bin.documents.new(document_params)
 
     respond_to do |format|
-      if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
-        format.json { render :show, status: :created, location: @document }
+      if @my_bin.save
+        format.html { redirect_to modify_bin_path(:my_bin => @my_bin.id, :my_event => @my_bin.event_id), notice: 'Document was successfully created.' }
+        format.json { render :show, status: :created, location: @my_bin }
       else
         format.html { render :new }
-        format.json { render json: @document.errors, status: :unprocessable_entity }
+        format.json { render json: @my_bin.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -44,7 +47,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html { redirect_to modify_bin_path(:my_bin => @document.id), notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }
       else
         format.html { render :edit }
@@ -71,6 +74,6 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params[:document]
+      params.require(:document).permit!
     end
 end

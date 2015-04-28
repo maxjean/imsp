@@ -1,0 +1,15 @@
+[
+    [
+        {"url":"http://mep.dr.magency.fr/","background":"http://mep.dr.magency.fr/uploads/theme/background/19/ipad_e3e9048ebcdaebe710e3.jpg","appname":"mep_demo","servername":"mep"},
+        {"url":"http://mep2.dr.magency.fr/","background":"http://mep2.dr.magency.fr/uploads/theme/background/7/ipad_9480ace72b367852288f.jpg","appname":"mep_jap","servername":"mep2"},
+        {"url":"http://mep3.dr.magency.fr/","background":"http://mep3.dr.magency.fr/uploads/theme/background/7/ipad_1f69506754cb152e9bc8.jpg","appname":"mep_demo","servername":"mep3"},
+        {"url":"http://mep4.dr.magency.fr/","background":"http://mep4.dr.magency.fr/uploads/theme/background/4/ipad_72bbb9a163198d475e22.jpg","appname":"demo_mep","servername":"mep4"},
+        {"url":"http://mep7.dr.magency.fr/","background":"http://mep7.dr.magency.fr/uploads/theme/background/2/ipad_3de8812caeca3efd8e7d.jpg","appname":"safran","servername":"mep7"},
+        {"url":"http://mep9.dr.magency.fr/","background":"http://mep9.dr.magency.fr/uploads/theme/background/9/ipad_0a3f5a9aafb262c1fe3a.jpg","appname":"mep_demo","servername":"mep9"},
+        {"url":"http://mep10.dr.magency.fr/","background":"http://mep10.dr.magency.fr/uploads/theme/background/7/ipad_9480ace72b367852288f.jpg","appname":"mep_jap2","servername":"mep10"}
+    ],
+    [
+        {"url":"http://mep5.dr.magency.fr/","background":"http://mep5.dr.magency.fr/uploads/theme/background/1/ipad_28fb6b31c17eff98b6b3.jpg","appname":null,"servername":"mep5"},
+        {"url":"http://mep6.dr.magency.fr/","background":"http://mep6.dr.magency.fr/uploads/theme/background/4/ipad_123ebe09c478c27e5f18.jpg","appname":"act_171805","servername":"mep6"}
+    ]
+]

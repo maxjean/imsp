@@ -6,3 +6,74 @@
     <span>Is display? <%= check_box_tag(:is_display)%></span><br>
     <%= submit_tag("Modify") %>
 <% end %>
+
+<div>
+  <h3><u>Associated labels</u></h3>
+  <table>
+    <thead>
+    <tr>
+      <th colspan="#">#</th>
+      <th colspan="#">Title</th>
+      <th colspan="#">Is Diplay?</th>
+      <th colspan="#">Authors</th>
+      <th colspan="#">File</th>
+      <th colspan="#">Added by</th>
+      <th colspan="#">Created at</th>
+      <th colspan="#">Last modification</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @my_bin.labels.each_with_index do |bin, i| %>
+        <tr>
+          <td colspan="#"><%= i+1 %></td>
+          <td colspan="#"><%= bin.title %></td>
+          <td colspan="#"><%= bin.is_display %></td>
+          <td colspan="#"><%= bin.authors %></td>
+          <td colspan="#"><%= bin.file %></td>
+          <td colspan="#"><%= bin.added_by %></td>
+          <td colspan="#"><%= bin.created_at %></td>
+          <td colspan="#"><%= bin.updated_at %></td>
+          <td><%= link_to 'Modify', edit_label_path(bin) %></td>
+          <td><%= link_to 'Destroy', bin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Create label', new_label_path(my_bin: "#{params[:my_bin]}") %>
+</div>
+
+<div>
+  <h3><u>Associated documents</u></h3>
+  <table>
+    <thead>
+    <tr>
+      <th colspan="#">#</th>
+      <th colspan="#">Title</th>
+      <th colspan="#">Is Diplay?</th>
+      <th colspan="#">Authors</th>
+      <th colspan="#">File</th>
+      <th colspan="#">Added by</th>
+      <th colspan="#">Created at</th>
+      <th colspan="#">Last modification</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @my_bin.documents.each_with_index do |document, i| %>
+        <tr>
+          <td colspan="#"><%= i+1 %></td>
+          <td colspan="#"><%= document.title %></td>
+          <td colspan="#"><%= document.is_display %></td>
+          <td colspan="#"><%= document.authors %></td>
+          <td colspan="#"><%= document.file %></td>
+          <td colspan="#"><%= document.added_by %></td>
+          <td colspan="#"><%= document.created_at %></td>
+          <td colspan="#"><%= document.updated_at %></td>
+          <td><%= link_to 'Modify', edit_document_path(document) %></td>
+          <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Add document', new_document_path(my_bin: "#{params[:my_bin]}") %>
+</div>

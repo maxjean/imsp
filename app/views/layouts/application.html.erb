@@ -3,10 +3,10 @@
 <head>
   <title>Imsp</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<body class=<%= controller.controller_path.gsub('/', ' ') %>>
+<body ng-app="MyApp" class=<%= controller.controller_path.gsub('/', ' ') %>>
     <div id="container">
       <div id="user_nav">
         <div class="user_cover"><img src=<%= current_user.cover unless current_user.nil? %>></img></div>
@@ -28,11 +28,13 @@
       <% end %>
 
       </div>
+
       <% flash.each do |name, msg| %>
           <%= content_tag :div, msg, id: "flash_#{name}" %>
       <% end %>
-
       <%= yield %>
+      <div ng-view></div>
+
     </div>
 
 </body>
