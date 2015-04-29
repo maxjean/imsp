@@ -1,7 +1,9 @@
+.plist-presentation{
+    margin-bottom: 1%;
+}
 .plist-categ-name{
     text-align: left;
     color: gray;
-    margin-bottom: 4%;
 }
 
 .plist-categs nav{
@@ -13,9 +15,43 @@
 }
 
 .plist-categ-link{
-    border-style: dashed;
+    border-style: double;
     border-color: #ddd;
     border-width: 1px;
     border-radius: 4px 4px 0 0;
     margin-bottom: 1%;
+    padding: 15px;
+}
+
+.plist-categ-link .glyphicon-chevron-right{
+    zoom: 0 !important;
+}
+
+.plist-categ-link .thumbnail{
+    max-width: 320px;
+    max-height: 220px;
+}
+
+.plist-categ-link .plist-informations .plist-name{
+    text-transform: uppercase;
+}
+
+.plist-categ-link .plist-description{
+    color: gray;
+}
+
+.plist-categ-informations {
+    text-transform: uppercase;
+    margin-bottom: 2%;
+}
+
+.plist-categ-user, .plist-categ-date, .plist-categ-presentation{
+    color: gray;
+}
+
+.plist-categ-link:hover{
+    background-color: #ddd;
+    border: white;
+    padding: 15px;
+    border-style: double;
 }

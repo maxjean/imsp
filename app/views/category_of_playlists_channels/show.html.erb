@@ -1,23 +1,32 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_category_of_playlists_channel_path(@category_of_playlists_channel) %> |
-<%= link_to 'Back', category_of_playlists_channels_path %>
+<%#= link_to 'Back', category_of_playlists_channels_path %>
 
 <div class="row">
-  <h3 class="plist-categ-name col-xs-12 col-sm-8 col-sm-offset-2"><%=@plist_categ.title%></h3>
+  <div class="plist-categ-informations col-xs-12 col-sm-8 col-sm-offset-2">
+    <h3 class="plist-categ-name "><%=@plist_categ.title %></h3>
+    <span class="plist-categ-user"><%= @plist_categ.channel.title %></span><br>
+    <span class="plist-categ-date"><%= @plist_categ.created_at %></span><br><br>
+    <span class="plist-categ-presentation"><%= @plist_categ.description %></span>
+  </div>
 </div>
+
 <div class="row">
   <div class="plist-categs col-xs-12 col-sm-8 col-sm-offset-2">
-    <ul class="nav nav-pills nav-stacked">
       <% @plists_in_current_category.each do |plist| %>
-        <li class="plist-categ-link">
-            <%= link_to playlist_path(plist.id) do %>
-              <span class="plist-name"><%= plist.title %></span><br>
-              <span class="plist-date"><%= plist.created_at %></span><br>
-              <span class="plist-user"><%= plist.user.channel.title %></span>
-              <span class="arrow-link glyphicon glyphicon-chevron-right"></span>
-            <% end %>
-        </li>
+        <%= link_to playlist_path(plist.id) do %>
+            <div class="row plist-categ-link">
+                <div class="thumbnail col-sm-4" style="visibility: visible">
+                    <%= image_tag("paysage4.jpg") %>
+                </div>
+                <div class="plist-informations col-sm-8">
+                  <span class="plist-name"><%= plist.title %></span>
+                  <span class="plist-user"><%= plist.user.channel.title %></span><br>
+                  <span class="plist-date"><%= plist.created_at %></span><br><br>
+                  <span class="plist-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                </div>
+            </div>
+        <% end %>
       <% end %>
-    </ul>
   </div>
+</div>

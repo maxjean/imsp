@@ -1,0 +1,15 @@
+.playlists h3, h6{
+    color:gray;
+    text-transform: uppercase;
+}
+
+.playlists .cover{
+    max-width: 180px;
+    max-height: 100%;
+    border: 2px solid;
+    border-color: gray;
+}
+
+.playlists table tr th{
+    text-transform: uppercase;
+}
