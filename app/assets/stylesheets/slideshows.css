@@ -236,7 +236,7 @@
 
 .serverInfo .serverInfo-serverName-field{
     text-align: right;
-    text-transform: capitalize;
+    text-transform: uppercase;
     text-decoration: underline;
 }
 

@@ -10,7 +10,8 @@ class CategoryOfPlaylistsChannelsController < ApplicationController
   # GET /category_of_playlists_channels/1
   # GET /category_of_playlists_channels/1.json
   def show
-    set_category_of_playlists_channel
+    @plist_categ = set_category_of_playlists_channel
+    @plists_in_current_category = @plist_categ.playlists
   end
 
   # GET /category_of_playlists_channels/new

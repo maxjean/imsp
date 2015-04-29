@@ -1,0 +1,21 @@
+.plist-categ-name{
+    text-align: left;
+    color: gray;
+    margin-bottom: 4%;
+}
+
+.plist-categs nav{
+    margin: 5px;
+}
+
+.plist-categ-link .plist-date, .plist-user {
+    color: gray;
+}
+
+.plist-categ-link{
+    border-style: dashed;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 1%;
+}
