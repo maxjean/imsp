@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+
+
+.user_cover_link{
+    padding-top: 1px!important;
+    padding-bottom: 1px!important;
+}
+.user_cover{
+    -webkit-border-radius: 150px;
+}
+
+.user_nav{
+    float: right;
+    margin: 0 50px 0px 0px;
+}
+
+.user-connexion{
+    float: right;
+    margin: 0 50px 0px 0px;
+}

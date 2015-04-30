@@ -42,7 +42,7 @@
     <div class="slide" ng-repeat="(key, data) in datas" ng-class="{active: key == activeToolIndex}" ng-hide="key != activeToolIndex">
       <div ng-repeat="liquidConfiguration in liquidConfigurations" class="liquidConfigurations">
         <div liquid="liquidConfiguration" class="imgLiquidFill imgLiquid liquidConfiguration">
-          <img ng-src="{{data.background}}"/>
+          <img ng-src="{{data}}"/>
           <figcaption>
             <div class="serverInfo">
               <span class="serverInfo-serverName-field">{{data.title}}</span>
