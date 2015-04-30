@@ -14,6 +14,12 @@
  *= require_self
  */
 
+.navbar{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 999;
+}
 
 .user_cover_link{
     padding-top: 1px!important;
@@ -31,4 +37,8 @@
 .user-connexion{
     float: right;
     margin: 0 50px 0px 0px;
+}
+
+.container{
+    margin-top: 55px;
 }
