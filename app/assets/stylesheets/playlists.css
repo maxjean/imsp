@@ -17,3 +17,32 @@
 .playlists table tr th{
     text-transform: uppercase;
 }
+
+.playlists .title{
+    text-align: center;
+    color: #30373b;
+}
+
+.playlists .edit_playlist, .new_playlist{
+    border: 1px solid #e5e5e5;
+    padding: 2.8125em;
+    background: #FCFCFC;
+    color:gray;
+}
+
+.playlists .edit_playlist label, .new_playlist label{
+    text-transform: uppercase;
+}
+
+.edit_playlist input, .new_playlist input{
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+
+.playlists .actions {
+    width: 30%;
+    margin-top:10px;
+}

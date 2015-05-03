@@ -1,3 +1,39 @@
+.category_of_playlists_channels .title{
+    text-align: center;
+    color: #30373b;
+}
+
+.category_of_playlists_channels .edit_category_of_playlists_channel, .new_category_of_playlists_channel{
+    border: 1px solid #e5e5e5;
+    padding: 2.8125em;
+    background: #FCFCFC;
+    color:gray;
+}
+
+.category_of_playlists_channels .edit_category_of_playlists_channel label, .category_of_playlists_channels .new_category_of_playlists_channel label{
+    text-transform: uppercase;
+}
+
+.category_of_playlists_channels .edit_category_of_playlists_channel input, .category_of_playlists_channels .new_category_of_playlists_channel input{
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+
+.category_of_playlists_channels .edit_category_of_playlists_channel textarea, .category_of_playlists_channels .new_category_of_playlists_channel textarea{
+    width: 100%;
+    height: 90px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+.category_of_playlists_channels .actions{
+    width: 30%;
+    margin-top:10px;
+}
+
 .plist-presentation{
     margin-bottom: 1%;
 }

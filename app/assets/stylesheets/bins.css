@@ -1,0 +1,22 @@
+.create_bin_form{
+    border: 1px solid #e5e5e5;
+    padding: 2.8125em;
+    background: #FCFCFC;
+    color:gray;
+}
+
+.create_bin_form label{
+    text-transform: uppercase;
+}
+
+.create_bin_form input{
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+.create_bin_form .actions {
+    width: 30%;
+    margin-top:10px;
+}
