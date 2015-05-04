@@ -11,6 +11,7 @@
 
     <% end %>
 </div>
+<hr>
 <div class="row">
   <div class="medias col-xs-12 col-sm-12">
       <% @medias.each do |media| %>
@@ -19,12 +20,14 @@
                 <span class="media-cover"><%= image_tag("unknown-media.jpg") %></span><br>
                 <div class="media-informations">
                     <span class="media-title"><%= media.title %></span><br>
-    <!--
+                    <span class="media-date"><%= media.created_at %></span><br>
+                  <!--
                     <span class="media-category-name"><%#= media.media_category.name if !media.media_category_id.nil? %></span><br>
     -->
                     <span class="media-duration"><%= media.duration %></span><br>
                     <span class="glyphicon glyphicon-eye-open"></span><span class="media-nb-views"><%= media.nb_views %></span><br>
                     <span class="glyphicon glyphicon-thumbs-up"></span><span class="media-nblike"><%#= media.nb_like %></span><br>
+                  <hr>
                 </div>
             <% end %>
             <%= link_to '', media, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete-media glyphicon glyphicon-trash" %>

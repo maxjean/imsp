@@ -1,29 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Category Of Playlists Channels</h1>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 plist-categories-management-header">
+    <span class="title">Playlists Categories</span><span class="plist-categories-count"><%= @category_of_playlists_channels.count %></span>
+  </div>
+</div>
 
-<table>
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Cover</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @category_of_playlists_channels.each do |categ_playlist| %>
-      <tr>
-        <td><%= categ_playlist.title %></td>
-        <td><%= categ_playlist.description %></td>
-        <td><img src=<%= categ_playlist.cover %>></img></td>
-        <td><%= link_to 'Edit', edit_category_of_playlists_channel_path(categ_playlist) %></td>
-        <td><%= link_to 'Destroy', categ_playlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="row">
+  <%= link_to new_category_of_playlists_channel_path, :class=>"col-xs-12 col-sm-3" do %>
+      <span class="glyphicon glyphicon-plus-sign "></span>
+      <span class="create-plist-category">Create a playlist category</span>
   <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Category of playlists channel', new_category_of_playlists_channel_path %>
+</div>
+<hr>
+<div class="row">
+  <div class="plists-categories col-xs-12 col-sm-12">
+      <% @category_of_playlists_channels.each do |categ_playlist| %>
+        <div class="plist-category-links col-xs-12 col-sm-2">
+          <%= link_to edit_category_of_playlists_channel_path(categ_playlist) do %>
+              <span class="plist-category-cover"><%= image_tag("unknown-media.jpg") %></span><br>
+              <div class="plist-category-informations">
+                <span class="plist-category-title"><%= categ_playlist.title %></span><span class="plist-category-nbplists"><%= categ_playlist.playlists.count %></span><br>
+                <span class="plist-category-date"><%= categ_playlist.created_at %></span><br>
+                <span class="plist-category-description"><%= categ_playlist.description %></span><br>
+              </div>
+          <% end %>
+          <hr>
+          <%= link_to '', categ_playlist, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete-plist-category glyphicon glyphicon-trash" %>
+        </div>
+      <% end %>
+  </div>
+</div>
