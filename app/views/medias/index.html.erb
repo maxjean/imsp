@@ -1,40 +1,35 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 media-management-header">
+    <span class="title">Medias</span><span class="medias-count"><%= @medias.count %></span>
+  </div>
+</div>
+<div class="row">
+    <%= link_to new_media_path, :class=>"col-xs-12 col-sm-2" do %>
+      <span class="glyphicon glyphicon-plus-sign "></span>
+      <span class="add-media">Add Media</span>
 
-<h1>Manage Medias</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title </th>
-      <th>Category </th>
-      <th>Authors</th>
-      <th>Duration</th>
-      <th>Is Live</th>
-      <th>Is Available?</th>
-      <th>Number of views</th>
-      <th>Number of like</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @medias.each do |media| %>
-      <tr>
-        <td><%= media.title %></td>
-        <td><%= media.media_category.name if !media.media_category_id.nil? %></td>
-        <td><%= media.authors %></td>
-        <td><%= media.duration %></td>
-        <td><%= media.is_live %></td>
-        <td><%= media.is_available %></td>
-        <td><%= media.nb_views %></td>
-        <td><%#= media.nb_like %></td>
-
-        <td><%= link_to 'Edit', edit_media_path(media) %></td>
-        <td><%= link_to 'Destroy', media, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
     <% end %>
-  </tbody>
-</table>
+</div>
+<div class="row">
+  <div class="medias col-xs-12 col-sm-12">
+      <% @medias.each do |media| %>
+        <div class="media-links col-xs-12 col-sm-2">
+            <%= link_to edit_media_path(media) do %>
+                <span class="media-cover"><%= image_tag("unknown-media.jpg") %></span><br>
+                <div class="media-informations">
+                    <span class="media-title"><%= media.title %></span><br>
+    <!--
+                    <span class="media-category-name"><%#= media.media_category.name if !media.media_category_id.nil? %></span><br>
+    -->
+                    <span class="media-duration"><%= media.duration %></span><br>
+                    <span class="glyphicon glyphicon-eye-open"></span><span class="media-nb-views"><%= media.nb_views %></span><br>
+                    <span class="glyphicon glyphicon-thumbs-up"></span><span class="media-nblike"><%#= media.nb_like %></span><br>
+                </div>
+            <% end %>
+            <%= link_to '', media, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete-media glyphicon glyphicon-trash" %>
+        </div>
+      <% end %>
+  </div>
+</div>
 
-<br>
-
-<%= link_to 'Add Media', new_media_path %>
