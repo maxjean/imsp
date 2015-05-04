@@ -1,30 +1,35 @@
-.registrations  .title{
+.devise  .title{
     text-align: center;
     color: #30373b;
 }
-.registrations .edit_user{
+.devise .new_user{
     border: 1px solid #e5e5e5;
     padding: 2.8125em;
     background: #FCFCFC;
     color:gray;
 }
 
-.registrations .edit_user label{
+.devise .new_user label{
     text-transform: uppercase;
 }
 
-.edit_user input{
+.devise .new_user input{
     width: 100%;
     height: 45px;
     padding: 10px;
     margin-bottom:10px;
 }
 
-.edit_user .actions {
+.devise input#user_remember_me{
+    width: 19px;
+    height: 14px;
+}
+
+.devise .new_user .actions {
     width: 30%;
     margin-top:10px;
 }
 
-.registrations .cancel-account{
+.devise .links{
     text-align: center;
 }
