@@ -1,49 +1,55 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Events</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="#">#</th>
-      <th colspan="#">Title</th>
-      <th colspan="#">Address</th>
-      <th colspan="#">Zip Code</th>
-      <th colspan="#">City</th>
-      <th colspan="#">States</th>
-      <th colspan="#">Country</th>
-      <th colspan="#">Beginning date</th>
-      <th colspan="#">Finishing date</th>
-      <th colspan="#">Is live?</th>
-      <th colspan="#">Created at</th>
-      <th colspan="#">Last update at</th>
-      <th colspan="#"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 events-header">
+    <span class="title">Events</span><span class="events-count"><%= @events.count %></span>
+  </div>
+</div>
+<div class="row">
+  <%= link_to new_event_path, :class=>"col-xs-12 col-sm-3" do %>
+      <span class="glyphicon glyphicon-plus-sign "></span>
+      <span class="create-event">Create an event</span>
+  <% end %>
+</div>
+<hr>
+<div class="row">
+  <div class="events-items col-xs-12 col-sm-12">
     <% @events.each_with_index do |event, i| %>
-      <tr>
-        <td colspan="#"><%= i+1 %></td>
-        <td colspan="#"><%= event.title %></td>
-        <td colspan="#"><%= event.address %></td>
-        <td colspan="#"><%= event.zip_code %></td>
-        <td colspan="#"><%= event.city %></td>
-        <td colspan="#"><%= event.states %></td>
-        <td colspan="#"><%= event.country %></td>
-        <td colspan="#"><%= event.beginning_datetime %></td>
-        <td colspan="#"><%= event.finishing_datetime %></td>
-        <td colspan="#"><%= event.is_live %></td>
-        <td colspan="#"><%= event.created_at %></td>
-        <td colspan="#"><%= event.updated_at %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <div class="event-links col-xs-12 col-sm-2">
+          <%= link_to edit_event_path(event) do %>
+              <div class="event-datetime">
+                <span class="event-debut_date"><%= event.beginning_datetime.strftime("%v") %></span><br>
+                <span class="event-debut_hour"><%= event.finishing_datetime.strftime("%H:%M") %></span><br>
+              </div>
+              <span class="event-cover"><%= image_tag("unknown-media.jpg") %></span><br>
+              <div class="event-informations">
+                <span class="event-title"><%= event.title %></span>
+                <div class="event-location">
+                    <span class="event-location-icon"><%= image_tag("location74.png")%></span>
+                    <span class="event-address"><%= event.address %>,&nbsp</span><br>
+                    <span class="event-city"><%= event.city %>,&nbsp</span>
+                    <span class="event-states"><%= event.states %>,&nbsp</span>
+                    <span class="event-zip_code"><%= event.zip_code %>,&nbsp</span><br>
+                    <span class="event-country"><%= event.country %></span><br>
+                </div>
+                <% if event.is_live == true %>
+                    <div class="event-islive">
+                      <span class="event-islive_icon"></span>
+                      <span class="text">live</span>
+                    </div>
+                <% else %>
+                    <div class="event-isvod">
+                      <span class="event-isvod_icon"></span>
+                      <span class="text">on demand</span>
+                    </div>
+                <% end %>
+          <% end %>
+          <hr>
+          <%= link_to '', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "cancel-event glyphicon glyphicon-trash" %>
+          <%= link_to '', event, method: :get, :class => "show-event glyphicon glyphicon-eye-open" %>
+          </div>
+        </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
-<br>
-
-<%= link_to 'New Event', new_event_path %>

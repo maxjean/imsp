@@ -122,7 +122,6 @@
     transition: all .1s linear;
     height: 250px;
     overflow: hidden;
-
 }
 
 .plists-categories .plist-category-links:hover{
@@ -136,11 +135,11 @@
 
 .plists-categories .plist-category-links .plist-category-informations{
     padding: 5px;
-}
-
-.plists-categories .plist-category-links .plist-category-informations{
     text-transform: capitalize;
     color: gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .plists-categories .plist-category-links .plist-category-title{
@@ -149,6 +148,13 @@
 }
 
 .plists-categories .plist-category-links .delete-plist-category{
+    float: right;
+    padding: 5px;
+    color: gray;
+    top: -10px;
+}
+
+.plists-categories .plist-category-links .show-plist-category{
     float: right;
     padding: 5px;
     color: gray;
