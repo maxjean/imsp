@@ -25,7 +25,7 @@
               <thead class="bins-table-head">
               <tr>
                 <th colspan="#" style="width:40px;">#</th>
-                <th colspan="#" style="width:130px;">Title</th>
+                <th colspan="#" style="width:135px;">Title</th>
                 <th colspan="#" style="width:70px;">Display?</th>
                 <th colspan="#" style="width:30px;"></th>
                 <th colspan="#" style="width:30px;"></th>
@@ -35,7 +35,7 @@
               <% @event.bins.each_with_index do |bin, i| %>
                   <tr>
                     <td colspan="#" style="width:40px;"><%= i+1 %></td>
-                    <td colspan="#" style="width:130px;"><%= bin.title %></td>
+                    <td colspan="#" style="width:135px;"><%= bin.title %></td>
                     <% if bin.is_display  %>
                         <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
                     <% else %>
