@@ -162,3 +162,145 @@
     color: gray;
     top: -10px;
 }
+
+/*events #show*/
+.select-event .event-name{
+    color: #30373b;
+    text-align:left;
+}
+
+.select-event .event-cover img{
+    transition: opacity,.5s;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    line-height: 0;
+    border: 2px solid #fff;
+    top: -25px;
+    left: 10px;
+    min-height: 48px;
+    width: 95%;
+    padding: 6px;
+    /* background-color: #FCFCFC; */
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 5px #e0e0e0;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+    overflow: hidden;
+}
+}
+
+.select-event .event-description{
+    color:gray;
+}
+.select-event .event-datetime{
+    margin-top:10px;
+}
+
+.select-event .event-location{
+    margin-bottom:20px;
+}
+
+.select-event .bins-list{
+    border-color: rgba(166, 166, 166, 0.1);
+    padding-left: 0px;
+    padding-right: 0px;
+    background-image: linear-gradient(rgb(223, 223, 223), #FCFCFC);
+    padding: 0;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 5px #e0e0e0;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+    overflow: hidden;
+}
+
+.select-event .bins-table{
+    height: 173px;
+    overflow: auto;
+    display: block;
+}
+
+.select-event .bins-table th, td{
+    text-align: center;
+}
+
+.select-event .bins-table-head{
+    position: absolute;
+    background-color: gainsboro;
+    z-index: 1000;
+    width: 100%;
+    box-shadow: 0px 1px 9px #838383;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+
+.select-event .bins-list .event-bins-header{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 5px;
+    background-color: gray;
+    color:white;
+    font-size: 1.3em;
+}
+
+.select-event .bins-list .event-bins-header .bins-title{
+}
+
+.select-event .bins-list .event-bins-header .event-bins-count{
+    background-color: rgb(168, 168, 168);
+    border-radius: 50%;
+    color: white;
+    padding: 2px;
+    position: absolute;
+    font-size: 0.9em;
+    margin-left: 3px;
+    width: 20px;
+    text-align: center;
+    border-color: white;
+    top: 4px;
+}
+
+.select-event .bins-list .add-bin{
+    float: right;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    top: -6px;
+}
+
+.select-event .event-islive_icon, .event-isvod_icon{
+    border-radius: 50%;
+    color: white;
+    padding: 3px;
+    position: absolute;
+    font-size: 0.9em;
+    margin-top: 4px;
+    width: 9px;
+    text-align: center;
+    height: 9px;
+}
+
+.select-event .bins-list-body{
+    display: block;
+    margin-top: 36px;
+}
+
+.select-event .event-informations .glyphicon{
+    zoom: 0.7;
+    margin-left: 3px;
+}
+
+.select-event .event-islive, .event-isvod{
+    float:left;
+    color:black;
+}
+
+.select-event a{
+    color:gray;
+}
+
+.select-event a:hover{
+    color:darkgray;
+}

@@ -1,52 +1,81 @@
 <p id="notice"><%= notice %></p>
+<div class="select-event col-sm-12">
+    <h2 class="event-name col-xs-12 col-sm-7"><%= @event.title.capitalize %></h2>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="col-xs-12 col-sm-12">
+          <hr>
+            <span class="event-description"><%= @event.description %></span><br>
+            <div class="event-datetime">
+                <span class="event-debut_date"><%= @event.beginning_datetime.strftime('%a, %b %d %Y')%> at: <%=@event.beginning_datetime.strftime('%T') %></span> - <span class="event-finishing_date"><%= @event.finishing_datetime.strftime('%a, %b %d %Y')%> at: <%=@event.finishing_datetime.strftime('%T') %></span><br>
+            </div>
+            <div class="event-location">
+                <span class="event-location-icon"><%= image_tag("location74.png")%></span>
+                <span class="event-address"><%= @event.address %>,&nbsp</span>
+                <span class="event-city"><%= @event.city %>,&nbsp</span>
+                <span class="event-states"><%= @event.states %>,&nbsp</span>
+                <span class="event-zip_code"><%= @event.zip_code %>,&nbsp</span>
+                <span class="event-country"><%= @event.country %></span><br>
+              <hr>
+            </div>
+        </div>
+        <div class="col-xs-9 col-xs-offset-1 col-sm-5 col-sm-offset-2 bins-list">
+            <h3 class="event-bins-header"><span class="bins-title">Bins associated</span><span class="event-bins-count"><%= @event.bins.count %></span></h3>
+            <table class="table table-striped bins-table">
+              <thead class="bins-table-head">
+              <tr>
+                <th colspan="#" style="width:40px;">#</th>
+                <th colspan="#" style="width:130px;">Title</th>
+                <th colspan="#" style="width:70px;">Display?</th>
+                <th colspan="#" style="width:30px;"></th>
+                <th colspan="#" style="width:30px;"></th>
+              </tr>
+              </thead>
+              <tbody class="bins-list-body">
+              <% @event.bins.each_with_index do |bin, i| %>
+                  <tr>
+                    <td colspan="#" style="width:40px;"><%= i+1 %></td>
+                    <td colspan="#" style="width:130px;"><%= bin.title %></td>
+                    <% if bin.is_display  %>
+                        <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
+                    <% else %>
+                        <td class="glyphicon glyphicon-remove" style="width:70px;"></td>
+                    <% end %>
+                    <td style="width:30px"><%= link_to '', modify_bin_path(my_bin: "#{bin.id}", my_event: "#{params[:id]}"), :class => "glyphicon glyphicon-pencil" %></td>
+                    <td style="width:30px"><%= link_to '', bin, method: :delete, data: { confirm: 'Are you sure?' }, :class => "glyphicon glyphicon-trash" %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+            <hr>
+            <%= link_to 'Create', create_bin_path(your_event: "#{params[:id]}"), :class => "add-bin glyphicon glyphicon-plus-sign" %>
+        </div>
+      </div>
 
-<%= link_to 'Back', events_path %>
-
-<h2><u><%= @event.title.capitalize %></u></h2>
-
-<div class="#">
-  <span><%= @event.beginning_datetime.strftime('%a %d %b %Y')%> From: <%=@event.beginning_datetime.strftime('%T') %> To: <%=@event.finishing_datetime.strftime('%T')%></span><br>
-  <span><%= "#{@event.states}, #{@event.country}" %></span>
+      <div class="col-xs-12 col-sm-4" style="margin-top: 15px;">
+        <div class="col-xs-12 col-sm-12">
+          <span class="event-cover"><%= image_tag("unknown-media.jpg") %></span>
+        </div>
+        <div class="col-xs-12 col-sm-12 event-informations" style="margin-top: 15px;">
+          <fieldset>
+            <legend>Informations<%= link_to '', edit_event_path(@event), :class => "glyphicon glyphicon-pencil" %>
+            </legend>
+            <% if @event.is_live == true %>
+                <div class="event-islive">
+                  <span class="event-islive_icon"></span>
+                  <span class="text">live</span>
+                </div>
+            <% else %>
+                <div class="event-isvod">
+                  <span class="event-isvod_icon"></span>
+                  <span class="text">on demand</span>
+                </div>
+            <% end %>
+            <br>
+            <span>Created at: <%= @event.created_at.strftime('%a %d %b %Y') %></span> <br>
+            <span>Last modification: <%= @event.updated_at.strftime('%a %d %b %Y') %></span> <br>
+          </fieldset>
+        </div>
+      </div>
+    </div>
 </div>
-
-<div class="#">
-  <fieldset>
-    <legend>Informations</legend>
-    Live?: <%= @event.is_live %> <br>
-    Description: <%= @event.description %> <br>
-    Created at: <%= @event.created_at.strftime('%a %d %b %Y') %> <br>
-    Last modification: <%= @event.updated_at.strftime('%a %d %b %Y') %> <br>
-  </fieldset>
-  <%= link_to 'Modify this event', edit_event_path(@event) %>
-</div>
-
-<div>
-    <h3><u>Bins associated</u></h3>
-    <table>
-      <thead>
-      <tr>
-        <th colspan="#">#</th>
-        <th colspan="#">Title</th>
-        <th colspan="#">Is Diplay?</th>
-        <th colspan="#">Created at</th>
-        <th colspan="#">Last modification</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <% @event.bins.each_with_index do |bin, i| %>
-          <tr>
-            <td colspan="#"><%= i+1 %></td>
-            <td colspan="#"><%= bin.title %></td>
-            <td colspan="#"><%= bin.is_display %></td>
-            <td colspan="#"><%= bin.created_at %></td>
-            <td colspan="#"><%= bin.updated_at %></td>
-            <td><%= link_to 'Modify', modify_bin_path(my_bin: "#{bin.id}", my_event: "#{params[:id]}") %></td>
-            <td><%= link_to 'Destroy', bin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  <%= link_to 'Create bin', create_bin_path(your_event: "#{params[:id]}") %>
-</div>
-
