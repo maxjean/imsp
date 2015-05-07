@@ -22,13 +22,14 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
+    puts "IN PARAMS EDIT:#{params}"
   end
 
   # POST /documents
   # POST /documents.json
   def create
     puts "IN PARAMS CREATE:#{params}"
-    @my_bin = Bin.find(params[:my_bin])
+    @my_bin = Bin.find(params[:document][:bin_id])
     @my_bin.documents.new(document_params)
 
     respond_to do |format|
@@ -45,9 +46,10 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   # PATCH/PUT /documents/1.json
   def update
+    @my_bin = Bin.find(params[:document][:bin_id])
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to modify_bin_path(:my_bin => @document.id), notice: 'Document was successfully updated.' }
+        format.html { redirect_to modify_bin_path(:my_bin => params[:document][:bin_id], :my_event => @my_bin.event_id), notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }
       else
         format.html { render :edit }
@@ -61,7 +63,7 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
+      format.html { redirect_to modify_bin_path(:my_bin => params[:my_bin], :my_event => params[:my_event]), notice: 'Document was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

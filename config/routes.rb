@@ -97,7 +97,8 @@ Rails.application.routes.draw do
   match "create_bin", controller: "events", via: ['get','post']
   match "modify_bin", controller: "events", via: ['get','post']
 
-  resources :labels
+  resources :labels do
+  end
 
   resources :bins, only: [:destroy]
 

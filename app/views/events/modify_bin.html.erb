@@ -1,79 +1,110 @@
-<span>Please fill the form to modify your bin for your event: <span class="my_bin_title"><%#=@your_event.title.capitalize %></span></span>
-<%= form_tag(controller: "events", action: "modify_bin", method: "get", class: "modify_bin_form") do %>
-    <span><%= text_field_tag(:title,"",:value => @my_bin.title)%></span><br>
-    <%= hidden_field_tag(:event_id, params[:my_event])%>
-    <%= hidden_field_tag(:my_bin, params[:my_bin])%>
-    <span>Is display? <%= check_box_tag(:is_display)%></span><br>
-    <%= submit_tag("Modify") %>
-<% end %>
+<div class="bin-management">
+    <div class="row">
+      <h3 class="title col-xs-10 col-sm-4">Bin Management</h3>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-5 edit_bin">
+        <span class="modify-bin-text">Bin for event: <span class="my_event_title"><%=@my_event.title.capitalize %></span></span>
+        <%= form_tag(controller: "events", action: "modify_bin", method: "get", class: "edit_bin") do %>
+            <label><span>Title</span><span><%= text_field_tag(:title,"",:value => @my_bin.title, :class =>"title-field")%></span></label>
+            <label><span>Display?</span><span><%= check_box_tag(:is_display)%></span></label>
+            <%= hidden_field_tag(:event_id, params[:my_event])%>
+            <%= hidden_field_tag(:my_bin, params[:my_bin])%>
+            <%= button_tag("Modify", :class => "btn btn-primary") %>
+        <% end %>
+      </div>
+    </div>
+    <hr class="col-xs-10  col-sm-10 col-sm-offset-1">
+    <div class="row manager-section">
+        <div class="col-xs-12 col-sm-4 right-section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 bin-informations">
+                <h3>What can you do?</h3>
+                <p>The specificity of this page is that it give you the possibility to manage this bin which can be available during your event. You have two possibilities here:</p>
+                <ul>
+                  <li> Manage labels</li>
+                  <li> Manage documents</li>
+                </ul>
+                <p>When you create labels or  documents they will be automatically associated to this bin. You will be able to call them and display them at precise times of your event and in same time as your video is playing.</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-8 left-section">
+          <div class="row">
+              <div class="col-xs-9 col-sm-5 col-sm-offset-2 labels-list">
+                  <h3 class="bin-labels-header"><span class="labels-title">Associated labels</span><span class="bin-labels-count"><%= @my_bin.labels.count %></span></h3>
+                  <table class="table table-striped labels-table">
+                    <thead class="labels-table-head">
+                        <tr>
+                          <th colspan="#" style="width:40px;">#</th>
+                          <th colspan="#" style="width:135px;">Title</th>
+                          <th colspan="#" style="width:70px;">Display?</th>
+                          <th colspan="#" style="width:30px;"></th>
+                          <th colspan="#" style="width:30px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="labels-list-body">
+                        <% @my_bin.labels.each_with_index do |label, i| %>
+                            <tr>
+                              <td colspan="#" style="width:40px;"><%= i+1 %></td>
+                              <td colspan="#" style="width:135px;"><%= label.title %></td>
+                              <% if label.is_display  %>
+                                  <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
+                              <% else %>
+                                  <td class="glyphicon glyphicon-remove" style="width:70px;"></td>
+                              <% end %>
+                              <td style="width:30px"><%= link_to '', edit_label_path(label,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), :class => "glyphicon glyphicon-pencil" %></td>
+                              <td style="width:30px"><%= link_to '', label_path(label,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), method: :delete, data: { confirm: 'Are you sure?' }, :class => "glyphicon glyphicon-trash" %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                  </table>
+                  <hr>
+                  <%= link_to 'Create', new_label_path(my_bin: "#{params[:my_bin]}"), :class => "add-label glyphicon glyphicon-plus-sign" %>
+              </div>
+              <div class="col-xs-3 col-sm-4 indication-text-labels-list">
+                <span class="">Manage labels for this bin</span><br>
+                <span class=""><%= image_tag("icons/arrow-129.png") %></span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-xs-9 col-sm-5 col-sm-offset-2 documents-list">
+                  <h3 class="bin-documents-header"><span class="documents-title">Associated documents</span><span class="bin-documents-count"><%= @my_bin.documents.count %></span></h3>
+                  <table class="table table-striped documents-table">
+                    <thead class="documents-table-head">
+                    <tr>
+                      <th colspan="#" style="width:40px;">#</th>
+                      <th colspan="#" style="width:135px;">Title</th>
+                      <th colspan="#" style="width:70px;">Display?</th>
+                      <th colspan="#" style="width:30px;"></th>
+                      <th colspan="#" style="width:30px;"></th>
+                    </tr>
+                    </thead>
 
-<div>
-  <h3><u>Associated labels</u></h3>
-  <table>
-    <thead>
-    <tr>
-      <th colspan="#">#</th>
-      <th colspan="#">Title</th>
-      <th colspan="#">Is Diplay?</th>
-      <th colspan="#">Authors</th>
-      <th colspan="#">File</th>
-      <th colspan="#">Added by</th>
-      <th colspan="#">Created at</th>
-      <th colspan="#">Last modification</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @my_bin.labels.each_with_index do |bin, i| %>
-        <tr>
-          <td colspan="#"><%= i+1 %></td>
-          <td colspan="#"><%= bin.title %></td>
-          <td colspan="#"><%= bin.is_display %></td>
-          <td colspan="#"><%= bin.authors %></td>
-          <td colspan="#"><%= bin.file %></td>
-          <td colspan="#"><%= bin.added_by %></td>
-          <td colspan="#"><%= bin.created_at %></td>
-          <td colspan="#"><%= bin.updated_at %></td>
-          <td><%= link_to 'Modify', edit_label_path(bin) %></td>
-          <td><%= link_to 'Destroy', bin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-  <%= link_to 'Create label', new_label_path(my_bin: "#{params[:my_bin]}") %>
-</div>
-
-<div>
-  <h3><u>Associated documents</u></h3>
-  <table>
-    <thead>
-    <tr>
-      <th colspan="#">#</th>
-      <th colspan="#">Title</th>
-      <th colspan="#">Is Diplay?</th>
-      <th colspan="#">Authors</th>
-      <th colspan="#">File</th>
-      <th colspan="#">Added by</th>
-      <th colspan="#">Created at</th>
-      <th colspan="#">Last modification</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @my_bin.documents.each_with_index do |document, i| %>
-        <tr>
-          <td colspan="#"><%= i+1 %></td>
-          <td colspan="#"><%= document.title %></td>
-          <td colspan="#"><%= document.is_display %></td>
-          <td colspan="#"><%= document.authors %></td>
-          <td colspan="#"><%= document.file %></td>
-          <td colspan="#"><%= document.added_by %></td>
-          <td colspan="#"><%= document.created_at %></td>
-          <td colspan="#"><%= document.updated_at %></td>
-          <td><%= link_to 'Modify', edit_document_path(document) %></td>
-          <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-  <%= link_to 'Add document', new_document_path(my_bin: "#{params[:my_bin]}") %>
+                    <tbody class="documents-list-body">
+                    <% @my_bin.documents.each_with_index do |document, i| %>
+                        <tr>
+                          <td colspan="#" style="width:40px;"><%= i+1 %></td>
+                          <td colspan="#" style="width:135px;"><%= document.title %></td>
+                          <% if document.is_display  %>
+                              <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
+                          <% else %>
+                              <td class="glyphicon glyphicon-remove" style="width:70px;"></td>
+                          <% end %>
+                          <td style="width:30px"><%= link_to '', edit_document_path(document,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), :class => "glyphicon glyphicon-pencil" %></td>
+                          <td style="width:30px"><%= link_to '', document_path(document,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), method: :delete, data: { confirm: 'Are you sure?' }, :class => "glyphicon glyphicon-trash" %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                  <hr>
+                  <%= link_to 'Add', new_document_path(my_bin: "#{params[:my_bin]}"), :class => "add-document glyphicon glyphicon-plus-sign" %>
+              </div>
+              <div class="col-xs-3 col-sm-4 indication-text-documents-list">
+                <span class="">Manage documents for this bin</span><br>
+                <span class=""><%= image_tag("icons/arrow-129.png") %></span>
+              </div>
+          </div>
+        </div>
+    </div>
 </div>

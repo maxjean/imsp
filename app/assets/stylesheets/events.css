@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'pwfreearrows';
+    src: url('/assets/images/icons/pwfreearrows/PWFreeArrows.ttf');
+}
+
 .events .title{
     text-align: center;
     color: #30373b;
@@ -188,7 +193,7 @@
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
     overflow: hidden;
-}
+
 }
 
 .select-event .event-description{
@@ -229,7 +234,7 @@
 .select-event .bins-table-head{
     position: absolute;
     background-color: gainsboro;
-    z-index: 1000;
+    z-index: 990;
     width: 100%;
     box-shadow: 0px 1px 9px #838383;
     -moz-transition: all .1s linear;
@@ -303,4 +308,240 @@
 
 .select-event a:hover{
     color:darkgray;
+}
+
+/*modify bin*/
+
+.events .bin-management .title{
+    font-size: 2.5em;
+    text-align: left;
+}
+
+.events .modify-bin-text{
+    font-size: 1.3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    color:gray;
+}
+
+.events .manager-section{
+    padding-top:5%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.events .manager-section .left-section .row, .right-section {
+    margin-bottom:20px;
+}
+
+.events .manager-section .right-section{
+    float: right;
+    border: 1px solid #e5e5e5;
+}
+
+.events .manager-section .right-section .bin-informations{
+    border-color: rgba(166, 166, 166, 0.1);
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 5px #e0e0e0;
+}
+
+.events .manager-section .right-section h3{
+    text-decoration: underline;
+}
+.events .bin-management form{
+    border: 1px solid #e5e5e5;
+    padding: 1.0125em;
+    background: #FCFCFC;
+    color:gray;
+    max-height:100px;
+    max-width: 371px;
+}
+
+.events .edit_bin form label{
+    text-transform: capitalize;
+    margin-left:5px;
+}
+
+.events .edit_bin form input{
+    margin-left:5px;
+    padding: 5px;
+}
+
+.events .edit_bin form .title-field{
+    width:140px;
+}
+
+.events .edit_bin button{
+    margin-left:5px;
+}
+
+/*labels*/
+.events .bin-labels-header{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 5px;
+    background-color: gray;
+    color:white;
+    font-size: 1.3em;
+}
+
+.events .bin-labels-count{
+    background-color: rgb(168, 168, 168);
+    border-radius: 50%;
+    color: white;
+    padding: 2px;
+    position: absolute;
+    font-size: 0.9em;
+    margin-left: 3px;
+    width: 20px;
+    text-align: center;
+    border-color: white;
+}
+
+.events .labels-table{
+    height: 173px;
+    overflow: auto;
+    display: block;
+}
+
+.events .labels-table th, td{
+    text-align: center;
+}
+
+.events .labels-table-head{
+    position: absolute;
+    background-color: gainsboro;
+    z-index: 990;
+    width: 100%;
+    box-shadow: 0px 1px 9px #838383;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+
+
+.events .labels-list{
+    border-color: rgba(166, 166, 166, 0.1);
+    padding-left: 0px;
+    padding-right: 0px;
+    background-image: linear-gradient(rgb(223, 223, 223), #FCFCFC);
+    padding: 0;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 5px #e0e0e0;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+    overflow: hidden;
+}
+
+
+.events .labels-list-body{
+    display: block;
+    margin-top: 36px;
+}
+
+.events .labels-list-body .glyphicon{
+    color:gray;
+}
+
+.events .labels-list .add-label {
+    float: right;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    top: -6px;
+}
+
+.events .indication-text-labels-list img{
+    width:30px;
+}
+
+.events .bin-management a{
+    color:gray;
+}
+
+.events .bin-management a:hover{
+    color:darkgray;
+}
+
+/*documents*/
+.events .bin-documents-header{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 5px;
+    background-color: gray;
+    color:white;
+    font-size: 1.3em;
+}
+
+.events .bin-documents-count{
+    background-color: rgb(168, 168, 168);
+    border-radius: 50%;
+    color: white;
+    padding: 2px;
+    position: absolute;
+    font-size: 0.9em;
+    margin-left: 3px;
+    width: 20px;
+    text-align: center;
+    border-color: white;
+}
+
+.events .documents-table{
+    height: 173px;
+    overflow: auto;
+    display: block;
+}
+
+.events .documents-table th, td{
+    text-align: center;
+}
+
+.events .documents-table-head{
+    position: absolute;
+    background-color: gainsboro;
+    z-index: 990;
+    width: 100%;
+    box-shadow: 0px 1px 9px #838383;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+
+
+.events .documents-list{
+    border-color: rgba(166, 166, 166, 0.1);
+    padding-left: 0px;
+    padding-right: 0px;
+    background-image: linear-gradient(rgb(223, 223, 223), #FCFCFC);
+    padding: 0;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 5px #e0e0e0;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+    overflow: hidden;
+}
+
+
+.events .documents-list-body{
+    display: block;
+    margin-top: 36px;
+}
+
+.events .documents-list-body .glyphicon{
+    color:gray;
+}
+
+.events .documents-list .add-document {
+    float: right;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    top: -6px;
+}
+
+
+.events .indication-text-documents-list img{
+    width:30px;
 }

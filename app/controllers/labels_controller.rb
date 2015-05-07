@@ -19,6 +19,7 @@ class LabelsController < ApplicationController
 
   # GET /labels/1/edit
   def edit
+    puts "IN PARAMS EDIT:#{params}"
   end
 
   # POST /labels
@@ -41,9 +42,10 @@ class LabelsController < ApplicationController
   # PATCH/PUT /labels/1
   # PATCH/PUT /labels/1.json
   def update
+    @my_bin = Bin.find(params[:label][:bin_id])
     respond_to do |format|
       if @label.update(label_params)
-        format.html { redirect_to modify_bin_path(:my_bin => @label.id), notice: 'Label was successfully updated.' }
+        format.html { redirect_to modify_bin_path(:my_bin => params[:label][:bin_id], :my_event => @my_bin.event_id), notice: 'Label was successfully updated.' }
         format.json { render :show, status: :ok, location: @label }
       else
         format.html { render :edit }
@@ -57,7 +59,7 @@ class LabelsController < ApplicationController
   def destroy
     @label.destroy
     respond_to do |format|
-      format.html { redirect_to labels_url, notice: 'Label was successfully destroyed.' }
+      format.html { redirect_to modify_bin_path(:my_bin => params[:my_bin], :my_event => params[:my_event]), notice: 'Label was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
