@@ -1,33 +1,39 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Playlists</h1>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 playlists-list-header">
+    <span class="title">Playlists</span><span class="playlist-medias-count"><%= @playlists.count %></span>
+  </div>
+</div>
 
-<table>
-  <thead>
-      <tr>
-        <th>Title</th>
-        <th>Tags</th>
-        <th>Cover</th>
-        <th>Categories</th>
-      </tr>
-  </thead>
-
-  <tbody>
-  <% @playlists.each do |playlist| %>
-      <tr class=<%= playlist.id %>>
-        <td><%= playlist.title %></td>
-        <td><%= playlist.tags %></td>
-        <td><img src=<%= playlist.cover %>></img></td>
-        <td><%= select_tag :category, options_for_select(current_user_category_of_playlists.map {|c| [c.title,c.id]}),:multiple => true, :data => {url: playlist_path(playlist)}%></td>
-        <td><%= link_to 'Edit', edit_playlist_path(playlist) %></td>
-        <td><%= link_to 'Show', playlist %></td>
-        <td><%= link_to 'Destroy', playlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="row">
+  <%= link_to new_playlist_path, :class=>"col-xs-12 col-sm-3" do %>
+      <span class="glyphicon glyphicon-plus-sign "></span>
+      <span class="create-plist-category">Create a playlist</span>
   <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Playlist', new_playlist_path %>
-
+</div>
+<hr>
+<div class="row">
+  <div class="playlists-items col-xs-12 col-sm-12">
+    <% @playlists.each do |playlist| %>
+        <div class="playlist-link col-xs-12 col-sm-2">
+          <div class=<%=playlist.id%>
+              <%= link_to edit_playlist_path(playlist) do %>
+                  <span class="playlist-cover"><%= image_tag("unknown-media.jpg") %></span><br>
+                  <div class="playlist-informations">
+                    <span class="playlist-title"><%= playlist.title %></span><span class="playlist-medias-count"><%= playlist.medias.count %></span><br>
+                    <span class="playlist-date"><%= playlist.created_at %></span><br>
+                  </div>
+              <% end %>
+              <div class="list-group">
+                <span>Select categories to assign</span>
+                <span class=""><%= image_tag("icons/arrow-129.png") %></span>
+                <td class=<%=playlist.id%>><%= select_tag :category, options_for_select(current_user_category_of_playlists.map {|c| [c.title,c.id]}),:multiple => true, :data => {url: playlist_path(playlist), id: playlist.id, :class=>"list-group-item"}%></td>
+              </div>
+              <hr>
+              <%= link_to '', playlist, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete-playlist glyphicon glyphicon-trash" %>
+              <%= link_to '', playlist, method: :get, :class => "show-playlist glyphicon glyphicon-eye-open" %>
+          </div>
+        </div>
+    <% end %>
+  </div>

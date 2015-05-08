@@ -9,7 +9,9 @@ jQuery(function($){ //init jquery
     }).trigger('change');
 
     function stylize_selected_contents(element){
+        $("." + selected_categories["playlist_id"] + " #category option:eq(" + element.index + ")").addClass("glyphicon glyphicon-ok selected-category");
         $("." + selected_categories["playlist_id"] + " #category option:eq(" + element.index + ")").css('background-color', '#f2f2f2');
+
     }
 
     //parsing JSON datas & select corresponding DOM datas for stylizing
