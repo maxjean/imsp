@@ -1,14 +1,15 @@
 <p>step1</p>
-<%= form_for @media do |f| %>
+<%= form_for @media, :html => {:multipart => true} do |f| %>
     <!--Upload the video-->
     <h4>Upload your video</h4>
     <p>Please select a video from your computer</p>
     <p>Files supported: mp4,mpeg,avi,mov,mkv</p>
     <div class="field">
-      <%= f.label :file %><br>
-      <%= f.file_field :file %>
+      <%= f.label :video %><br>
+      <%= f.file_field :video %>
     </div>
       <%= f.hidden_field :form_step, value: "step1" %>
+      <%= f.hidden_field :deployed_at, value: Time.now %>
     <br>
     <div class="actions">
       <%= f.submit "Next" %>

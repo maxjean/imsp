@@ -16,5 +16,7 @@
 !/log/.keep
 /tmp
 /.idea/*
-
+app/uploaders/*
 path/*
+public/uploads/media/video/*
+public/uploads/tmp/*

@@ -1,6 +1,11 @@
 class MediasController < ApplicationController
   before_action :set_media, only: [:show, :edit, :update, :destroy]
 
+  def deploy
+    Media.delay(queue: "Media").deploy(params[:id])
+    redirect_to edit_media_step_path, notice: "Uploading video..."
+  end
+
   # GET /medias
   # GET /medias.json
   def index
@@ -38,6 +43,7 @@ class MediasController < ApplicationController
   def update
     @media = Media.find(params[:id])
     if @media.update_attributes(media_params)
+
       if @media.form_step == "step2"
         redirect_to medias_path
       else

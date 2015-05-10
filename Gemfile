@@ -64,5 +64,19 @@ group :development, :test do
   gem 'arel'
 
   gem 'wicked'
+
+  gem 'carrierwave'
+  gem 'net-ssh'
+  gem 'net-sftp'
+  gem 'carrierwave-ftp', :require => 'carrierwave/storage/ftp/all' # both FTP/SFTP
+
+
+  gem 'carrierwave-scp', '~> 0.0.1'
+
+  #gem 'daemons', '~> 1.2.2'
+  gem 'daemons-rails', '~> 1.2.1'
+  gem 'delayed_job', '~> 4.0.6'
+  gem 'delayed_job_active_record'
 end
+
 

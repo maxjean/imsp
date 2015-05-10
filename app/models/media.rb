@@ -7,6 +7,16 @@ class Media < ActiveRecord::Base
   belongs_to :system_profil
   belongs_to :media_category
   has_one    :media_treatment
+  mount_uploader :video, VideoUploader
+
+  def self.deploy(id)
+    find(id).deliver
+  end
+
+  def deploy
+    sleep 10
+    update_attribute(:deployed_at, Time.now)
+  end
 
   def next_step
     if self.form_step.blank?
