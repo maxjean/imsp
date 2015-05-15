@@ -65,18 +65,23 @@ group :development, :test do
 
   gem 'wicked'
 
-  gem 'carrierwave'
-  gem 'net-ssh'
-  gem 'net-sftp'
-  gem 'carrierwave-ftp', :require => 'carrierwave/storage/ftp/all' # both FTP/SFTP
-
-
-  gem 'carrierwave-scp', '~> 0.0.1'
-
+  #gem 'carrierwave'
+  gem 'net-ssh', '~> 2.9.2'
+  gem 'net-scp'
+  #gem 'carrierwave-scp', '~> 0.0.1'
+  #gem 'net-sftp'
+  gem 'carrierwave-ftp', :require => 'carrierwave/storage/sftp'
+  #gem 'carrierwave-ftp', :require => 'carrierwave/storage/ftp/all' # both FTP/SFTP
   #gem 'daemons', '~> 1.2.2'
   gem 'daemons-rails', '~> 1.2.1'
   gem 'delayed_job', '~> 4.0.6'
   gem 'delayed_job_active_record'
+
+  gem 'streamio-ffmpeg', '~> 1.0.0'
+  gem 'fileutils', '~> 0.7'
+  gem 'thread', '~> 0.2.0'
+
+  #gem 'rubysl-stringio'
 end
 
 
