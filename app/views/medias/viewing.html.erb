@@ -41,8 +41,12 @@
     </div>
   </div>
   <div class="subtitle"></div>
+<div class="row row_top">
+  <div class="col-xs-12 col-sm-3 col-media-comments">
+    <div class="media-comments"><%= @media.description %></div>
 
-  <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+  </div>
+  <div class="col-xs-12 col-sm-6 col-media">
     <div class="media" ng-controller="MediaController" ng-class="{'media-blur' : showSettings == true }">
       <div mediaplayer>
         <div id="player"></div>
@@ -52,7 +56,7 @@
           <div class="media-informations col-xs-8 col-sm-8">
               <span class="media-title"><%=@media.title.capitalize%></span><br>
               <span>Added on: <%=@media.created_at%></span><br>
-              <span><%=@media.user.channel.id%></span>
+              <span><%=@media.user.pseudo%></span>
           </div>
           <div class="media-statistics col-xs-4 col-sm-4">
             <div class="media-nb-views"><span class="glyphicon glyphicon-stats"><%=@media.nb_views%> views</span></div>
@@ -60,9 +64,6 @@
               <%= link_to '', "#", method: :get, :class => "glyphicon glyphicon-thumbs-up" %><span><%=@media.like %></span>
               <%= link_to '', "#", method: :get, :class => "glyphicon glyphicon-thumbs-down" %><span><%=@media.dislike %></span>
             </div>
-          </div>
-          <div class="">
-
           </div>
         <div>
       </div>
@@ -72,7 +73,55 @@
       </div>
     </div>
   </div>
-
+</div>
+</div>
+    <div class="col-xs-12 col-sm-3 col-media-playlist">
+      <div class="media-playlist">
+        <div class="row">
+<!--
+          <div class="col-xs-12 col-sm-2"><span class="glyphicon glyphicon-list plist-icon"></span></div>
+-->
+          <div class="col-xs-12 col-sm-6">
+              <span class="plist-title"><%= Playlist.find(params[:plist]).title %></span><br>
+              <span>From <%= link_to(Playlist.find(params[:plist]).user.pseudo.upcase, channel_path(Playlist.find(params[:plist]).user.channel), :class => "user-media-pseudo-link") %></span>
+          </div>
+        </div>
+        <div class="row media-playlist-list">
+            <table class="table table-striped media-playlist-table">
+              <tbody class="medias-list-body">
+                <% @playlist.medias.each_with_index do |media, i| %>
+                    <% if media.id == params[:m] %>
+                         <tr>
+                           <td>
+                               <%= link_to "#{viewing_path}?m=#{media.id}&plist=#{params[:plist]}" do %>
+                                 <div class="col-xs-1 col-sm-1 media-playing-icon"><span class="glyphicon glyphicon-play"></span></div>
+                                 <div class="media-cover col-xs-3 col-sm-3"><%= image_tag("paysage3.jpg") %></div>
+                                 <div class="media-details col-xs-5 col-sm-5">
+                                        <span class="media-title"><%= media.title.capitalize %></span><br>
+                                        <span class="user-media-pseudo"><%= link_to(media.user.pseudo.upcase, channel_path(media.user.channel), :class => "user-media-pseudo-link") %></span>
+                                 </div>
+                               <% end %>
+                           </td>
+                         </tr>
+                    <% else %>
+                      <tr>
+                        <td>
+                            <%= link_to "#{viewing_path}?m=#{media.id}&plist=#{params[:plist]}" do %>
+                              <div class="col-xs-1 col-sm-1 media-index"><%= i+1 %>.</div>
+                              <div class="media-cover col-xs-3 col-sm-3"><%= image_tag("paysage1.jpg") %></div>
+                              <div class="media-details col-xs-5 col-sm-5">
+                                <span class="media-title"><%= media.title.capitalize %></span><br>
+                                <span class="user-media-pseudo"><%= link_to(media.user.pseudo.upcase, channel_path(media.user.channel), :class => "user-media-pseudo-link") %></span>
+                              </div>
+                            <% end %>
+                        </td>
+                    <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
 
 </div>
 

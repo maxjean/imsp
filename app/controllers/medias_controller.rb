@@ -3,6 +3,7 @@ class MediasController < ApplicationController
 
   def viewing
     @media = Media.find(params[:m])
+    @playlist = Playlist.find(params[:plist])
   end
   # GET /medias
   # GET /medias.json

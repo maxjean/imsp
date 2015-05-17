@@ -455,3 +455,68 @@
 .media-datas .media-informations .media-title{
     font-size: 1.8em;
 }
+
+.media-layer .media-comments{
+    color:gray;
+    padding:10px;
+}
+
+/*.media-layer .row_top{
+    background: linear-gradient(to bottom, rgba(160, 160, 160, 0.05), rgba(163, 163, 163, 0.2));
+}*/
+.media-layer .row_top .col-media-comments, .col-media-playlist{
+    background: linear-gradient(to bottom, rgba(160, 160, 160, 0.05), rgba(163, 163, 163, 0.2));
+}
+
+ .media-layer .table-striped > tbody > tr:nth-child(odd) {
+    background-color: #202020!important;
+}
+
+.media-layer .medias-list-body .media-cover{
+    width: 80px;
+}
+
+.media-layer .medias-list-body .media-cover img{
+    width: 100%;
+}
+
+.media-layer .medias-list-body .media-details{
+    text-align:left;
+}
+
+.media-layer .medias-list-body .media-details .media-title{
+}
+
+.media-layer .medias-list-body .media-details .user-media-pseudo-link{
+    font-size:0.7em;
+}
+
+.media-layer .medias-list-body td:hover{
+    background-color: #535353;
+}
+
+.media-layer .medias-list-body td{
+    border-top: initial !important;
+}
+
+.media-layer .medias-list-body .media-playing-icon, .media-index{
+    top: 8px;
+}
+
+.media-layer .col-media-playlist .plist-icon{
+    margin-right: 2px;
+}
+
+.media-layer .col-media-playlist .plist-title{
+    font-size: 1.8em;
+    color:gray;
+}
+
+.media-layer .media-playlist-list{
+    margin-top:5px;
+    margin-top: 5px;
+    height: 173px;
+    overflow: auto;
+    display: block;
+}
+

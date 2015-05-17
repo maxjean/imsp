@@ -213,7 +213,7 @@ app.directive('mediaplayer', function(){
                     persistConfig: true,
                     preload: 'metadata',
                     mediacontrol: {seekbar: "blue", buttons: "gray"},
-                    hideMediaControl: false, //auto hide/display the player bar
+                    hideMediaControl: true, //auto hide/display the player bar
                     //watermark: "rtmp://10.20.77.238/vod/Url-logo.png", position: 'top-right',
                     //poster: "http://10.20.77.238/Url-logo.png",
                     plugins: {playback: [RTMP]}}

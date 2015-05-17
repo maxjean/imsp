@@ -32,5 +32,9 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << :pseudo
   end
 
+  def set_access_control_headers
+    response.headers["Access-Control-Allow-Origin"] = "*"
+  end
+
   helper_method :current_user_channel, :current_user_category_of_playlists
 end
