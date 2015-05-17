@@ -84,6 +84,7 @@ Rails.application.routes.draw do
 
   match "channel/:id", :to => 'users#show', as: "channel", via: 'get'
 
+  match "viewing", :to => 'medias#viewing', as: "viewing", via: 'get'
   resources :medias
   resources :media_steps
 

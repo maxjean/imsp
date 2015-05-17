@@ -10,14 +10,14 @@ var app = angular.module('MyApp',['ngRoute','spinnerLoader','angular-websocket',
 
 
 
-
+/*
 app.config(['$routeProvider', function($routeProvider){
     $routeProvider
 // 			.when('/', {templateUrl: './public/views/partials/404.html', controller:'AllInfosServersCtrl'})
 			.when('/slideshows', {templateUrl:'./public/views/slideshows.erb', controller:'AllInfosServersCtrl'})
 			.when('/slideshows/:id', {templateUrl:'./views/partials/slideshow.html', controller:'infosServerCtrl'})
 // 			.otherwise({redirectTo : '/'});
-}]);
+}]);*/
 
 //app.config(function(WebSocketProvider) {
 //  WebSocketProvider

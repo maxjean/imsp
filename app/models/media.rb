@@ -50,11 +50,20 @@ class Media < ActiveRecord::Base
   #Take 3 screenshots with resolution => "320*240"
   #stock them in video folderlder
 
+  def self.addToPlaylist(playlist, media)
+    if playlist.medias.find_by(id: media.id).nil?
+      playlist.medias << playlist
+    end
+  end
 
+  def self.removeFromPlaylist(playlist, media)
+    playlist = playlist.medias.find(media.id)
 
+    if playlist
+      playlist.medias.delete(playlist) #delete association
+    end
 
-
-
+  end
 
   def next_step
     if self.form_step.blank?

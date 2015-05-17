@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150510201059) do
+ActiveRecord::Schema.define(version: 20150517132556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,8 @@ ActiveRecord::Schema.define(version: 20150510201059) do
     t.string   "form_step"
     t.string   "video"
     t.datetime "deployed_at"
+    t.decimal  "like"
+    t.decimal  "dislike"
   end
 
   create_table "medias_playlists", id: false, force: :cascade do |t|
@@ -227,6 +229,8 @@ ActiveRecord::Schema.define(version: 20150510201059) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "dislike"
+    t.boolean  "like"
   end
 
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

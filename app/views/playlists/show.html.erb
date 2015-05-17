@@ -34,7 +34,7 @@
                       <td><%= media.authors %></td>
                       <td><%= media.duration %></td>
                       <td><%= media.nb_views %></td>
-                      <td><%= link_to (image_tag("glyphicons/glyphicons/png/glyphicons-52-eye-open.png")), media %></td>
+                      <td><%= link_to (image_tag("glyphicons/glyphicons/png/glyphicons-52-eye-open.png")), "#{viewing_path}?m=#{media.id}" %></td>
                     </tr>
                 <% end %>
             </tbody>

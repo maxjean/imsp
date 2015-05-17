@@ -1,7 +1,9 @@
 class MediasController < ApplicationController
   before_action :set_media, only: [:show, :edit, :update, :destroy]
 
-
+  def viewing
+    @media = Media.find(params[:m])
+  end
   # GET /medias
   # GET /medias.json
   def index
@@ -45,8 +47,8 @@ class MediasController < ApplicationController
         video.transcode("./public/uploads/media/video/#{@media.id}/#{@media.id}_640x360.mp4") {|progress| puts progress}
         3.times do |x| video.screenshot("./public/uploads/media/video/#{@media.id}/#{@media.id}_#{x}.png", seek_time: "#{x+=10}", resolution: '320x240') end
 
-        upload = Transfer.upload("ip-addr","username","password","local-folder/file", "remote-path")
-        system("rm -rf local-folder/file")
+        upload = Transfer.upload("#","#","#","./public/uploads/media/video/#{@media.id}", '/usr/local/nginx/html/imsp')
+        system("rm -rf ./public/uploads/media/video/#{@media.id}")
       else
         @media.form_step == "step1"
       end

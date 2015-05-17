@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<div class="media-layer" ng-controller="MediaController">
+  <div class="col-xs-4 my-spinner">
+    <div spinner class="loader" ng-show="spinnerLoad">
+      <canvas id="spinner"></canvas>
+      <span class="datas-infos">{{loadingInfos[0]}}</span>
+    </div>
+  </div>
+  <div class="menu col-xs-12 col-sm-12">
+    <a href="#" class="settings">
+      <div class="settings-gray"></div>
+    </a>
+  </div>
+  <div onsettings class="my-settings col-xs-12 col-sm-12">
+    <div class="navigation">
+      <a class="previous-section" href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+      <a class="close-settings" href="#"><span class="glyphicon glyphicon-remove-circle"></span></a>
+    </div>
+    <div rowonhoverorselect class="row">
+      <div class="item">
+        <a href="#" class="content">
+          <div class="title">Pairing</div>
+          <div class="icon"></div>
+          <div class="description">Take control of the slideshow with a remote</div>
+        </a>
+      </div>
+    </div>
+    <div class="row2" ng-controller="PairingController">
+      <div class="item">
+        <div class="pairing-content">
+          <div class="indication-text">Pairing your device?</div>
+          <div class="pairing-icon"></div>
+          <div class="pairing-infos">
+            <span>Go to <a href={{pairingUrl}}>{{pairingUrl}}</a> page and enter this key: </span><br>
+            <span>{{currentPainringKey}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="subtitle"></div>
+
+  <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+    <div class="media" ng-controller="MediaController" ng-class="{'media-blur' : showSettings == true }">
+      <div mediaplayer>
+        <div id="player"></div>
+      </div>
+      <div class="row">
+        <div class="media-datas col-xs-12 col-sm-12">
+          <div class="media-informations col-xs-8 col-sm-8">
+              <span class="media-title"><%=@media.title.capitalize%></span><br>
+              <span>Added on: <%=@media.created_at%></span><br>
+              <span><%=@media.user.channel.id%></span>
+          </div>
+          <div class="media-statistics col-xs-4 col-sm-4">
+            <div class="media-nb-views"><span class="glyphicon glyphicon-stats"><%=@media.nb_views%> views</span></div>
+            <div class="media-vote">
+              <%= link_to '', "#", method: :get, :class => "glyphicon glyphicon-thumbs-up" %><span><%=@media.like %></span>
+              <%= link_to '', "#", method: :get, :class => "glyphicon glyphicon-thumbs-down" %><span><%=@media.dislike %></span>
+            </div>
+          </div>
+          <div class="">
+
+          </div>
+        <div>
+      </div>
+      <div class="slide-play-pause" ng-show="showPlayPause">
+        <div class="slide-play" ng-show="showPlay"><a href="#" ng-click="play()"><span class="glyphicon glyphicon-play"></span></a></div>
+        <div class="slide-pause" ng-show="showPause"><a href="#" ng-click="pause()"><span class="glyphicon glyphicon-pause"></span></a></div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
