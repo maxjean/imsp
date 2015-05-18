@@ -4,6 +4,15 @@ class MediasController < ApplicationController
   def viewing
     @media = Media.find(params[:m])
     @playlist = Playlist.find(params[:plist])
+
+    if current_user
+      Media.addToUserVideoViews(current_user, @media)
+    else
+      client_ip = request.remote_ip
+      Media.addClientToUserVideoViews(client_ip, @media)
+    end
+
+    @media
   end
   # GET /medias
   # GET /medias.json
@@ -48,7 +57,7 @@ class MediasController < ApplicationController
         video.transcode("./public/uploads/media/video/#{@media.id}/#{@media.id}_640x360.mp4") {|progress| puts progress}
         3.times do |x| video.screenshot("./public/uploads/media/video/#{@media.id}/#{@media.id}_#{x}.png", seek_time: "#{x+=10}", resolution: '320x240') end
 
-        upload = Transfer.upload("#","#","#","./public/uploads/media/video/#{@media.id}", '/usr/local/nginx/html/imsp')
+        upload = Transfer.upload("","","","./public/uploads/media/video/#{@media.id}", '/usr/local/nginx/html/imsp')
         system("rm -rf ./public/uploads/media/video/#{@media.id}")
       else
         @media.form_step == "step1"

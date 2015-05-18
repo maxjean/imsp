@@ -50,6 +50,50 @@ class Media < ActiveRecord::Base
   #Take 3 screenshots with resolution => "320*240"
   #stock them in video folderlder
 
+  #check if current_media has_alread_been_seen_by_this_user
+  def self.addToUserVideoViews(user, media)
+
+    if user.user_video_views.find_by(user_id: user.id).nil?
+
+      u = UserVideoView.new(:user_id => user.id, :media_id => media.id, :last_time_seen => Time.now)
+      u.save!
+
+      @media = Media.find(media.id)
+
+      if @media.nb_views == nil
+        @media.nb_views = 1
+        @media.save!
+      else
+        @media.nb_views = @media.nb_views+=1
+        @media.save!
+      end
+    else
+      u = UserVideoView.find_by(user_id: user.id)
+      u.last_time_seen = Time.now
+      u.save!
+    end
+  end
+
+  def self.addClientToUserVideoViews(client_ip, media)
+    if UserVideoView.find_by(client_ip: client_ip).nil?
+      c = UserVideoView.new(:client_ip => client_ip, :media_id => media.id, :last_time_seen => Time.now)
+      c.save!
+
+      @media = Media.find(media.id)
+      if @media.nb_views == nil
+        @media.nb_views = 1
+        @media.save!
+      else
+        @media.nb_views = @media.nb_views+=1
+        @media.save!
+      end
+    else
+      u = UserVideoView.find_by(client_ip: client_ip)
+      u.last_time_seen = Time.now
+      u.save!
+    end
+  end
+
   def self.addToPlaylist(playlist, media)
     if playlist.medias.find_by(id: media.id).nil?
       playlist.medias << playlist
