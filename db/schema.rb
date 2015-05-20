@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518045431) do
+ActiveRecord::Schema.define(version: 20150519135023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 20150518045431) do
 
   create_table "medias", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "user_id"
-    t.integer  "system_profil_id",  null: false
+    t.integer  "system_profil_id",                null: false
     t.integer  "media_category_id"
     t.string   "title"
     t.string   "authors"
@@ -172,13 +172,22 @@ ActiveRecord::Schema.define(version: 20150518045431) do
     t.string   "form_step"
     t.string   "video"
     t.datetime "deployed_at"
-    t.decimal  "like"
-    t.decimal  "dislike"
+    t.decimal  "like",              default: 0.0
+    t.decimal  "dislike",           default: 0.0
   end
 
   create_table "medias_playlists", id: false, force: :cascade do |t|
     t.uuid "media_id"
     t.uuid "playlist_id"
+  end
+
+  create_table "medias_timeline", force: :cascade do |t|
+    t.time     "time"
+    t.integer  "bin_id"
+    t.integer  "label_id"
+    t.integer  "document_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "playlists", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -230,7 +239,7 @@ ActiveRecord::Schema.define(version: 20150518045431) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "dislike"
-    t.boolean  "like"
+    t.boolean  "like",           default: false
     t.string   "client_ip"
   end
 

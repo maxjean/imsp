@@ -12,7 +12,17 @@ class MediasController < ApplicationController
       Media.addClientToUserVideoViews(client_ip, @media)
     end
 
-    @media
+    if params[:media_like_button]
+      if !current_user.nil?
+        Media.addLikeToUserVideoViews(current_user,@media)
+      end
+    end
+
+    if params[:media_dislike_button]
+      if !current_user.nil?
+        Media.addDislikeToUserVideoViews(current_user,@media)
+      end
+    end
   end
   # GET /medias
   # GET /medias.json

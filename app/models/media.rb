@@ -50,10 +50,35 @@ class Media < ActiveRecord::Base
   #Take 3 screenshots with resolution => "320*240"
   #stock them in video folderlder
 
+  def self.addLikeToUserVideoViews(user, media)
+    @user = user.user_video_views.find_by(media_id: media.id)
+    @media = Media.find(media.id)
+    if UserVideoView.find_by(media_id: media.id)
+      if @user.dislike == false || nil && @user.like == false
+        @user.like = true
+        @media.like+=1
+      elsif @user.dislike == false && @user.like == true
+        @user.like = false
+        @media.like-=1
+      elsif @user.dislike == true && @user.like == false
+        @user.like = true
+        @user.dislike = false
+        @media.like+=1
+        @media.dislike-=1
+      end
+    end
+  end
+
+
+  def self.addDislikeToUserVideoViews(user, media)
+    @user = user.user_video_views.find_by(user_id: user.id)
+    @media = Media.find(media.id)
+  end
+
   #check if current_media has_alread_been_seen_by_this_user
   def self.addToUserVideoViews(user, media)
 
-    if user.user_video_views.find_by(user_id: user.id).nil?
+    if UserVideoView.find_by(media_id: media.id).nil?
 
       u = UserVideoView.new(:user_id => user.id, :media_id => media.id, :last_time_seen => Time.now)
       u.save!
@@ -68,7 +93,7 @@ class Media < ActiveRecord::Base
         @media.save!
       end
     else
-      u = UserVideoView.find_by(user_id: user.id)
+      u = UserVideoView.find_by(media_id: media.id)
       u.last_time_seen = Time.now
       u.save!
     end

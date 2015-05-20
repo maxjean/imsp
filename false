@@ -1,0 +1,2 @@
+      invoke  active_record
+      create    db/migrate/20150518221445_change_dislike_to_user_video_views.rb
