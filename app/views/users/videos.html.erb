@@ -1,1 +1,6 @@
+<%= render partial: "header" %>
+
 <p>ALL VIDEOS OF THIS USER/CHANNEL</p>
+<%= @user_videos.each do |u| %>
+<p><%= link_to u.title, "#{viewing_path}?m=#{u.id}" %></p>
+<% end %>

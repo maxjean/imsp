@@ -68,6 +68,7 @@ class EventsController < ApplicationController
     elsif params[:event_id]
       @bin = Bin.create!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display])
       if @bin.save
+        @timeline = @bin
         respond_to do |format|
           format.html { redirect_to("/events/#{params[:event_id]}", notice: 'Bin was succesfully created.') }
         end
@@ -79,6 +80,7 @@ class EventsController < ApplicationController
     if params[:my_event]
       @my_event = Event.find(params[:my_event])
       @my_bin = Bin.find(params[:my_bin])
+      @media_timeline = @my_bin.media_timeline
     elsif params[:event_id]
       @bin = Bin.find(params[:my_bin])
       @bin.update_attributes!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display])

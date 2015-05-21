@@ -105,6 +105,25 @@
                 <span class=""><%= image_tag("icons/arrow-129.png") %></span>
               </div>
           </div>
+          <div class="media-timeline">
+            <div class="row">
+                <%= form_for @my_bin do |f| %>
+                    Attributes:
+                    <ul>
+                      <%= f.fields_for :media_timelines do |addresses_form| %>
+                          <li>
+                            <%= addresses_form.label :label_id %>
+                            <%= addresses_form.text_field :label_id %>
+
+                            <%= addresses_form.label :document_id %>
+                            <%= addresses_form.text_field :document_id %>
+                          </li>
+                      <% end %>
+                    </ul>
+                    <% f.submit %>
+                <% end %>
+            </div>
         </div>
+      </div>
     </div>
 </div>

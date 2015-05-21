@@ -6,7 +6,7 @@ class CreateMediasTimeline < ActiveRecord::Migration
       t.integer :label_id
       t.integer :document_id
 
-      t.timestamps null: false
+      t.timestamps
     end
   end
 end

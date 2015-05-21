@@ -74,8 +74,10 @@ Rails.application.routes.draw do
   #match 'signout', to: 'sessions#destroy', as: 'signout', via: 'get'
 
   resources :users, only: :show do
-    get "about", to: 'users#about', :as => "about"
+    get "channel", to: 'users#channel', :as => "channel"
     get "videos", to: 'users#videos', :as => "videos"
+    get "comments", to: 'users#comments', :as => "comments"
+    get "about", to: 'users#about', :as => "about"
   end
 
   #resources :channels, :path => "channel" do
@@ -97,6 +99,9 @@ Rails.application.routes.draw do
 
   match "create_bin", controller: "events", via: ['get','post']
   match "modify_bin", controller: "events", via: ['get','post']
+
+  match "media_timeline", controller: "events", via: ['get','post']
+
 
   resources :labels do
   end

@@ -1,11 +1,24 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   respond_to :json
-  def videos
 
+  def channel
+    @user = User.find(params[:user_id])
+  end
+
+  def videos
+    @user_videos = User.find(params[:user_id]).medias
+    @user = User.find(params[:user_id])
   end
 
   def about
+    @user = User.find(params[:user_id])
+  end
+
+  def comments
+    @user = User.find(params[:user_id])
+    #@user_videos = User.find(params[:id]).channel.comments
+    #@user_videos = User.find(params[:id]).comments
   end
 
   def category_plist_channels_api

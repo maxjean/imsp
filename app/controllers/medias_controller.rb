@@ -3,7 +3,13 @@ class MediasController < ApplicationController
 
   def viewing
     @media = Media.find(params[:m])
-    @playlist = Playlist.find(params[:plist])
+
+    if params[:plist]
+      @playlist = Playlist.find(params[:plist])
+    else
+      @playlist = nil
+    end
+
 
     if current_user
       Media.addToUserVideoViews(current_user, @media)
