@@ -13,8 +13,11 @@ class ApplicationController < ActionController::Base
   def home
   end
 
-  def channel
+  def content
 
+  end
+
+  def channel
   end
   protected
 

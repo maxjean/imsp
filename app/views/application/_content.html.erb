@@ -1,0 +1,29 @@
+<div id="player"></div>
+<script>
+    var playerElement = document.getElementById("player");
+    var video_id = window.location.pathname.slice(9,45);
+    var video_format = "640x360";
+    var video_server_url = "http://195.154.67.219:80/imsp"
+    var player = new Clappr.Player({
+                //source: "rtmp://10.20.77.238/vod/terminator.mp4", //flash player & for external links(embedded video)
+                source: video_server_url+"/"+video_id+"/"+video_id+"_"+video_format+".mp4", //in case of hls streaming, compati\ble anywhere(HTML5)
+                //source: "http://195.154.67.219:1935/hls/my_file.m3u8", //flash player
+                parentId: "#player",
+                autoPlay: true,
+                chromeless: false, //true => in chromeless mode, the video is only read, we can't do anything
+                mute: false, // start the player with no sound
+                persistConfig: true,
+                preload: 'metadata',
+                mediacontrol: {seekbar: "blue", buttons: "gray"},
+                hideMediaControl: false, //auto hide/display the player bar
+                //watermark: "rtmp://10.20.77.238/vod/Url-logo.png", position: 'top-right',
+                //poster: "http://10.20.77.238/Url-logo.png",
+                plugins: {playback: [RTMP]}}
+
+    );
+/*    $("#player").children().css("width","100%")
+    $("#player").children().css("height","703px")*/
+</script>
+<style>
+
+</style>

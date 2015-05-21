@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     get "about", to: 'users#about', :as => "about"
   end
 
+    match "content/:id", :to => "application#content", :as => "content", via: 'get'
   #resources :channels, :path => "channel" do
    # get "videos", to: 'medias#show', :as => "videos"
   #end
