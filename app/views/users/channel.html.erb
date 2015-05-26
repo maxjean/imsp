@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="slide" ng-repeat="(key, data) in datas" ng-class="{active: key == activeToolIndex}" ng-hide="key != activeToolIndex">
+    <div class="slide" ng-repeat="(key, data) in datas track by $index" ng-class="{active: key == activeToolIndex}" ng-hide="key != activeToolIndex">
       <div ng-repeat="liquidConfiguration in liquidConfigurations" class="liquidConfigurations">
         <div liquid="liquidConfiguration" class="imgLiquidFill imgLiquid liquidConfiguration">
           <img ng-src="{{data}}"/>

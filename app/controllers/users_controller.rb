@@ -4,6 +4,14 @@ class UsersController < ApplicationController
 
   def channel
     @user = User.find(params[:user_id])
+    @channel = @user.channel
+    @playlist_categories = @channel.category_of_playlists_channels
+    session[:category_plist_channel] = @channel.category_of_playlists_channels
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @playlist_categories }
+    end
   end
 
   def videos
