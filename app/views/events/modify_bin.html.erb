@@ -1,15 +1,43 @@
 <div class="bin-management">
     <div class="row">
-      <h3 class="title col-xs-10 col-sm-4">Bin Management</h3>
+      <h3 class="title col-xs-10 col-sm-4">Event Manager</h3>
     </div>
     <div class="row">
       <div class="col-xs-12 col-sm-5 edit_bin">
-        <span class="modify-bin-text">Bin for event: <span class="my_event_title"><%=@my_event.title.capitalize %></span></span>
+        <span class="modify-bin-text"></span>
         <%= form_tag(controller: "events", action: "modify_bin", method: "get", class: "edit_bin") do %>
-            <label><span>Title</span><span><%= text_field_tag(:title,"",:value => @my_bin.title, :class =>"title-field")%></span></label>
-            <label><span>Display?</span><span><%= check_box_tag(:is_display)%></span></label>
-            <%= hidden_field_tag(:event_id, params[:my_event])%>
-            <%= hidden_field_tag(:my_bin, params[:my_bin])%>
+            <h3 class="bin-header">Bin for event: <span class="my_event_title"><%=@my_event.title.capitalize %></span></h3>
+            <label><span>Bin title</span><span><%= text_field_tag(:title,"",:value => @my_bin.title, :class =>"title-field")%></span></label>
+            <label><span>Display it?</span><span><%= check_box_tag(:is_display)%></span></label><br>
+            <span style="float:right;"><%= link_to '', '', :class => "add-media-timeline-OnTop glyphicon glyphicon-plus-sign", remote: true %></span>
+            <table class="table table-striped media_timelines-table">
+              <thead class="media_timelines-table-head">
+                  <tr>
+                    <th colspan="#" style="width:128px;">Time</th>
+                    <th colspan="#" style="width:90px;">Label</th>
+                    <th colspan="#" style="width:115px;">Document</th>
+                    <th colspan="#" style="width:60px;"></th>
+                    <th colspan="#" style="width:60px;"></th>
+                  </tr>
+              </thead>
+              <tbody class="media_timelines-list-body">
+                <% for media_timeline in @my_bin.media_timelines %>
+                    <%= fields_for "bin[media_timeline_attributes][]", media_timeline do |media_timeline_form| %>
+                          <tr>
+                            <td colspan="#" style="width:128px;"><%= media_timeline_form.time_field :time %></td>
+                            <td colspan="#" style="width:90px;"><%= media_timeline_form.collection_select :label_id, @my_bin.labels, :id, :title, {:prompt => ''} %></td>
+                            <td colspan="#" style="width:115px;"><%= media_timeline_form.collection_select :document_id, @my_bin.documents, :id, :title, {:prompt => ''} %></td>
+                            <td style="width:30px"><%= media_timeline_form.check_box '_destroy' %></td>
+                            <td colspan="#" style="width:60px;"><%= link_to '', media_timeline_path(media_timeline), method: :delete, data: { confirm: 'Are you sure?' }, :class => "add-media-timeline-afterElement glyphicon glyphicon-plus-sign" %></td>
+                            <td></td>
+                          </tr>
+                    <% end %>
+                <% end %>
+                <%= hidden_field_tag(:event_id, params[:my_event])%>
+                <%= hidden_field_tag(:my_bin, params[:my_bin])%>
+              </tbody>
+            </table>
+            <hr>
             <%= button_tag("Modify", :class => "btn btn-primary") %>
         <% end %>
       </div>
@@ -107,21 +135,7 @@
           </div>
           <div class="media-timeline">
             <div class="row">
-                <%= form_for @my_bin do |f| %>
-                    Attributes:
-                    <ul>
-                      <%= f.fields_for :media_timelines do |addresses_form| %>
-                          <li>
-                            <%= addresses_form.label :label_id %>
-                            <%= addresses_form.text_field :label_id %>
 
-                            <%= addresses_form.label :document_id %>
-                            <%= addresses_form.text_field :document_id %>
-                          </li>
-                      <% end %>
-                    </ul>
-                    <% f.submit %>
-                <% end %>
             </div>
         </div>
       </div>

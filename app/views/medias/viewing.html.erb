@@ -86,13 +86,13 @@
 <!--
           <div class="col-xs-12 col-sm-2"><span class="glyphicon glyphicon-list plist-icon"></span></div>
 -->
-          <div class="col-xs-12 col-sm-6">
+          <div class="col-xs-12 col-sm-12">
               <span class="plist-title"><%= link_to(Playlist.find(params[:plist]).title, playlist_path(Playlist.find(params[:plist]))) %></span><br>
               <span>From <%= link_to(Playlist.find(params[:plist]).user.pseudo.upcase, channel_path(Playlist.find(params[:plist]).user.channel), :class => "user-media-pseudo-link") %></span>
           </div>
         </div>
         <div class="row media-playlist-list">
-            <table class="table table-striped media-playlist-table">
+            <table class="col-xs-12 col-sm-12 table table-striped media-playlist-table">
               <tbody class="medias-list-body">
                 <% @playlist.medias.each_with_index do |media, i| %>
                     <% if media.id == params[:m] %>

@@ -317,13 +317,26 @@
     text-align: left;
 }
 
-.events .modify-bin-text{
+/*.events .modify-bin-text{
     font-size: 1.3em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     position: relative;
     color:gray;
+}*/
+
+.events .bin-header{
+    margin-top: 0px;
+    margin-bottom: 6px;
+    padding: 5px;
+    background-color: gray;
+    color:white;
+    font-size: 1.3em;
+}
+
+.events .media_timelines-table-head{
+
 }
 
 .events .manager-section{
@@ -350,13 +363,18 @@
 .events .manager-section .right-section h3{
     text-decoration: underline;
 }
+
 .events .bin-management form{
     border: 1px solid #e5e5e5;
+/*
     padding: 1.0125em;
+*/
     background: #FCFCFC;
     color:gray;
+/*
     max-height:100px;
-    max-width: 371px;
+*/
+    /*max-width: 371px;*/
 }
 
 .events .edit_bin form label{

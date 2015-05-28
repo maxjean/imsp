@@ -5,7 +5,7 @@ app.factory('InfoFactory', function ($http, $q, $timeout){
         getInfos : function(){  /*get all infos*/
             var deferred = $q.defer();
             var infosServers = [];
-            $http.get("http://localhost:3000/category_plist_channels_api.json")
+            $http.get(window.location.origin+"/category_plist_channels_api.json")
                 .success(function(data, status){
                     factory.infos = data;
                     var elems = factory.infos;
@@ -28,7 +28,7 @@ app.factory('InfoFactory', function ($http, $q, $timeout){
             var deferred = $q.defer();
             var infosServer = {};
 
-            $http.get("http://localhost:3000/category_plist_channels_api.json")
+            $http.get(window.location.origin+"/category_plist_channels_api.json")
                 .success(function(data, status){
                     factory.infos = data;
                     var elem = factory.infos;

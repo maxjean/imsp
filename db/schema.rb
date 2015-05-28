@@ -187,8 +187,8 @@ ActiveRecord::Schema.define(version: 20150520140238) do
     t.integer  "bin_id"
     t.integer  "label_id"
     t.integer  "document_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "playlists", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

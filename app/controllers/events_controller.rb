@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+
   # GET /events
   # GET /events.json
   def index
@@ -80,10 +81,27 @@ class EventsController < ApplicationController
     if params[:my_event]
       @my_event = Event.find(params[:my_event])
       @my_bin = Bin.find(params[:my_bin])
-      @media_timeline = @my_bin.media_timeline
     elsif params[:event_id]
       @bin = Bin.find(params[:my_bin])
       @bin.update_attributes!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display])
+      #binding.debugger
+      @media_timeline_attributes = params[:bin][:media_timeline_attributes]
+      if @media_timeline_attributes.present?
+        @media_timeline_attributes.each do |media_timeline_attribute|
+          @db_media_timeline_attribute = @bin.media_timelines.find_by_id(media_timeline_attribute[0])
+          if @db_media_timeline_attribute.present?
+            if media_timeline_attribute[1][:_destroy] == "0"
+              @db_media_timeline_attribute.time = media_timeline_attribute[1][:time]
+              @db_media_timeline_attribute.label_id = media_timeline_attribute[1][:label_id]
+              @db_media_timeline_attribute.document_id = media_timeline_attribute[1][:document_id]
+              @db_media_timeline_attribute.save!
+            elsif media_timeline_attribute[1][:_destroy] == "1"
+              @db_media_timeline_attribute.destroy!
+            end
+          end
+        end
+      end
+
       if @bin.save
         respond_to do |format|
           format.html { redirect_to("/events/#{params[:event_id]}", notice: 'Bin was successfully updated.')}

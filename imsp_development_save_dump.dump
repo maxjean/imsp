@@ -1,0 +1,1615 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: bins; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE bins (
+    id integer NOT NULL,
+    title character varying,
+    event_id uuid,
+    is_display boolean,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    media_timeline_id integer
+);
+
+
+ALTER TABLE bins OWNER TO maxclifordjean;
+
+--
+-- Name: bins_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE bins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE bins_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: bins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE bins_id_seq OWNED BY bins.id;
+
+
+--
+-- Name: category_of_playlists_channels; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE category_of_playlists_channels (
+    id integer NOT NULL,
+    title character varying,
+    description text,
+    cover character varying,
+    channel_uid uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    channel_id uuid
+);
+
+
+ALTER TABLE category_of_playlists_channels OWNER TO maxclifordjean;
+
+--
+-- Name: category_of_playlists_channels_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE category_of_playlists_channels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE category_of_playlists_channels_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: category_of_playlists_channels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE category_of_playlists_channels_id_seq OWNED BY category_of_playlists_channels.id;
+
+
+--
+-- Name: category_of_playlists_channels_playlists; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE category_of_playlists_channels_playlists (
+    category_of_playlists_channel_id integer NOT NULL,
+    playlist_id uuid NOT NULL
+);
+
+
+ALTER TABLE category_of_playlists_channels_playlists OWNER TO maxclifordjean;
+
+--
+-- Name: channels; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE channels (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    title character varying,
+    nb_views integer,
+    nb_subscribers integer,
+    profil character varying,
+    cover character varying,
+    presentation_text text,
+    presentation_video character varying,
+    user_id uuid,
+    tags text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE channels OWNER TO maxclifordjean;
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE comments (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    initial_comment_id uuid,
+    user_id uuid,
+    content text,
+    commentable_id integer,
+    commentable_type character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE comments OWNER TO maxclifordjean;
+
+--
+-- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE delayed_jobs (
+    id integer NOT NULL,
+    priority integer DEFAULT 0 NOT NULL,
+    attempts integer DEFAULT 0 NOT NULL,
+    handler text NOT NULL,
+    last_error text,
+    run_at timestamp without time zone,
+    locked_at timestamp without time zone,
+    failed_at timestamp without time zone,
+    locked_by character varying,
+    queue character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE delayed_jobs OWNER TO maxclifordjean;
+
+--
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE delayed_jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE delayed_jobs_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE delayed_jobs_id_seq OWNED BY delayed_jobs.id;
+
+
+--
+-- Name: documents; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE documents (
+    id integer NOT NULL,
+    title character varying,
+    bin_id integer,
+    is_display boolean,
+    authors character varying,
+    file character varying,
+    added_by character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE documents OWNER TO maxclifordjean;
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE documents_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE documents_id_seq OWNED BY documents.id;
+
+
+--
+-- Name: events; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE events (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    user_id uuid,
+    title character varying,
+    address character varying,
+    zip_code character varying,
+    city character varying,
+    states character varying,
+    country character varying,
+    beginning_datetime timestamp without time zone,
+    finishing_datetime timestamp without time zone,
+    is_live boolean DEFAULT true,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE events OWNER TO maxclifordjean;
+
+--
+-- Name: events_medias; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE events_medias (
+    event_id uuid,
+    media_id uuid
+);
+
+
+ALTER TABLE events_medias OWNER TO maxclifordjean;
+
+--
+-- Name: events_playlists; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE events_playlists (
+    event_id uuid,
+    playlist_id uuid
+);
+
+
+ALTER TABLE events_playlists OWNER TO maxclifordjean;
+
+--
+-- Name: labels; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE labels (
+    id integer NOT NULL,
+    title character varying,
+    bin_id integer,
+    is_display boolean,
+    authors character varying,
+    file character varying,
+    added_by character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE labels OWNER TO maxclifordjean;
+
+--
+-- Name: labels_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE labels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE labels_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: labels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE labels_id_seq OWNED BY labels.id;
+
+
+--
+-- Name: media_categories; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE media_categories (
+    id integer NOT NULL,
+    name character varying,
+    genre character varying,
+    type character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE media_categories OWNER TO maxclifordjean;
+
+--
+-- Name: media_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE media_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_categories_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: media_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE media_categories_id_seq OWNED BY media_categories.id;
+
+
+--
+-- Name: media_treatments; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE media_treatments (
+    id integer NOT NULL,
+    media_id uuid,
+    subtitle character varying,
+    name character varying,
+    error character varying,
+    progression double precision,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE media_treatments OWNER TO maxclifordjean;
+
+--
+-- Name: media_treatments_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE media_treatments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_treatments_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: media_treatments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE media_treatments_id_seq OWNED BY media_treatments.id;
+
+
+--
+-- Name: medias; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE medias (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    user_id uuid,
+    system_profil_id integer NOT NULL,
+    media_category_id integer,
+    title character varying,
+    authors character varying,
+    file character varying,
+    duration time without time zone,
+    added_by character varying,
+    status character varying,
+    img character varying,
+    is_live character varying,
+    is_available boolean,
+    nb_views integer,
+    tags text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    description text,
+    form_step character varying,
+    video character varying,
+    deployed_at timestamp without time zone,
+    "like" numeric DEFAULT 0.0,
+    dislike numeric DEFAULT 0.0
+);
+
+
+ALTER TABLE medias OWNER TO maxclifordjean;
+
+--
+-- Name: medias_playlists; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE medias_playlists (
+    media_id uuid,
+    playlist_id uuid
+);
+
+
+ALTER TABLE medias_playlists OWNER TO maxclifordjean;
+
+--
+-- Name: medias_timeline; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE medias_timeline (
+    id integer NOT NULL,
+    "time" time without time zone,
+    bin_id integer,
+    label_id integer,
+    document_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE medias_timeline OWNER TO maxclifordjean;
+
+--
+-- Name: medias_timeline_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE medias_timeline_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE medias_timeline_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: medias_timeline_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE medias_timeline_id_seq OWNED BY medias_timeline.id;
+
+
+--
+-- Name: playlists; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE playlists (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    title character varying,
+    user_id uuid,
+    cover character varying,
+    tags text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE playlists OWNER TO maxclifordjean;
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE schema_migrations OWNER TO maxclifordjean;
+
+--
+-- Name: system_profils; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE system_profils (
+    id integer NOT NULL,
+    title character varying,
+    parameters character varying,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE system_profils OWNER TO maxclifordjean;
+
+--
+-- Name: system_profils_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE system_profils_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE system_profils_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: system_profils_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE system_profils_id_seq OWNED BY system_profils.id;
+
+
+--
+-- Name: user_abouts; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_abouts (
+    id integer NOT NULL,
+    user_id uuid,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE user_abouts OWNER TO maxclifordjean;
+
+--
+-- Name: user_abouts_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_abouts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_abouts_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_abouts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_abouts_id_seq OWNED BY user_abouts.id;
+
+
+--
+-- Name: user_on_hold_videos; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_on_hold_videos (
+    id integer NOT NULL,
+    user_id uuid,
+    media_id uuid,
+    seen boolean DEFAULT false,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE user_on_hold_videos OWNER TO maxclifordjean;
+
+--
+-- Name: user_on_hold_videos_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_on_hold_videos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_on_hold_videos_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_on_hold_videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_on_hold_videos_id_seq OWNED BY user_on_hold_videos.id;
+
+
+--
+-- Name: user_subscriptions; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_subscriptions (
+    id integer NOT NULL,
+    channel_id uuid,
+    user_id uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE user_subscriptions OWNER TO maxclifordjean;
+
+--
+-- Name: user_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_subscriptions_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_subscriptions_id_seq OWNED BY user_subscriptions.id;
+
+
+--
+-- Name: user_video_views; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE user_video_views (
+    id integer NOT NULL,
+    user_id uuid,
+    media_id uuid,
+    last_time_seen timestamp without time zone,
+    category character varying,
+    genre character varying,
+    type character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    dislike boolean,
+    "like" boolean DEFAULT false,
+    client_ip character varying
+);
+
+
+ALTER TABLE user_video_views OWNER TO maxclifordjean;
+
+--
+-- Name: user_video_views_id_seq; Type: SEQUENCE; Schema: public; Owner: maxclifordjean
+--
+
+CREATE SEQUENCE user_video_views_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_video_views_id_seq OWNER TO maxclifordjean;
+
+--
+-- Name: user_video_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: maxclifordjean
+--
+
+ALTER SEQUENCE user_video_views_id_seq OWNED BY user_video_views.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE TABLE users (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    email character varying,
+    encrypted_password character varying,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip inet,
+    last_sign_in_ip inet,
+    firstname character varying,
+    lastname character varying,
+    name character varying,
+    channel_name character varying,
+    pseudo character varying,
+    phone character varying,
+    address character varying,
+    zip_code character varying,
+    city character varying,
+    states character varying,
+    country character varying,
+    "isAdmin" boolean,
+    profil character varying,
+    cover character varying,
+    last_device_used character varying,
+    tags text,
+    provider character varying,
+    uid character varying,
+    oauth_token character varying,
+    oauth_expires_at timestamp without time zone,
+    genre character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    limit_pseudo_change integer
+);
+
+
+ALTER TABLE users OWNER TO maxclifordjean;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY bins ALTER COLUMN id SET DEFAULT nextval('bins_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY category_of_playlists_channels ALTER COLUMN id SET DEFAULT nextval('category_of_playlists_channels_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY delayed_jobs ALTER COLUMN id SET DEFAULT nextval('delayed_jobs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY documents ALTER COLUMN id SET DEFAULT nextval('documents_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY labels ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY media_categories ALTER COLUMN id SET DEFAULT nextval('media_categories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY media_treatments ALTER COLUMN id SET DEFAULT nextval('media_treatments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY medias_timeline ALTER COLUMN id SET DEFAULT nextval('medias_timeline_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY system_profils ALTER COLUMN id SET DEFAULT nextval('system_profils_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_abouts ALTER COLUMN id SET DEFAULT nextval('user_abouts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_on_hold_videos ALTER COLUMN id SET DEFAULT nextval('user_on_hold_videos_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_subscriptions ALTER COLUMN id SET DEFAULT nextval('user_subscriptions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: maxclifordjean
+--
+
+ALTER TABLE ONLY user_video_views ALTER COLUMN id SET DEFAULT nextval('user_video_views_id_seq'::regclass);
+
+
+--
+-- Data for Name: bins; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY bins (id, title, event_id, is_display, created_at, updated_at, media_timeline_id) FROM stdin;
+14		144933f9-eea1-45c5-adca-9fd9fc2ebf6e	\N	2015-03-30 11:09:33.931926	2015-03-30 11:09:33.931926	\N
+15	max test	144933f9-eea1-45c5-adca-9fd9fc2ebf6e	t	2015-03-30 11:10:07.834763	2015-03-30 11:10:07.834763	\N
+16		\N	\N	2015-03-30 11:10:34.401876	2015-03-30 11:10:34.401876	\N
+17	jekll	144933f9-eea1-45c5-adca-9fd9fc2ebf6e	t	2015-03-30 11:13:17.825607	2015-03-30 11:13:17.825607	\N
+18	r	144933f9-eea1-45c5-adca-9fd9fc2ebf6e	\N	2015-03-30 11:27:14.491017	2015-03-30 11:27:14.491017	\N
+19	g	144933f9-eea1-45c5-adca-9fd9fc2ebf6e	\N	2015-03-30 11:28:12.812001	2015-03-30 11:28:12.812001	\N
+20	po	37368b49-d513-4060-8e67-e804ee8a128f	\N	2015-03-30 11:32:40.706813	2015-03-30 13:41:01.777098	\N
+26	fdsfdsfe	3c1c02a8-a21a-4b01-9d66-f28cbafaacc3	\N	2015-03-30 16:29:14.086534	2015-03-30 16:29:14.086534	\N
+27	cxvxv	3c1c02a8-a21a-4b01-9d66-f28cbafaacc3	\N	2015-03-30 16:29:20.439332	2015-03-30 16:29:20.439332	\N
+29	twiil	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-05 18:46:20.230841	2015-05-05 18:46:20.230841	\N
+30	love	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-05 18:46:33.338101	2015-05-05 18:46:33.338101	\N
+31	fm fjs	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-05 18:49:28.464321	2015-05-05 18:49:28.464321	\N
+32	my ejfmes	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-05 21:29:58.441431	2015-05-05 21:29:58.441431	\N
+33	gzegha	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-06 08:32:53.315763	2015-05-06 08:32:53.315763	\N
+34	ge	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-06 08:33:05.941832	2015-05-06 08:33:05.941832	\N
+35	test bin	a8baace7-514c-4d24-8402-eab34cd9a7b7	t	2015-05-06 10:51:38.276668	2015-05-06 10:51:38.276668	\N
+36	test bin2	a8baace7-514c-4d24-8402-eab34cd9a7b7	\N	2015-05-06 10:51:53.577586	2015-05-06 10:51:53.577586	\N
+37	mfjsf	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-06 11:20:32.65992	2015-05-06 11:20:32.65992	\N
+38	vvdz	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-05-06 11:20:42.061792	2015-05-06 11:20:42.061792	\N
+24	My Bin1	8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	\N	2015-03-30 16:13:12.100137	2015-05-26 11:50:58.520391	6
+\.
+
+
+--
+-- Name: bins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('bins_id_seq', 38, true);
+
+
+--
+-- Data for Name: category_of_playlists_channels; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY category_of_playlists_channels (id, title, description, cover, channel_uid, created_at, updated_at, channel_id) FROM stdin;
+3	test	qsdgs	\N	eb937b95-912f-47fe-9993-6d34e646795b	2015-03-03 15:37:11.155751	2015-03-03 15:37:11.155751	\N
+7	cliff-1		\N	\N	2015-03-12 10:53:38.706443	2015-03-12 10:53:38.706443	e6751100-2eb3-44a5-97ff-d270661f9a7c
+8	cliff-2		\N	\N	2015-03-12 10:53:51.542512	2015-03-12 10:53:51.542512	e6751100-2eb3-44a5-97ff-d270661f9a7c
+9	cliff-3		\N	\N	2015-03-12 13:48:05.276858	2015-03-12 13:48:05.276858	e6751100-2eb3-44a5-97ff-d270661f9a7c
+10	cate		\N	\N	2015-03-12 14:55:08.792632	2015-03-12 14:55:08.792632	2fa49ca9-d723-434c-b84d-3d8ccb9d1505
+12	cate		\N	\N	2015-03-12 14:55:13.675455	2015-03-12 14:55:13.675455	2fa49ca9-d723-434c-b84d-3d8ccb9d1505
+11	cati		\N	\N	2015-03-12 14:55:13.65555	2015-03-12 14:55:28.411487	2fa49ca9-d723-434c-b84d-3d8ccb9d1505
+13	fdsqf		\N	\N	2015-03-12 15:15:53.308303	2015-03-12 15:15:53.308303	2fa49ca9-d723-434c-b84d-3d8ccb9d1505
+15	categ-play-2		\N	\N	2015-03-12 15:20:43.785247	2015-03-12 15:20:43.785247	55526a55-faa3-4ae9-ac35-8431018f9eef
+16	categ-play-1		\N	\N	2015-03-12 19:39:30.843348	2015-03-12 19:39:30.843348	55526a55-faa3-4ae9-ac35-8431018f9eef
+5	Presentation	fdsfdsqf	\N	\N	2015-03-03 19:14:42.353124	2015-04-16 12:40:59.518899	eb937b95-912f-47fe-9993-6d34e646795b
+6	Bande annonce	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	\N	\N	2015-03-04 13:56:30.264944	2015-04-28 13:28:29.102199	eb937b95-912f-47fe-9993-6d34e646795b
+1	Sport	rsqr fsfsf ieuprz jkmfsdjie\r\njm	#<ActionDispatch::Http::UploadedFile:0x007fa83fbb4290>	eb937b95-912f-47fe-9993-6d34e646795b	2015-03-03 11:24:24.878814	2015-05-04 16:14:41.744432	eb937b95-912f-47fe-9993-6d34e646795b
+\.
+
+
+--
+-- Name: category_of_playlists_channels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('category_of_playlists_channels_id_seq', 16, true);
+
+
+--
+-- Data for Name: category_of_playlists_channels_playlists; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY category_of_playlists_channels_playlists (category_of_playlists_channel_id, playlist_id) FROM stdin;
+1	32e5e110-9738-4261-8347-16cbb8869848
+6	ea1ca113-617d-4a4f-983c-342397dc0ed7
+6	9c755f02-5a45-4348-91bc-dbb37b8189bb
+1	06127075-5f96-4f6f-98d2-a72f5c1aef95
+6	06127075-5f96-4f6f-98d2-a72f5c1aef95
+5	c0b86a84-ad2c-4cc6-94d8-1bb0d8270473
+1	c0b86a84-ad2c-4cc6-94d8-1bb0d8270473
+6	0ff55977-fdb9-4650-8651-141b35f0e94e
+5	cde4f1ea-1eee-40be-8414-2777ddbd21cc
+1	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+1	cde4f1ea-1eee-40be-8414-2777ddbd21cc
+5	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+6	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+7	40503d70-5586-4be4-8313-4a6777c9d274
+\.
+
+
+--
+-- Data for Name: channels; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY channels (id, title, nb_views, nb_subscribers, profil, cover, presentation_text, presentation_video, user_id, tags, created_at, updated_at) FROM stdin;
+0215a3bd-05ab-49cf-be1d-a98acdfd085f	\N	\N	\N	\N	\N	\N	\N	0215a3bd-05ab-49cf-be1d-a98acdfd085f	\N	2015-02-26 15:01:50.780299	2015-02-26 15:01:50.780299
+5b9a9e67-7a7b-435d-bda0-5fe918e0cbae	MCJ's Channel	\N	\N	\N	\N	\N	\N	5b9a9e67-7a7b-435d-bda0-5fe918e0cbae	\N	2015-02-26 15:03:00.629506	2015-02-26 15:08:13.030441
+609ea565-041b-42c6-b391-840afa6f65b7	Cliff-J's Channel	\N	\N	\N	\N	\N	\N	609ea565-041b-42c6-b391-840afa6f65b7	\N	2015-02-26 15:09:51.140731	2015-02-26 15:12:01.96104
+923d2ca4-de21-4263-a876-1af0dd4246a7	\N	\N	\N	\N	\N	\N	\N	3092f1b8-03ef-4f42-ae75-f2f904758461	\N	2015-02-26 15:14:58.946232	2015-02-26 15:14:58.946232
+2fa49ca9-d723-434c-b84d-3d8ccb9d1505	\N	\N	\N	\N	\N	\N	\N	2fa49ca9-d723-434c-b84d-3d8ccb9d1505	\N	2015-02-26 15:22:27.494731	2015-02-26 15:22:27.494731
+250ccd1b-9d9d-458e-865c-ab0f57bab12b	\N	\N	\N	\N	\N	\N	\N	250ccd1b-9d9d-458e-865c-ab0f57bab12b	\N	2015-02-26 20:49:24.078769	2015-02-26 20:49:24.078769
+06c610e6-a0cc-4fce-84d6-cebf86654b5d	\N	\N	\N	\N	\N	\N	\N	06c610e6-a0cc-4fce-84d6-cebf86654b5d	\N	2015-02-26 20:50:05.545712	2015-02-26 20:50:05.545712
+30199e27-cf23-4a81-80d1-aa70ccb11aa7	\N	\N	\N	\N	\N	\N	\N	30199e27-cf23-4a81-80d1-aa70ccb11aa7	\N	2015-02-26 20:53:52.815178	2015-02-26 20:53:52.815178
+a135e200-8ac7-4b86-81c0-85f9a15e82be	\N	\N	\N	\N	\N	\N	\N	a135e200-8ac7-4b86-81c0-85f9a15e82be	\N	2015-02-27 09:10:04.212999	2015-02-27 09:10:04.212999
+7656c2bf-c1e3-44a3-9630-7b787c2300be	\N	\N	\N	\N	\N	\N	\N	7656c2bf-c1e3-44a3-9630-7b787c2300be	\N	2015-02-27 09:16:03.111425	2015-02-27 09:16:03.111425
+5630e268-d1d7-4ea1-ba7b-95e4198cadff	\N	\N	\N	\N	\N	\N	\N	5630e268-d1d7-4ea1-ba7b-95e4198cadff	\N	2015-02-27 09:19:43.785587	2015-02-27 09:19:43.785587
+92142a87-0f56-4662-b588-31f1e6370a4b	\N	\N	\N	\N	\N	\N	\N	92142a87-0f56-4662-b588-31f1e6370a4b	\N	2015-02-27 09:25:21.935503	2015-02-27 09:25:21.935503
+e6751100-2eb3-44a5-97ff-d270661f9a7c	\N	\N	\N	\N	\N	\N	\N	e6751100-2eb3-44a5-97ff-d270661f9a7c	\N	2015-02-27 09:29:12.229851	2015-02-27 09:29:12.229851
+eb937b95-912f-47fe-9993-6d34e646795b	\N	\N	\N	\N	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	https://www.youtube.com/embed/Kq7LHBNdAqQ	eb937b95-912f-47fe-9993-6d34e646795b	\N	2015-02-27 10:05:49.998165	2015-02-27 10:13:53.038455
+55526a55-faa3-4ae9-ac35-8431018f9eef	\N	\N	\N	\N	\N	\N	\N	55526a55-faa3-4ae9-ac35-8431018f9eef	\N	2015-03-12 15:19:52.278496	2015-03-12 15:19:52.278496
+\.
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY comments (id, initial_comment_id, user_id, content, commentable_id, commentable_type, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: delayed_jobs; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY delayed_jobs (id, priority, attempts, handler, last_error, run_at, locked_at, failed_at, locked_by, queue, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('delayed_jobs_id_seq', 1, false);
+
+
+--
+-- Data for Name: documents; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY documents (id, title, bin_id, is_display, authors, file, added_by, description, created_at, updated_at) FROM stdin;
+1	dsf	24	t		\N	Max Clifford Jean		2015-04-16 10:48:40.981548	2015-04-16 11:14:42.106187
+2	tttezd	\N	t	fz	\N	Max Clifford Jean	zerg	2015-05-06 17:42:16.313602	2015-05-06 17:51:03.897896
+3	kkkkk	24	t		\N	Max Clifford Jean		2015-05-06 18:06:00.198589	2015-05-06 18:06:00.198589
+4	nnnll	\N	f		\N	Max Clifford Jean		2015-05-06 18:06:14.052252	2015-05-06 18:06:42.671297
+\.
+
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('documents_id_seq', 6, true);
+
+
+--
+-- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY events (id, user_id, title, address, zip_code, city, states, country, beginning_datetime, finishing_datetime, is_live, description, created_at, updated_at) FROM stdin;
+144933f9-eea1-45c5-adca-9fd9fc2ebf6e	\N	eveeent	\N	\N	\N	\N	\N	\N	\N	t	\N	2015-03-20 16:10:36.195628	2015-03-20 16:10:36.195628
+99be8210-bd7e-49c5-a657-38834c5dca27	\N	fd	\N	\N	\N	\N	\N	\N	\N	t	\N	2015-03-20 16:30:01.542842	2015-03-20 16:30:01.542842
+acf35a71-fdf5-4639-9af4-76d31bb82e1c	\N	e	\N	\N	\N	\N	\N	\N	\N	t	\N	2015-03-30 11:29:17.030316	2015-03-30 11:29:17.030316
+3c1c02a8-a21a-4b01-9d66-f28cbafaacc3	e6751100-2eb3-44a5-97ff-d270661f9a7c	cliffEvent						2015-03-30 16:28:00	2015-03-30 16:28:00	t		2015-03-30 16:29:04.274543	2015-03-30 16:29:04.274543
+a8baace7-514c-4d24-8402-eab34cd9a7b7	eb937b95-912f-47fe-9993-6d34e646795b	Digital age	3 rue de paris	75015	Paris	Ile de france	France	2015-06-06 12:08:00	2015-06-06 16:08:00	f	jdlksmf jfdms fjdslmf jdf msjf dmsf djsfm ds fdsmqf djsmfdjsqfldsqjfmds fjs\r\nfjdsmqf dslmqfjdsmfjds qmfs	2015-05-05 13:10:04.727747	2015-05-05 13:10:04.727747
+8c517813-5249-44cd-adb4-40dcb7e48b52	eb937b95-912f-47fe-9993-6d34e646795b	Ted x 42000	5 rue Marcel	75001	Paris	Ile-de-france	France	2016-04-09 09:20:00	2016-04-09 13:30:00	t	L'évènement de l'année, pour tout ceux qui sont intéressé par les technologies innovantes, venez nombreux!!!	2015-05-05 13:29:49.592737	2015-05-05 13:29:49.592737
+8c19f6b6-2eee-4ed1-bdb0-3a7df9a7d294	eb937b95-912f-47fe-9993-6d34e646795b	Rio Football	1 bis rue des montalets	92190	Meudon	Ile de France	France	2015-03-30 16:07:00	2015-03-30 16:07:00	t	dfsdfsqsff, jfdsflds qfdsfd,sf djsqfm dfds,f dskjlfd sjf dsjf dskjf djsq fjdslqfjd\r\nfjdmsfjd sjfd,f dsjfmdjs fjksfjdlmsjf, fdkljsf dsmf jkds mfs dfj df,sd,fdjsf ff\r\nezopuoijfs u zeuij fiouezq fezj fpiouiezu fezjmfq.	2015-03-30 16:07:19.523554	2015-05-11 16:03:02.539446
+\.
+
+
+--
+-- Data for Name: events_medias; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY events_medias (event_id, media_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: events_playlists; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY events_playlists (event_id, playlist_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: labels; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY labels (id, title, bin_id, is_display, authors, file, added_by, description, created_at, updated_at) FROM stdin;
+1	\N	\N	\N	\N	\N	\N	\N	2015-03-30 19:16:38.456833	2015-03-30 19:16:38.456833
+4	\N	24	\N	\N	\N	\N	\N	2015-03-30 19:59:48.399704	2015-03-30 19:59:48.399704
+5	\N	24	\N	\N	\N	\N	\N	2015-03-30 20:02:39.990089	2015-03-30 20:02:39.990089
+6	\N	24	\N	\N	\N	\N	\N	2015-03-30 20:08:24.498049	2015-03-30 20:08:24.498049
+7	\N	24	\N	\N	\N	\N	\N	2015-03-30 20:09:18.834324	2015-03-30 20:09:18.834324
+9		24	f			Max Clifford Jean	\N	2015-03-30 20:22:31.50286	2015-03-30 20:22:31.50286
+10	fdqfs	24	t	fdsqf,lmejifs,dfks	#<ActionDispatch::Http::UploadedFile:0x007fdac2947a10>	Max Clifford Jean	\N	2015-03-30 20:36:04.195238	2015-03-30 20:36:04.195238
+11		24	f		\N	Max Clifford Jean	\N	2015-04-16 10:42:21.271359	2015-04-16 10:42:21.271359
+12		24	f		\N	Max Clifford Jean		2015-04-16 10:47:12.574804	2015-04-16 10:47:12.574804
+17	mylabsvvvooo	24	t		\N	Max Clifford Jean	\N	2015-05-07 07:56:58.650618	2015-05-07 09:04:34.957913
+2	ssgdg	24	f		\N	Max Clifford Jean	\N	2015-03-30 19:57:53.807949	2015-05-07 10:31:45.445423
+3	My Label	24	f		\N	Max Clifford Jean	\N	2015-03-30 19:58:24.391919	2015-05-20 13:23:26.455715
+\.
+
+
+--
+-- Name: labels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('labels_id_seq', 17, true);
+
+
+--
+-- Data for Name: media_categories; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY media_categories (id, name, genre, type, description, created_at, updated_at) FROM stdin;
+1	Music	\N	\N	\N	2015-03-02 15:20:16.546619	2015-03-02 15:20:16.546619
+2	Enterntainment	\N	\N	\N	2015-03-02 15:20:57.169735	2015-03-02 15:20:57.169735
+3	Sport	\N	\N	\N	2015-03-02 15:21:10.783784	2015-03-02 15:21:10.783784
+4	Science & technology	\N	\N	\N	2015-03-02 15:23:28.900889	2015-03-02 15:23:28.900889
+5	News	\N	\N	\N	2015-03-02 15:24:05.635512	2015-03-02 15:24:05.635512
+6	Movies	\N	\N	\N	2015-03-02 15:24:14.802837	2015-03-02 15:24:14.802837
+7	Video games	\N	\N	\N	2015-03-02 15:24:26.9707	2015-03-02 15:24:26.9707
+\.
+
+
+--
+-- Name: media_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('media_categories_id_seq', 7, true);
+
+
+--
+-- Data for Name: media_treatments; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY media_treatments (id, media_id, subtitle, name, error, progression, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: media_treatments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('media_treatments_id_seq', 1, false);
+
+
+--
+-- Data for Name: medias; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY medias (id, user_id, system_profil_id, media_category_id, title, authors, file, duration, added_by, status, img, is_live, is_available, nb_views, tags, created_at, updated_at, description, form_step, video, deployed_at, "like", dislike) FROM stdin;
+b2b8446a-5029-449e-8c1d-b5d78b489dc1	eb937b95-912f-47fe-9993-6d34e646795b	1	6	music-dd		\N	\N	\N	\N	\N	0	\N	1		2015-03-02 14:39:57.048169	2015-05-21 14:29:46.703495		step2	\N	\N	\N	\N
+b89ba8b6-609c-4027-8fdd-e21647e7c92a	eb937b95-912f-47fe-9993-6d34e646795b	1	\N			\N	\N	\N	\N	\N	0	\N	\N		2015-05-13 14:22:34.310044	2015-05-13 14:25:08.187504		step2	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+6b217f4b-8685-4bd4-8c41-6a26c8c38228	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	2	test		\N	\N	\N	\N	\N	0	\N	1		2015-03-20 14:15:14.485812	2015-05-26 13:37:04.128261		step2	\N	\N	\N	\N
+8a984d0b-c541-485a-8172-04cacd579ea2	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	1	\N	2015-05-13 14:20:36.682791	2015-05-21 14:19:24.680322	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+d31b9058-700b-47e4-905b-2b3b62b22c66	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	\N	CJ-media	cj, cliff-j, cliff	\N	\N	\N	\N	\N	1	\N	\N	music, dance, electro	2015-03-02 12:36:59.544546	2015-03-20 12:28:41.896413		step2	\N	\N	\N	\N
+3e688f4f-6651-42bc-9f9a-204337c3e045	eb937b95-912f-47fe-9993-6d34e646795b	1	1	retake	fdsfs	\N	\N	\N	\N	\N	0	\N	\N	tstsdts	2015-03-02 10:17:58.797654	2015-03-30 21:50:52.313964		step2	\N	\N	\N	\N
+6f4ba700-9b10-47dd-aed5-5855f93671db	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-03-30 21:51:24.100071	2015-03-30 21:51:31.701885	\N	step1	\N	\N	\N	\N
+65a03aef-2540-4285-a8cc-e495b05f172f	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:30:04.13133	2015-05-13 14:30:11.032269	\N	step1	testing.mp4	\N	\N	\N
+93bfaa84-17b8-468e-91df-a67101750dc8	eb937b95-912f-47fe-9993-6d34e646795b	1	\N			\N	\N	\N	\N	\N	0	\N	\N		2015-03-30 21:51:52.030205	2015-03-30 21:52:56.190612		step2	\N	\N	\N	\N
+932f06ea-ea60-4f38-b2af-d64126924ef3	eb937b95-912f-47fe-9993-6d34e646795b	1	2	djfsqm	jfksdmfs	\N	\N	\N	\N	\N	0	\N	\N	jfdskqfm	2015-03-02 10:11:45.270445	2015-05-04 12:34:12.54055	jkfdlsmqfdjkslfmeijsfes	step2	\N	\N	\N	\N
+a2f8e104-44ed-45a0-8a53-bd6961638bf0	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:30:59.124616	2015-05-13 14:31:04.305646	\N	step1	testing.mp4	\N	\N	\N
+14b1359a-529a-467c-b6b9-44088de2b7e3	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	testmyvideo		\N	\N	\N	\N	\N	0	\N	\N		2015-05-10 14:32:28.796996	2015-05-10 14:41:17.396195		step2	\N	\N	\N	\N
+6de2fc37-17b4-49bc-98dd-eabcd89b4edf	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-10 14:42:29.545867	2015-05-10 14:42:29.545867	\N	\N	\N	\N	\N	\N
+7a31ae9a-6596-490f-9737-59a07d7ab77a	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:52:40.453883	2015-05-13 14:52:48.198405	\N	step1	testing.mp4	\N	\N	\N
+c8dfefe1-56ba-43e4-b0d8-33fd646eb464	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:32:47.387166	2015-05-13 14:33:16.932425	\N	step1	testing.mp4	\N	\N	\N
+cd47721e-398e-4204-9ba8-b98fda4d36d2	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 11:39:57.767355	2015-05-13 11:42:19.399682	\N	step1	Batman_v_Superman_-_Dawn_of_Justice_-_Official_Teaser_Trailer__HD_-IwfUnkBfdZ4.mp4	\N	\N	\N
+16274ec5-14f4-4d29-912f-fe90a64dad2c	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2012-01-01 06:19:27.854998	2015-05-11 08:14:06.348165	\N	step1	test.mp4	\N	\N	\N
+66ca31e9-622d-483c-ae1c-c1c7ffc2e04c	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 08:16:30.028887	2015-05-11 08:16:42.104953	\N	step1	\N	\N	\N	\N
+4f91d1db-3e2b-4b25-bccc-99ddd6a6ad2e	\N	1	\N	\N	\N	\N	\N	\N	\N	\N	1	\N	\N	\N	2015-03-02 10:02:26.189539	2015-03-02 10:02:26.189539	\N	\N	\N	\N	\N	\N
+0e6cb139-e6a2-42f1-976f-7a9ff442542e	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-03-02 10:20:17.376933	2015-03-02 10:20:17.376933	\N	\N	\N	\N	\N	\N
+0fbd9cd3-a300-448e-b707-7ac62417c539	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-03-02 10:53:43.597459	2015-03-02 10:53:43.597459	\N	\N	\N	\N	\N	\N
+6596d0d8-c29f-4a38-b594-43a84d5689cc	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-03-02 10:54:20.102041	2015-03-02 10:54:20.102041	\N	\N	\N	\N	\N	\N
+d1f6e6f1-b3e5-4f09-a2d3-6b2bd1f64fb6	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-03-02 10:54:39.448031	2015-03-02 10:54:39.448031	\N	\N	\N	\N	\N	\N
+8c0ecae3-845e-401d-a755-84453ccb59a9	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-03-02 10:56:12.331023	2015-03-02 10:57:03.837756	\N	step1	\N	\N	\N	\N
+e3716536-b777-42e1-8a2e-cb7d3a0504a4	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 08:16:53.890666	2015-05-11 08:17:01.582182	\N	step1	test.mp4	\N	\N	\N
+37201853-b36f-453a-afb1-0dd4e9e4410a	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	My media	cliff-j, cliff	\N	\N	\N	\N	\N	1	\N	\N	cliff-j, hip-hop, music	2015-03-02 10:58:45.691718	2015-03-02 11:20:27.250955	\N	done	\N	\N	\N	\N
+2ec7129c-f7c1-4fb6-a8b1-43c115ff00b2	eb937b95-912f-47fe-9993-6d34e646795b	1	\N			\N	\N	\N	\N	#<ActionDispatch::Http::UploadedFile:0x007fb97eb13818>	0	\N	\N		2015-05-10 14:55:09.73775	2015-05-10 15:56:30.522815		step2	L_application__OCS_GoT_S5_officiel___-_votre_compagnon_TV_indispensable-NCDRfaPe5Wg.mp4	\N	\N	\N
+c2ff9746-e4b4-451b-ab29-41587ba7f57b	eb937b95-912f-47fe-9993-6d34e646795b	1	\N			\N	\N	\N	\N	\N	0	\N	\N		2015-03-02 11:21:31.051698	2015-03-02 11:21:35.814294	\N	done	\N	\N	\N	\N
+c0127439-add1-4bcd-8806-3e133141068d	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-10 15:11:05.666859	2015-05-10 15:12:02.257856	\N	step1	L_application__OCS_GoT_S5_officiel___-_votre_compagnon_TV_indispensable-NCDRfaPe5Wg.mp4	\N	\N	\N
+4bddae5a-7107-4ed3-ba7f-98e2c911dc16	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-10 15:14:08.103337	2015-05-10 15:14:08.103337	\N	\N	\N	\N	\N	\N
+1b469ae9-328a-4d63-9e42-fed723742f20	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-10 15:58:41.137773	2015-05-10 15:58:41.137773	\N	\N	\N	\N	\N	\N
+bcd4af01-3ac6-4027-ad3c-ee2d99aa67be	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 08:25:08.126296	2015-05-11 08:25:08.126296	\N	\N	\N	\N	\N	\N
+2eb4faa5-3625-4250-8df4-25675be596d2	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-10 16:21:19.723194	2015-05-10 16:21:28.736086	\N	step1	L_application__OCS_GoT_S5_officiel___-_votre_compagnon_TV_indispensable-NCDRfaPe5Wg.mp4	\N	\N	\N
+0915665e-9f2c-4dfa-ad3e-3863f5b9a89c	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-10 20:50:14.98328	2015-05-10 20:50:14.98328	\N	\N	\N	\N	\N	\N
+1d304c91-6cf4-44b5-8cd0-18d86a85b753	eb937b95-912f-47fe-9993-6d34e646795b	1	1	final	dsqf	\N	\N	\N	\N	\N	1	\N	1	ezet	2015-03-17 10:23:53.162579	2015-05-18 23:05:30.714262	gterqf	step2	\N	\N	\N	\N
+0bece693-048b-4b61-9a9f-6a89153fafe8	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 11:43:29.083192	2015-05-13 11:43:45.19592	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+557a7aba-fa70-4756-a546-7a1b78e6c752	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 08:37:23.33557	2015-05-11 08:37:23.33557	\N	\N	\N	\N	\N	\N
+93b7cc95-b84e-4318-ac29-63b00f46af48	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 08:51:44.282331	2015-05-11 08:51:44.282331	\N	\N	\N	\N	\N	\N
+6d6fbc33-cd30-47f8-bc24-69897d812d97	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:04:38.627875	2015-05-13 14:04:57.467968	\N	step1	Batman_v_Superman_-_Dawn_of_Justice_-_Official_Teaser_Trailer__HD_-IwfUnkBfdZ4.mp4	\N	\N	\N
+8cc4fe34-b00a-46c5-abc4-5212d1246cda	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 08:58:16.494843	2015-05-11 08:58:16.494843	\N	\N	\N	\N	\N	\N
+6ac04463-abc6-4205-b47f-d7cba1de02f1	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:05:54.086837	2015-05-13 14:06:00.777274	\N	step1	Batman_v_Superman_-_Dawn_of_Justice_-_Official_Teaser_Trailer__HD_-IwfUnkBfdZ4.mp4	\N	\N	\N
+000b227f-c783-4001-9b4f-e3110700727b	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:07:13.798505	2015-05-13 14:07:24.499082	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+b818afdd-a18c-4dbd-8064-0bf054ea4663	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 09:21:19.687365	2015-05-11 09:21:19.687365	\N	\N	\N	\N	\N	\N
+28a5e28e-f460-4d5c-a5a0-bc2820bc6dc8	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:09:38.999901	2015-05-13 14:09:49.544283	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+1dae31ef-1ab3-4613-b432-7bb5ace9e0e2	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:11:34.634144	2015-05-13 14:11:44.233392	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+44c5b324-595d-4832-97f3-3f650ce5af54	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:19:57.996192	2015-05-13 14:20:06.987276	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+d8ab51b1-04d5-4ac7-8db0-fb2ab1d0ad46	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:38:25.515411	2015-05-13 14:38:31.300736	\N	step1	testing.mp4	\N	\N	\N
+d85e6abd-06c6-488c-a20f-3abc5516b6c9	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-11 14:42:02.270864	2015-05-11 14:42:02.270864	\N	\N	\N	\N	\N	\N
+dabe902b-af73-4045-adf7-077659c637ae	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:46:18.800068	2015-05-13 14:46:32.204494	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+544652ff-4199-4580-82dc-8b335f56787d	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:47:20.697664	2015-05-13 14:47:29.19532	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+27a86016-1a71-44ff-b82c-4d7c8e43e0b7	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 14:54:42.122976	2015-05-13 14:54:47.927169	\N	step1	testing.mp4	\N	\N	\N
+8ba03b15-fa28-4b12-b6f8-ab45c0cb71f8	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 15:00:23.018168	2015-05-13 15:00:31.76598	\N	step1	testing.mp4	\N	\N	\N
+56bae91e-148c-4d73-a5d7-e42c6d4293aa	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 15:05:06.615812	2015-05-13 15:05:13.032496	\N	step1	testing.mp4	\N	\N	\N
+dec6bf24-7670-40ac-87fc-e0672190ffc8	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 15:11:48.107761	2015-05-13 15:11:54.789434	\N	step1	testing.mp4	\N	\N	\N
+6180f3f9-1e53-4f72-a5e6-bb2dd75ac499	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 15:12:54.511355	2015-05-13 15:13:00.384539	\N	step1	testing.mp4	\N	\N	\N
+cd41d9f4-f3f6-4062-9048-26a87cdd1fc9	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 15:31:43.664046	2015-05-13 15:31:53.11863	\N	step1	testing.mp4	\N	\N	\N
+28f3fa8e-9c6d-4e0b-8ebb-d981d59f2adc	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 15:36:29.246506	2015-05-13 15:36:36.150313	\N	step1	testing.mp4	\N	\N	\N
+812a5a8f-f74a-48fc-b490-887b2f8b3d84	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 23:11:53.221549	2015-05-13 23:12:08.099372	\N	step1	testing.mp4	\N	\N	\N
+ec0e4489-5d33-4f6f-9f8e-5053df8588e9	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 23:22:25.47469	2015-05-13 23:40:47.532434	\N	step1	testing.mp4	\N	\N	\N
+eb70e3f8-f984-4148-b337-092c6aa6ecee	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 23:46:02.130456	2015-05-13 23:46:13.538664	\N	step1	testing.mp4	\N	\N	\N
+165cad05-1d4a-43ae-afd3-ec9b5e941c23	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 23:49:55.829727	2015-05-13 23:50:54.4805	\N	step1	testing.mp4	\N	\N	\N
+d200c937-3f6d-4408-8ddc-a67779eb2170	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-13 23:51:36.806348	2015-05-13 23:51:51.03672	\N	step1	testing.mp4	\N	\N	\N
+2cb81dd1-81b8-4a75-8605-d1fa881a3eb1	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-14 11:50:18.524968	2015-05-14 11:50:29.026769	\N	step1	testing.mp4	\N	\N	\N
+566a4712-b25e-4731-98f1-95ff08605d24	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-14 18:59:18.724	2015-05-14 18:59:26.745872	\N	step1	testing.mp4	\N	\N	\N
+9c216985-9c48-4ecb-acac-62029240113b	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-14 19:00:18.872816	2015-05-14 19:00:26.662346	\N	step1	testing.mp4	\N	\N	\N
+76f2f543-3732-4d33-ac1f-0220d29152a3	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-15 08:34:21.327422	2015-05-15 08:34:32.161985	\N	step1	testing.mp4	\N	\N	\N
+f324e5e7-9264-4ba8-b71f-816f35a58ffb	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-15 08:42:26.828452	2015-05-15 08:42:38.607111	\N	step1	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	\N	\N
+b0521ee6-b4b1-40e3-a5ed-54579ab02b21	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-15 08:44:39.188759	2015-05-15 08:44:50.612203	\N	step1	testing.mp4	\N	\N	\N
+080eab2e-7e23-41ac-8138-53c51137caeb	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-15 08:47:49.480193	2015-05-15 08:48:41.69579	\N	step1	testing.mp4	\N	\N	\N
+c8d9aeb1-1f8d-4362-b505-9f289c070bc0	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-15 08:47:54.613289	2015-05-15 08:49:16.964466	\N	step1	testing.mp4	\N	\N	\N
+4a5d32a6-0d7a-4f4c-94ff-1662d6066484	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-15 08:54:03.725509	2015-05-15 08:54:17.301837	\N	step1	testing.mp4	\N	\N	\N
+78f31a4a-b64e-4a0f-b530-f6035ae18060	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	cliff-j	cliff, cliff-j	\N	\N	\N	\N	\N	1	\N	1	test, cliff-j, cliffj, music, hip-hop	2015-03-02 11:25:14.635587	2015-05-18 23:05:03.670278	fldsjkfdfjd sfljdmsqf kdjfkljd sjkfmdksf f	step2	\N	\N	\N	\N
+0b83aa8c-3192-47b4-9a43-9554152cd178	eb937b95-912f-47fe-9993-6d34e646795b	1	\N			\N	\N	\N	\N	\N	0	\N	\N		2015-05-15 09:10:56.642091	2015-05-15 10:46:14.463471		step2	testing.mp4	\N	\N	\N
+c5e69266-2713-476c-8ca8-7615f14df28f	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-17 00:11:12.187365	2015-05-17 00:11:12.187365	\N	\N	\N	\N	\N	\N
+ba7f58e9-9b96-4695-b1db-2f8d987b8925	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-17 00:16:29.371712	2015-05-17 00:16:45.797258	\N	step1	testing.mp4	\N	\N	\N
+e37ed1c2-35ad-4768-a482-6e08bfe3e716	eb937b95-912f-47fe-9993-6d34e646795b	1	6	terminator		\N	\N	\N	\N	\N	0	\N	3		2015-05-17 00:52:50.190657	2015-05-18 23:05:54.170529	He's back. Watch the new Terminator Genisys trailer starring Arnold Schwarzenegger. \r\n<a href="http://TerminatorMovie.com">TerminatorMovie.com<a>	step2	terminator.mp4	\N	1.0	2.0
+5dd9de1a-a8b9-43de-b048-f92fe56e28f0	eb937b95-912f-47fe-9993-6d34e646795b	1	1	snoop		\N	\N	\N	\N	\N	0	\N	1		2015-05-18 23:06:55.872473	2015-05-18 23:15:20.86586	"So Many Pros" taken from Snoop Dogg's new album BUSH produced by Pharrell Williams.  Get the album 	step2	Snoop_Dogg_-_So_Many_Pros-JPIm6vrSl9s.mp4	\N	0.0	0.0
+e7b80f8e-b8a8-4c33-87c9-186a619aa724	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-20 18:53:01.999041	2015-05-20 18:56:39.230861	\N	step1	pyramide-2014.avi	\N	0.0	0.0
+250dc7d4-ec7c-4036-b6d7-e49f226d125c	eb937b95-912f-47fe-9993-6d34e646795b	1	4	250DC	cliff	\N	\N	\N	\N	\N	0	\N	3	fdsf, fdjsf, jke	2015-05-17 00:26:25.741357	2015-05-18 21:59:01.246383	Jfjdsmfdsfksd,f,df sdjfdslqfjdskfdqf,fd sjfkdsfjkdsfqjdjsqf	step2	testing.mp4	\N	-1.0	0.0
+3b550446-e76e-4cd9-be9f-f59f8a0a5ee0	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-18 09:19:35.697697	2015-05-18 09:19:55.912559	\N	step1	testing.mp4	\N	\N	\N
+328ba5e6-d618-4b10-b9ef-3d3b6f1ed8b4	eb937b95-912f-47fe-9993-6d34e646795b	1	6	pyramide		\N	\N	\N	\N	\N	0	\N	1		2015-05-20 19:22:23.208946	2015-05-21 00:32:22.038252		step2	pyramide.mp4	\N	0.0	0.0
+e4cdf378-d48a-46c8-8b77-242f338110f7	eb937b95-912f-47fe-9993-6d34e646795b	1	\N	testttt		\N	\N	\N	\N	\N	0	\N	\N		2015-05-18 09:22:22.627149	2015-05-18 09:24:56.243372		step2	testing.mp4	\N	\N	\N
+64964c69-e0c3-47fc-a3a7-9f5fcb27b895	eb937b95-912f-47fe-9993-6d34e646795b	1	6	Taken 3		\N	\N	\N	\N	\N	0	\N	1		2015-05-21 20:22:04.240868	2015-05-21 21:52:52.650333		step2	__www.OMGTORRENT.com___Taken.3.2014.EXTENDED.FRENCH.BDRip.XviD-GLUPS.avi	\N	0.0	0.0
+2155469a-085c-48b7-98cb-9e8cb183883e	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-26 13:13:14.100777	2015-05-26 13:13:14.100777	\N	\N	\N	\N	0.0	0.0
+5dc26670-4288-4b69-82d8-31692bf6cca4	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-26 13:18:23.09961	2015-05-26 13:20:11.925725	\N	step1	trim.4F2D08C1-8607-45BB-9EE1-D3B056CF44D3.MOV	\N	0.0	0.0
+50b49280-5fa4-4e82-8b40-6ec77928e863	eb937b95-912f-47fe-9993-6d34e646795b	1	2	CJ-Entert		\N	\N	\N	\N	\N	0	\N	1		2015-05-18 22:00:40.367086	2015-05-18 22:47:36.424065	fds	step2	Batman_v_Superman_-_Dawn_of_Justice_-_Official_Teaser_Trailer__HD_-IwfUnkBfdZ4.mp4	\N	0.0	\N
+af5144f0-d973-46bf-87da-8539117d5125	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	3	Patinoire max		\N	\N	\N	\N	\N	0	\N	1		2015-05-26 13:24:17.920814	2015-05-26 13:29:19.995143	A good Time a la patinoire	step2	trim.88DC9004-545C-498A-9048-743739845567.MOV	\N	0.0	0.0
+d733b60b-7473-4a5d-ac34-0ce1688726d0	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	4	Max working		\N	\N	\N	\N	\N	0	\N	1		2015-05-26 13:48:22.11783	2015-05-26 13:53:58.858954		step2	capturedvideo.MOV	\N	0.0	0.0
+de1b2543-ab0b-4b45-8a11-e463a106056d	e6751100-2eb3-44a5-97ff-d270661f9a7c	1	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	\N	\N	2015-05-26 14:21:10.185984	2015-05-26 14:21:10.185984	\N	\N	\N	\N	0.0	0.0
+\.
+
+
+--
+-- Data for Name: medias_playlists; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY medias_playlists (media_id, playlist_id) FROM stdin;
+d31b9058-700b-47e4-905b-2b3b62b22c66	fc117936-868a-49dd-8ef8-c6b40f93ed97
+6b217f4b-8685-4bd4-8c41-6a26c8c38228	40503d70-5586-4be4-8313-4a6777c9d274
+6b217f4b-8685-4bd4-8c41-6a26c8c38228	fc117936-868a-49dd-8ef8-c6b40f93ed97
+d31b9058-700b-47e4-905b-2b3b62b22c66	40503d70-5586-4be4-8313-4a6777c9d274
+78f31a4a-b64e-4a0f-b530-f6035ae18060	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+1d304c91-6cf4-44b5-8cd0-18d86a85b753	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+1d304c91-6cf4-44b5-8cd0-18d86a85b753	ea1ca113-617d-4a4f-983c-342397dc0ed7
+b2b8446a-5029-449e-8c1d-b5d78b489dc1	ea1ca113-617d-4a4f-983c-342397dc0ed7
+250dc7d4-ec7c-4036-b6d7-e49f226d125c	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+250dc7d4-ec7c-4036-b6d7-e49f226d125c	ea1ca113-617d-4a4f-983c-342397dc0ed7
+e37ed1c2-35ad-4768-a482-6e08bfe3e716	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+50b49280-5fa4-4e82-8b40-6ec77928e863	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+50b49280-5fa4-4e82-8b40-6ec77928e863	9c755f02-5a45-4348-91bc-dbb37b8189bb
+5dd9de1a-a8b9-43de-b048-f92fe56e28f0	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+328ba5e6-d618-4b10-b9ef-3d3b6f1ed8b4	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+64964c69-e0c3-47fc-a3a7-9f5fcb27b895	2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1
+af5144f0-d973-46bf-87da-8539117d5125	40503d70-5586-4be4-8313-4a6777c9d274
+af5144f0-d973-46bf-87da-8539117d5125	fc117936-868a-49dd-8ef8-c6b40f93ed97
+d733b60b-7473-4a5d-ac34-0ce1688726d0	40503d70-5586-4be4-8313-4a6777c9d274
+\.
+
+
+--
+-- Data for Name: medias_timeline; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY medias_timeline (id, "time", bin_id, label_id, document_id, created_at, updated_at) FROM stdin;
+1	13:43:37.082401	\N	3	1	2015-05-20 13:43:37.095638	2015-05-20 13:43:37.095638
+2	13:59:12.011214	\N	3	1	2015-05-20 13:59:12.025343	2015-05-20 13:59:12.025343
+3	14:03:52.75943	\N	3	1	2015-05-20 14:03:52.802724	2015-05-20 14:03:52.802724
+4	14:07:32.398112	\N	1	3	2015-05-20 14:07:32.434869	2015-05-20 14:07:32.434869
+5	14:08:31.691884	\N	3	1	2015-05-20 14:08:31.693196	2015-05-20 14:08:31.693196
+6	14:08:41.118841	\N	1	3	2015-05-20 14:08:41.120226	2015-05-20 14:08:41.120226
+7	14:10:03.651496	\N	3	1	2015-05-20 14:10:03.665417	2015-05-20 14:10:03.665417
+8	14:10:28.129587	\N	1	3	2015-05-20 14:10:28.1311	2015-05-20 14:10:28.1311
+9	\N	\N	\N	\N	2015-05-20 14:22:32.87016	2015-05-20 14:22:32.87016
+10	\N	\N	\N	\N	2015-05-20 14:22:40.110521	2015-05-20 14:22:40.110521
+\.
+
+
+--
+-- Name: medias_timeline_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('medias_timeline_id_seq', 10, true);
+
+
+--
+-- Data for Name: playlists; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY playlists (id, title, user_id, cover, tags, created_at, updated_at) FROM stdin;
+2da53f5d-c1d8-4f1e-b4c6-00f878a69ed1	Max-testt	eb937b95-912f-47fe-9993-6d34e646795b	\N		2015-03-16 09:41:03.6058	2015-03-16 09:41:03.6058
+ea1ca113-617d-4a4f-983c-342397dc0ed7	Max-testing-2	eb937b95-912f-47fe-9993-6d34e646795b	\N		2015-03-17 09:45:04.988886	2015-03-17 09:45:04.988886
+40503d70-5586-4be4-8313-4a6777c9d274	my p	e6751100-2eb3-44a5-97ff-d270661f9a7c	\N		2015-03-20 10:41:29.868543	2015-03-20 10:41:29.868543
+fc117936-868a-49dd-8ef8-c6b40f93ed97	my-p2	e6751100-2eb3-44a5-97ff-d270661f9a7c	\N		2015-03-20 12:26:48.479032	2015-03-20 12:26:48.479032
+9c755f02-5a45-4348-91bc-dbb37b8189bb	Batman vs Superman	eb937b95-912f-47fe-9993-6d34e646795b	\N		2015-04-28 18:46:44.894226	2015-04-28 18:46:44.894226
+06127075-5f96-4f6f-98d2-a72f5c1aef95	Soundtrack	eb937b95-912f-47fe-9993-6d34e646795b	\N		2015-04-30 14:03:02.295631	2015-04-30 14:03:02.295631
+c0b86a84-ad2c-4cc6-94d8-1bb0d8270473	testting	eb937b95-912f-47fe-9993-6d34e646795b	\N	zttatzt	2015-05-03 23:26:13.871299	2015-05-03 23:26:34.559668
+0ff55977-fdb9-4650-8651-141b35f0e94e	shakti	eb937b95-912f-47fe-9993-6d34e646795b	\N		2015-05-08 15:25:18.097518	2015-05-08 15:25:18.097518
+cde4f1ea-1eee-40be-8414-2777ddbd21cc	sam	eb937b95-912f-47fe-9993-6d34e646795b	\N		2015-05-08 18:38:09.917424	2015-05-08 18:38:09.917424
+\.
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY schema_migrations (version) FROM stdin;
+20150219113336
+20150219120843
+20150225135606
+20150227084741
+20150227120647
+20150302102723
+20150303182258
+20150510141827
+20150510200343
+20150510201059
+20150517130620
+20150517130757
+20150517132539
+20150517132556
+20150518045431
+20150518221013
+20150518221149
+20150518221307
+20150518221445
+20150519135023
+20150520140238
+\.
+
+
+--
+-- Data for Name: system_profils; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY system_profils (id, title, parameters, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: system_profils_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('system_profils_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_abouts; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_abouts (id, user_id, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: user_abouts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_abouts_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_on_hold_videos; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_on_hold_videos (id, user_id, media_id, seen, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: user_on_hold_videos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_on_hold_videos_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_subscriptions; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_subscriptions (id, channel_id, user_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: user_subscriptions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_subscriptions_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_video_views; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY user_video_views (id, user_id, media_id, last_time_seen, category, genre, type, created_at, updated_at, dislike, "like", client_ip) FROM stdin;
+14	eb937b95-912f-47fe-9993-6d34e646795b	50b49280-5fa4-4e82-8b40-6ec77928e863	2015-05-21 08:37:00.021306	\N	\N	\N	2015-05-18 22:47:36.352712	2015-05-21 08:37:00.05392	\N	f	\N
+24	e6751100-2eb3-44a5-97ff-d270661f9a7c	6b217f4b-8685-4bd4-8c41-6a26c8c38228	2015-05-26 13:37:07.097712	\N	\N	\N	2015-05-26 13:37:04.122892	2015-05-26 13:37:07.098676	\N	f	\N
+25	e6751100-2eb3-44a5-97ff-d270661f9a7c	d733b60b-7473-4a5d-ac34-0ce1688726d0	2015-05-26 14:22:23.894841	\N	\N	\N	2015-05-26 13:53:58.853569	2015-05-26 14:22:23.896268	\N	f	\N
+23	e6751100-2eb3-44a5-97ff-d270661f9a7c	af5144f0-d973-46bf-87da-8539117d5125	2015-05-26 14:23:07.289575	\N	\N	\N	2015-05-26 13:29:19.944239	2015-05-26 14:23:07.290602	\N	f	\N
+20	eb937b95-912f-47fe-9993-6d34e646795b	8a984d0b-c541-485a-8172-04cacd579ea2	2015-05-21 14:28:48.816835	\N	\N	\N	2015-05-21 14:19:24.559287	2015-05-21 14:28:48.818289	\N	f	\N
+21	eb937b95-912f-47fe-9993-6d34e646795b	b2b8446a-5029-449e-8c1d-b5d78b489dc1	2015-05-21 14:30:02.735978	\N	\N	\N	2015-05-21 14:29:46.697402	2015-05-21 14:30:02.737775	\N	f	\N
+15	eb937b95-912f-47fe-9993-6d34e646795b	78f31a4a-b64e-4a0f-b530-f6035ae18060	2015-05-18 23:06:10.020451	\N	\N	\N	2015-05-18 23:05:03.641286	2015-05-18 23:06:10.022813	\N	f	\N
+19	eb937b95-912f-47fe-9993-6d34e646795b	328ba5e6-d618-4b10-b9ef-3d3b6f1ed8b4	2015-05-21 20:15:49.476728	\N	\N	\N	2015-05-21 00:32:21.911344	2015-05-21 20:15:49.47844	\N	f	\N
+12	\N	250dc7d4-ec7c-4036-b6d7-e49f226d125c	2015-05-20 09:01:44.120559	\N	\N	\N	2015-05-18 10:24:09.669435	2015-05-20 09:01:44.182593	\N	\N	::1
+16	eb937b95-912f-47fe-9993-6d34e646795b	1d304c91-6cf4-44b5-8cd0-18d86a85b753	2015-05-20 09:01:53.149719	\N	\N	\N	2015-05-18 23:05:30.706518	2015-05-20 09:01:53.151076	\N	f	\N
+11	eb937b95-912f-47fe-9993-6d34e646795b	250dc7d4-ec7c-4036-b6d7-e49f226d125c	2015-05-18 22:41:31.686054	\N	\N	\N	2015-05-18 10:20:27.695692	2015-05-18 22:41:31.687978	f	f	\N
+13	e6751100-2eb3-44a5-97ff-d270661f9a7c	250dc7d4-ec7c-4036-b6d7-e49f226d125c	2015-05-20 09:14:50.589891	\N	\N	\N	2015-05-18 10:29:26.471292	2015-05-20 09:14:50.591634	\N	\N	\N
+18	eb937b95-912f-47fe-9993-6d34e646795b	5dd9de1a-a8b9-43de-b048-f92fe56e28f0	2015-05-26 10:08:20.717557	\N	\N	\N	2015-05-18 23:15:20.855736	2015-05-26 10:08:20.719449	\N	f	\N
+17	eb937b95-912f-47fe-9993-6d34e646795b	e37ed1c2-35ad-4768-a482-6e08bfe3e716	2015-05-26 10:26:27.93107	\N	\N	\N	2015-05-18 23:05:54.091769	2015-05-26 10:26:27.939099	\N	f	\N
+22	eb937b95-912f-47fe-9993-6d34e646795b	64964c69-e0c3-47fc-a3a7-9f5fcb27b895	2015-05-26 10:35:55.957001	\N	\N	\N	2015-05-21 21:52:52.615321	2015-05-26 10:35:55.958019	\N	f	\N
+\.
+
+
+--
+-- Name: user_video_views_id_seq; Type: SEQUENCE SET; Schema: public; Owner: maxclifordjean
+--
+
+SELECT pg_catalog.setval('user_video_views_id_seq', 25, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: maxclifordjean
+--
+
+COPY users (id, email, encrypted_password, reset_password_token, reset_password_sent_at, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, firstname, lastname, name, channel_name, pseudo, phone, address, zip_code, city, states, country, "isAdmin", profil, cover, last_device_used, tags, provider, uid, oauth_token, oauth_expires_at, genre, created_at, updated_at, limit_pseudo_change) FROM stdin;
+55526a55-faa3-4ae9-ac35-8431018f9eef	maxwelli@gmail.com	$2a$10$6knIu5iufb7vnkGDK7L.2.kHtaVSop5LEiX4XGa3MLzB1csDWss96	\N	\N	\N	3	2015-03-12 19:38:33.354658	2015-03-12 15:32:42.071851	::1	::1	\N	\N	\N	\N	maxwell	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-03-12 15:19:52.207599	2015-03-12 19:38:33.357539	\N
+2fa49ca9-d723-434c-b84d-3d8ccb9d1505	maxcliford@magency.fr	$2a$10$eqg5WXqlRs050d4JMz0cqeA/uuIHBWiN0y5OLhDMJ5hcpT4p.l4Sq	\N	\N	\N	21	2015-05-24 10:18:29.246966	2015-05-04 09:01:01.124754	::1	::1	\N	\N	\N	\N	cj-max	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 15:22:27.445289	2015-05-24 10:18:29.250818	\N
+235fc6c6-1392-421f-a338-efde7a19eff4	ddsds@gmail.com	$2a$10$4iRz4WRBmz5u1dykrdbW6OTpMZeoin2uXhZ8mBDVZWdyn.ub6dL4S	\N	\N	\N	1	2015-02-26 20:15:21.628247	2015-02-26 20:15:21.628247	::1	::1	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:15:21.56222	2015-02-26 20:15:21.630627	\N
+58d67177-4ce4-42b3-967f-6d50f57d81f7	aaa@gmail.com	$2a$10$QO0BFa0mXfYW/KSL1A7.v.GZi7rWwN9uuAACroGPO6o5bf.Zya/GK	\N	\N	\N	1	2015-02-26 20:27:28.319556	2015-02-26 20:27:28.319556	::1	::1	\N	\N	max	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:27:28.315589	2015-02-26 20:27:28.321322	\N
+90eacfa6-dee9-4576-a927-282c99f8bd5d	poo@gmail.com	$2a$10$D0jVGYsbfjcz3C.Vv8lnc.ElRZNZbe8RiKqFDQYykGeRT8YjFuKqO	\N	\N	\N	1	2015-02-26 20:33:56.674907	2015-02-26 20:33:56.674907	::1	::1	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:33:56.671041	2015-02-26 20:33:56.676686	\N
+a135e200-8ac7-4b86-81c0-85f9a15e82be	clifford@gmail.com	$2a$10$xtrxaasMIAyk3FP8i7dnJeLF51MKuzICvqAGWfLxiFmB.EGeN4Pnm	\N	\N	\N	1	2015-02-27 09:10:04.179095	2015-02-27 09:10:04.179095	::1	::1	\N	\N	\N	\N	Clifford	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-27 09:10:04.174376	2015-02-27 09:10:04.180849	\N
+2d5719e6-7c78-47e6-aa00-f4528d945798	yu@gmail.com	$2a$10$2hQ6WzRvODy178H4Kuw9n.x3hZtxrOcE.khDZBxSx5MB.UXqRbPG2	\N	\N	\N	1	2015-02-26 20:34:40.170994	2015-02-26 20:34:40.170994	::1	::1	\N	\N	yu	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:34:40.167299	2015-02-26 20:34:40.172847	\N
+c9db51d4-c71a-41a0-b71b-730af754e5e8	jj@gmail.com	$2a$10$UCJyyli1tWNX3RYFOnBaT.EkPdpPxKb.eTiuFlNqjosn0fiQYw7Ya	\N	\N	\N	1	2015-02-26 20:40:17.68323	2015-02-26 20:40:17.68323	::1	::1	\N	\N	jjjjeeeeV	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:40:17.679228	2015-02-26 20:41:03.436935	\N
+cdc0fe1a-954c-43b2-b2ac-5d3a61cba6f4	testing@gmail.com	$2a$10$mUP4GtEklA4BHLBpDvylk.IiYgMsb2pPCRFfsHwHLs1W0vaYS7ltC	\N	\N	\N	1	2015-02-26 20:42:47.956479	2015-02-26 20:42:47.956479	::1	::1	\N	\N	testing	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:42:47.952628	2015-02-26 20:42:47.958173	\N
+457d9aba-a024-43d2-982a-137a7cf88c59	adl@gmail.com	$2a$10$ibUCyHTJzIUTG6zyrlzHFerbTKuHpyaEjgWs5IldB8leMtSCbCk0K	\N	\N	\N	1	2015-02-26 20:44:42.107802	2015-02-26 20:44:42.107802	::1	::1	\N	\N	ADL	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:44:42.10373	2015-02-26 20:44:42.109557	\N
+62b57875-ab21-4827-a865-f887f29e62ff	fdjsk@gmail.com	$2a$10$AxiLeGELJT5pmiljpteLqe8ou/udj0WXEc9sQN4vBkRLfodBbdn3O	\N	\N	\N	1	2015-02-26 20:47:45.639355	2015-02-26 20:47:45.639355	::1	::1	\N	\N	FLDKS	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:47:45.635493	2015-02-26 20:47:45.641216	\N
+250ccd1b-9d9d-458e-865c-ab0f57bab12b	aaad@gmail.com	$2a$10$KbQGXtZrJXHVz2mKVRqLZul252Fv.867YkKxQBL0juh/bN8QJYUmK	\N	\N	\N	1	2015-02-26 20:49:24.047357	2015-02-26 20:49:24.047357	::1	::1	\N	\N	aaaa	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:49:24.043628	2015-02-26 20:49:24.049259	\N
+06c610e6-a0cc-4fce-84d6-cebf86654b5d	success@gmail.com	$2a$10$a.7Afpo2dVXRWNbOGzr5wuCBUS0PT02TL0jj4yhKQvNieIcyghba6	\N	\N	\N	2	2015-02-26 20:51:52.118438	2015-02-26 20:50:05.514239	::1	::1	\N	\N	successT	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:50:05.510614	2015-02-26 20:51:52.1211	\N
+30199e27-cf23-4a81-80d1-aa70ccb11aa7	hhh@gmail.com	$2a$10$QWbGaQ/exGKdR.7PxzRiXeUOzkpg8rY98L5jzCOvfVy83yyN4Z/Ei	\N	\N	\N	1	2015-02-26 20:53:52.801069	2015-02-26 20:53:52.801069	::1	::1	\N	\N		\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-02-26 20:53:52.797051	2015-02-26 20:53:52.802852	\N
+eb937b95-912f-47fe-9993-6d34e646795b	maxcliffordjean@gmail.com	\N	f01043ce17c69a203466cf288ef3b535f20a67583400b0cb6e34479ef9d2f417	2015-03-02 12:55:19.939083	\N	45	2015-05-26 10:16:38.136992	2015-05-24 10:19:06.085153	::1	::1	Max Clifford	Jean	Max Clifford Jean	\N	Cliff-J	\N	\N	\N	\N	\N	\N	\N	\N	http://graph.facebook.com/398706596957138/picture	\N	\N	facebook	398706596957138	CAAIUNom7FV0BAID6x3MGCEUAQJbZChz8XKS7Xa1BFPdDWUJrbGSwSdnS6tBZB6JK4nbZC3o4h78acfutzlZAmRZAmpigk5f4ToX36FP2GK1LyjOcwAzallt1uMwCHHCVIo2TZBlM0zglxQnczWzFroWptd016FGw1EorSTF4GtZA8U9oXNujnd3RNht1yDL3OeFeCQ0bylXZC3G7DAkXZAcF9	2015-04-27 13:43:52	\N	2015-02-27 10:05:49.977839	2015-05-26 10:16:38.140553	\N
+e6751100-2eb3-44a5-97ff-d270661f9a7c	contact@cliff-j.com	\N	\N	\N	\N	19	2015-05-26 14:20:00.998324	2015-05-26 13:39:57.144675	10.20.86.81	10.20.85.225	\N	\N	Cliff-J	\N	Cliff	\N	\N	\N	\N	\N	\N	\N	\N	http://pbs.twimg.com/profile_images/2726922349/3a701f6c5cc47943780211dab1e3c0b3_normal.jpeg	\N	\N	twitter	885385610	885385610-rzJ5GqM0U0HukAjubuyfnblIG3jw49eKZEZAn7DO	\N	\N	2015-02-27 09:29:12.209511	2015-05-26 14:20:01.001299	\N
+\.
+
+
+--
+-- Name: bins_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY bins
+    ADD CONSTRAINT bins_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: category_of_playlists_channels_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY category_of_playlists_channels
+    ADD CONSTRAINT category_of_playlists_channels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: channels_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY channels
+    ADD CONSTRAINT channels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY delayed_jobs
+    ADD CONSTRAINT delayed_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: documents_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY documents
+    ADD CONSTRAINT documents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: labels_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY labels
+    ADD CONSTRAINT labels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY media_categories
+    ADD CONSTRAINT media_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_treatments_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY media_treatments
+    ADD CONSTRAINT media_treatments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: medias_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY medias
+    ADD CONSTRAINT medias_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: medias_timeline_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY medias_timeline
+    ADD CONSTRAINT medias_timeline_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: playlists_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY playlists
+    ADD CONSTRAINT playlists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_profils_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY system_profils
+    ADD CONSTRAINT system_profils_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_abouts_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_abouts
+    ADD CONSTRAINT user_abouts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_on_hold_videos_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_on_hold_videos
+    ADD CONSTRAINT user_on_hold_videos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_subscriptions
+    ADD CONSTRAINT user_subscriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_video_views_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY user_video_views
+    ADD CONSTRAINT user_video_views_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: delayed_jobs_priority; Type: INDEX; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at);
+
+
+--
+-- Name: index_comments_on_commentable_id_and_commentable_type; Type: INDEX; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE INDEX index_comments_on_commentable_id_and_commentable_type ON comments USING btree (commentable_id, commentable_type);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: maxclifordjean; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: maxclifordjean
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM maxclifordjean;
+GRANT ALL ON SCHEMA public TO maxclifordjean;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

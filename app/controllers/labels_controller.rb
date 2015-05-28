@@ -25,7 +25,7 @@ class LabelsController < ApplicationController
   # POST /labels
   # POST /labels.json
   def create
-    @my_bin = Bin.find(params[:my_bin])
+    @my_bin = Bin.find(params[:label][:bin_id])
     @my_bin.labels.new(label_params)
 
     respond_to do |format|

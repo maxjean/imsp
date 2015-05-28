@@ -101,8 +101,10 @@ Rails.application.routes.draw do
   match "create_bin", controller: "events", via: ['get','post']
   match "modify_bin", controller: "events", via: ['get','post']
 
-  match "media_timeline", controller: "events", via: ['get','post']
+  match "media_timeline", controller: "events", via: ['get','post','destroy']
+  resources :media_timelines do
 
+  end
 
   resources :labels do
   end

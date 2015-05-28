@@ -20,3 +20,18 @@ jQuery(document).ready(function($){ //init jquery
         $.post($(this).data("dislike-button"),{media_dislike_button:$(this).val(),_method:"get"})
     })
 });
+
+/*
+jQuery(document).ready(function($){ //init jquery
+    $(".add-media-timeline-OnTop").on("click", function(){
+        $(".media_timelines-list-body").prepend()
+        //$.post($(this).data("media-timeline"),{add_media_timeline:$(this).val(),_method:"get"})
+    })
+});
+
+jQuery(document).ready(function($){ //init jquery
+    $(".add-media-timeline-afterElement").on("click", function(){
+        $.post($(this).data("media-timeline"),{add_media_timeline:$(this).val(),_method:"get"})
+    })
+});
+*/
