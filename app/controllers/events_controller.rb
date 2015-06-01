@@ -12,6 +12,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = set_event
+    @event_bin = @event.bins.where(:is_current => true)[0]
   end
 
   # GET /events/new
