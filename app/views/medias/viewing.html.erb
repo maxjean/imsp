@@ -42,9 +42,13 @@
   </div>
   <div class="subtitle"></div>
 <div class="row row_top">
-  <div class="col-xs-12 col-sm-3 col-media-comments">
-    <div class="media-comments"><%= @media.description %></div>
-
+  <div class="col-xs-12 col-sm-3">
+    <div class="col-media-comments">
+        <div class="media-comments"><%= @media.description %></div>
+    </div>
+    <div class="col-media-timeline">
+      <div mediatimeline id="timeline"></div>
+    </div>
   </div>
   <div class="col-xs-12 col-sm-6 col-media">
     <div class="media" ng-controller="MediaController" ng-class="{'media-blur' : showSettings == true }">

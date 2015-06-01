@@ -520,3 +520,8 @@
     display: block;
 }
 
+#timeline{
+    height: 233px;
+    overflow: auto;
+    display: block;
+}

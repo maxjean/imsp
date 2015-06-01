@@ -1,4 +1,4 @@
-app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserFactory, $routeParams,$timeout,$route, $websocket, WebSocket) {
+app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserFactory, MediaTimelinesFactory, $routeParams,$timeout,$route, $websocket, WebSocket) {
     $rootScope.loading = true;
     $scope.slideshowID = $routeParams.id;
     $scope.spinnerLoad = true;
@@ -15,6 +15,26 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
     $scope.showRow2;
 
 
+    $scope.timelines = MediaTimelinesFactory.getTimelines().then(function(timelines){
+        $scope.timelines = timelines;
+        var currentDate = new Date;
+        for (i=0; i<= $scope.timelines.length; i++) {
+            console.log("timeline:",$scope.timelines[i]["time"])
+            var pop = Popcorn(document.querySelector('video'));
+            pop.timeline({
+                start: $scope.timelines[i]["time"].slice(14,16),
+                target: "timeline",
+                title: $scope.timelines[i]["label"].title,
+                text: $scope.timelines[i]["label"].description,
+                innerHTML: "Click here for <a href='http://www.google.ca'>Google</a>",
+                direction: "up"
+            });
+        }
+
+        console.log("timelines",$scope.timelines);
+    }, function(msg){
+        alert(msg);
+    });
 
     if(!$scope.slideshowID){
         $scope.datas = InfoFactory.getInfos().then(function(allInfosServers){
@@ -221,6 +241,18 @@ app.directive('mediaplayer', function(){
             );
             //player.attachTo(playerElement);
             $(".container").parent().css("width","100%")
+        }
+    }
+});
+
+app.directive('mediatimeline', function(){
+    return {
+        restrict: 'AE',
+        //scope: { timelines: '=' },
+        link: function (scope, element, attr) {
+            $( document ).ready(function() {
+                $(element).children().children().css('background', 'linear-gradient(to bottom, rgba(160, 160, 160, 0.05), rgba(163, 163, 163, 0.2)');
+            });
         }
     }
 });

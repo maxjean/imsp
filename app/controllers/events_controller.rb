@@ -90,8 +90,8 @@ class EventsController < ApplicationController
       end
 
       #binding.debugger
-      @bin.update_attributes!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display], :is_current => params[:is_current], :media_id => params[:media][:id])
-      @media_timeline_attributes = params[:bin][:media_timeline_attributes] unless !nil
+      @bin.update_attributes!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display], :is_current => params[:is_current], :media_id => params[:media][:id], )
+      @media_timeline_attributes = params[:bin][:media_timeline_attributes]
       if @media_timeline_attributes.present?
         @media_timeline_attributes.each do |media_timeline_attribute|
           @db_media_timeline_attribute = @bin.media_timelines.find_by_id(media_timeline_attribute[0])
@@ -100,6 +100,7 @@ class EventsController < ApplicationController
               @db_media_timeline_attribute.time = media_timeline_attribute[1][:time]
               @db_media_timeline_attribute.label_id = media_timeline_attribute[1][:label_id]
               @db_media_timeline_attribute.document_id = media_timeline_attribute[1][:document_id]
+              @db_media_timeline_attribute.bin_id = params[:my_bin]
               @db_media_timeline_attribute.save!
             elsif media_timeline_attribute[1][:_destroy] == "1"
               @db_media_timeline_attribute.destroy!
@@ -121,13 +122,15 @@ class EventsController < ApplicationController
     current_event_ref = current_event[0]["event_id"]
     current_event = Event.find(current_event_ref)
 
-    event_bin = current_event.bins.where(:is_current => true)
+    ebins = current_event.bins.where(:is_current => true)
+    ebin = ebins[0]
 
-    current_media_timelines = event_bin[0].media_timelines.includes(:document, :label).order(time: :asc)
+    current_media_timelines = ebin.media_timelines.includes(:document, :label).order(time: :asc)
     media_timelines = []
     current_media_timelines.each do |mt| media_timelines << { "time" => mt.time, "label" => mt.label, "document" => mt.document } end
 
     media_timeline_api = media_timelines
+    #binding.debugger
     render :json => media_timeline_api
   end
 

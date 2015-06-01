@@ -6,12 +6,12 @@ class MediasController < ApplicationController
       @media = Media.find(params[:m])
     end
 
-    #binding.debugger
     if params[:event]
        @event= Event.find(params[:event])
        @event_bin = @event.bins.where(:is_current => true)
        @media = Media.find(@event_bin[0].media_id)
        @current_media_timelines = @event_bin[0].media_timelines.includes(:document, :label).order(time: :asc)
+       #binding.debugger
 
        session[:event] = @event_bin
     end
