@@ -83,9 +83,14 @@ class EventsController < ApplicationController
       @my_bin = Bin.find(params[:my_bin])
     elsif params[:event_id]
       @bin = Bin.find(params[:my_bin])
-      @bin.update_attributes!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display])
+
+      if params[:is_current] == "1"
+         Bin.where.not(:id => @bin.id).update_all(:is_current => false)
+      end
+
       #binding.debugger
-      @media_timeline_attributes = params[:bin][:media_timeline_attributes]
+      @bin.update_attributes!(:event_id => params[:event_id], :title => params[:title], :is_display => params[:is_display], :is_current => params[:is_current], :media_id => params[:media][:id])
+      @media_timeline_attributes = params[:bin][:media_timeline_attributes] unless !nil
       if @media_timeline_attributes.present?
         @media_timeline_attributes.each do |media_timeline_attribute|
           @db_media_timeline_attribute = @bin.media_timelines.find_by_id(media_timeline_attribute[0])
@@ -108,6 +113,19 @@ class EventsController < ApplicationController
         end
       end
     end
+  end
+
+  def media_timeline_api
+    @media_timeline_api = session[:media_timeline]
+    #binding.debugger
+=begin
+    @media_timeline_api = @media_timeline_api[0]["event_id"]
+    #binding.debugger
+    e = Event.find(@media_timeline_api)
+    e = e.bins.where(:is_current => true)
+    @media_timelines_api = e.media_timelines
+=end
+    render :json => @media_timeline_api
   end
 
 

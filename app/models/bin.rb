@@ -3,6 +3,7 @@ class Bin < ActiveRecord::Base
   has_many :documents
   has_many :labels
   has_many :media_timelines
+  belongs_to :media
 
   validates_presence_of :event_id
   validates_presence_of :title

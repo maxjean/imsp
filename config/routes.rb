@@ -102,9 +102,6 @@ Rails.application.routes.draw do
   match "modify_bin", controller: "events", via: ['get','post']
 
   match "media_timeline", controller: "events", via: ['get','post','destroy']
-  resources :media_timelines do
-
-  end
 
   resources :labels do
   end
@@ -114,4 +111,5 @@ Rails.application.routes.draw do
   get "channel", controller: "application"
 
   get "category_plist_channels_api", controller: "users", :only => [:show], :defaults => { :format => 'json' }
+  get "media_timeline_api", controller: "events", :only => [:show], :defaults => { :format => 'json' }
 end

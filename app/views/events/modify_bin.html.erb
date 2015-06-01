@@ -9,15 +9,17 @@
             <h3 class="bin-header">Bin for event: <span class="my_event_title"><%=@my_event.title.capitalize %></span></h3>
             <label><span>Bin title</span><span><%= text_field_tag(:title,"",:value => @my_bin.title, :class =>"title-field")%></span></label>
             <label><span>Display it?</span><span><%= check_box_tag(:is_display)%></span></label><br>
+            <label><span>Is current?</span><span><%= check_box_tag(:is_current)%></span></label><br>
+            <label><span>Add Media</span><span><%= collection_select :media, :id, current_user.medias, :id, :title %></span></label><br>
             <span style="float:right;"><%= link_to '', '', :class => "add-media-timeline-OnTop glyphicon glyphicon-plus-sign", remote: true %></span>
             <table class="table table-striped media_timelines-table">
               <thead class="media_timelines-table-head">
                   <tr>
-                    <th colspan="#" style="width:128px;">Time</th>
-                    <th colspan="#" style="width:90px;">Label</th>
-                    <th colspan="#" style="width:115px;">Document</th>
-                    <th colspan="#" style="width:60px;"></th>
-                    <th colspan="#" style="width:60px;"></th>
+                    <th colspan="#" style="width:128px;text-align:center;">Time</th>
+                    <th colspan="#" style="width:90px;text-align:center;">Label</th>
+                    <th colspan="#" style="width:115px;text-align:center;">Document</th>
+                    <th colspan="#" style="width:60px;text-align:center;"><span class="glyphicon glyphicon-trash"></span></th>
+                    <th colspan="#" style="width:60px;text-align:center;"></th>
                   </tr>
               </thead>
               <tbody class="media_timelines-list-body">
@@ -27,7 +29,7 @@
                             <td colspan="#" style="width:128px;"><%= media_timeline_form.time_field :time %></td>
                             <td colspan="#" style="width:90px;"><%= media_timeline_form.collection_select :label_id, @my_bin.labels, :id, :title, {:prompt => ''} %></td>
                             <td colspan="#" style="width:115px;"><%= media_timeline_form.collection_select :document_id, @my_bin.documents, :id, :title, {:prompt => ''} %></td>
-                            <td style="width:30px"><%= media_timeline_form.check_box '_destroy' %></td>
+                            <td colspan="#" style="width:60px"><%= media_timeline_form.check_box '_destroy' %></td>
                             <td colspan="#" style="width:60px;"><%= link_to '', media_timeline_path(media_timeline), method: :delete, data: { confirm: 'Are you sure?' }, :class => "add-media-timeline-afterElement glyphicon glyphicon-plus-sign" %></td>
                             <td></td>
                           </tr>
@@ -38,7 +40,7 @@
               </tbody>
             </table>
             <hr>
-            <%= button_tag("Modify", :class => "btn btn-primary") %>
+            <%= button_tag("Save", :class => "btn btn-primary") %>
         <% end %>
       </div>
     </div>

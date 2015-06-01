@@ -27,6 +27,7 @@
                 <th colspan="#" style="width:40px;">#</th>
                 <th colspan="#" style="width:135px;">Title</th>
                 <th colspan="#" style="width:70px;">Display?</th>
+                <th colspan="#" style="width:70px;">Current?</th>
                 <th colspan="#" style="width:30px;"></th>
                 <th colspan="#" style="width:30px;"></th>
               </tr>
@@ -37,6 +38,11 @@
                     <td colspan="#" style="width:40px;"><%= i+1 %></td>
                     <td colspan="#" style="width:135px;"><%= bin.title %></td>
                     <% if bin.is_display  %>
+                        <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
+                    <% else %>
+                        <td class="glyphicon glyphicon-remove" style="width:70px;"></td>
+                    <% end %>
+                    <% if bin.is_current  %>
                         <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
                     <% else %>
                         <td class="glyphicon glyphicon-remove" style="width:70px;"></td>

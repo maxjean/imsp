@@ -2,9 +2,24 @@ class MediasController < ApplicationController
   before_action :set_media, only: [:show, :edit, :update, :destroy]
 
   def viewing
-    @media = Media.find(params[:m])
+    if params[:m]
+      @media = Media.find(params[:m])
+    end
 
-    @playlist = Playlist.find(params[:plist])
+    #binding.debugger
+    if params[:event]
+       @event= Event.find(params[:event])
+       @event_bin = @event.bins.where(:is_current => true)
+      #binding.debugger
+       @media = Media.find(@event_bin[0].media_id)
+       #session[:media_timeline] = @event_bin
+       session[:media_timeline] = @event_bin[0].media_timelines.includes(:document, :label).order(:time).map{|mt| "{#{mt.time}: [#{mt.document.inspect}, #{mt.label.inspect}}]"}
+
+    end
+
+    if params[:plist]
+      @playlist = Playlist.find(params[:plist])
+    end
 
     if current_user
       Media.addToUserVideoViews(current_user, @media)
