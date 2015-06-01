@@ -116,16 +116,18 @@ class EventsController < ApplicationController
   end
 
   def media_timeline_api
-    @media_timeline_api = session[:media_timeline]
-    #binding.debugger
-=begin
-    @media_timeline_api = @media_timeline_api[0]["event_id"]
-    #binding.debugger
-    e = Event.find(@media_timeline_api)
-    e = e.bins.where(:is_current => true)
-    @media_timelines_api = e.media_timelines
-=end
-    render :json => @media_timeline_api
+    current_event = session[:event]
+    current_event_ref = current_event[0]["event_id"]
+    current_event = Event.find(current_event_ref)
+
+    event_bin = current_event.bins.where(:is_current => true)
+
+    current_media_timelines = event_bin[0].media_timelines.includes(:document, :label).order(time: :asc)
+    media_timelines = []
+    current_media_timelines.each do |mt| media_timelines << { "time" => mt.time, "label" => mt.label, "document" => mt.document } end
+
+    media_timeline_api = media_timelines
+    render :json => media_timeline_api
   end
 
 

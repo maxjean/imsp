@@ -10,11 +10,10 @@ class MediasController < ApplicationController
     if params[:event]
        @event= Event.find(params[:event])
        @event_bin = @event.bins.where(:is_current => true)
-      #binding.debugger
        @media = Media.find(@event_bin[0].media_id)
-       #session[:media_timeline] = @event_bin
-       session[:media_timeline] = @event_bin[0].media_timelines.includes(:document, :label).order(:time).map{|mt| "{#{mt.time}: [#{mt.document.inspect}, #{mt.label.inspect}}]"}
+       @current_media_timelines = @event_bin[0].media_timelines.includes(:document, :label).order(time: :asc)
 
+       session[:event] = @event_bin
     end
 
     if params[:plist]
