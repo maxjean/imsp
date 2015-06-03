@@ -85,7 +85,7 @@ group :development, :test do
   gem 'thread', '~> 0.2.0'
 
   #gem 'rubysl-stringio'
-
+  gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 end
 
 
