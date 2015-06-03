@@ -17,17 +17,14 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
 
     $scope.timelines = MediaTimelinesFactory.getTimelines().then(function(timelines){
         $scope.timelines = timelines;
-        var currentDate = new Date;
+        var pop = Popcorn(document.querySelector('video'));
         for (i=0; i<= $scope.timelines.length; i++) {
-            console.log("timeline:",$scope.timelines[i]["time"])
-            var pop = Popcorn(document.querySelector('video'));
             pop.timeline({
-                start: $scope.timelines[i]["time"].slice(14,16),
+                start: $scope.timelines[i]["time"],
                 target: "timeline",
                 title: $scope.timelines[i]["label"].title,
                 text: $scope.timelines[i]["label"].description,
-                innerHTML: "Click here for <a href='http://www.google.ca'>Google</a>",
-                direction: "up"
+                innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime("+$scope.timelines[i].time+")'  href=#>"+$scope.timelines[i].time+"</a>"
             });
         }
 
@@ -35,6 +32,11 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
     }, function(msg){
         alert(msg);
     });
+
+    goAtThisTime = function(time){
+        var pop = Popcorn(document.querySelector('video'));
+        pop.play(time);
+    };
 
     if(!$scope.slideshowID){
         $scope.datas = InfoFactory.getInfos().then(function(allInfosServers){

@@ -60,6 +60,11 @@
                     <label>Associate to playlists</label>
                     <%= f.select :playlist_ids, current_user.playlists.map{|c|[c.title, c.id]},{prompt: ''}, :multiple => true, :class=>"list-group-item" %>
                   </div>
+<!--                <div class="field">
+                    <label>Upload Translation files</label>
+                    <%#= f.select.media_translate.language :language %>
+                    <%#= f.media_translate.file_field :file %>
+                </div>-->
             </div>
         </div>
         <div class="actions">

@@ -127,7 +127,7 @@ class EventsController < ApplicationController
 
     current_media_timelines = ebin.media_timelines.includes(:document, :label).order(time: :asc)
     media_timelines = []
-    current_media_timelines.each do |mt| media_timelines << { "time" => mt.time, "label" => mt.label, "document" => mt.document } end
+    current_media_timelines.each do |mt| media_timelines << { "time" => Time.parse(mt.time.to_s).seconds_since_midnight, "label" => mt.label, "document" => mt.document } end
 
     media_timeline_api = media_timelines
     #binding.debugger

@@ -26,7 +26,7 @@
                 <% for media_timeline in @my_bin.media_timelines %>
                     <%= fields_for "bin[media_timeline_attributes][]", media_timeline do |media_timeline_form| %>
                           <tr>
-                            <td colspan="#" style="width:128px;"><%= media_timeline_form.time_field :time %></td>
+                            <td colspan="#" style="width:128px;"><%= media_timeline_form.time_field :time, :max => (Time.parse(@my_bin.media.duration.to_s) unless !nil?), :step => 1 %></td>
                             <td colspan="#" style="width:90px;"><%= media_timeline_form.collection_select :label_id, @my_bin.labels, :id, :title, {:prompt => ''} %></td>
                             <td colspan="#" style="width:115px;"><%= media_timeline_form.collection_select :document_id, @my_bin.documents, :id, :title, {:prompt => ''} %></td>
                             <td colspan="#" style="width:60px"><%= media_timeline_form.check_box '_destroy' %></td>
