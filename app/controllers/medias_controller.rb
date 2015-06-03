@@ -78,12 +78,14 @@ class MediasController < ApplicationController
     if @media.update_attributes(media_params)
       video = FFMPEG::Movie.new(@media.video.file.file)
       if video.valid? == true
-
         video.transcode("./public/uploads/media/video/#{@media.id}/#{@media.id}_640x360.mp4") {|progress| puts progress}
         3.times do |x| video.screenshot("./public/uploads/media/video/#{@media.id}/#{@media.id}_#{x}.png", seek_time: "#{x+=1}", resolution: '320x240') end
 
-        upload = Transfer.upload("195.154.67.219","cliffjtech","Jesuis03","./public/uploads/media/video/#{@media.id}", '/usr/local/nginx/html/imsp')
+        upload = Transfer.upload("ip-addr","hostname","pass","./public/uploads/media/video/#{@media.id}", '/usr/local/nginx/html/imsp')
         system("rm -rf ./public/uploads/media/video/#{@media.id}")
+
+        @media.duration = Time.at(video.duration).utc
+        @media.save!
       else
         @media.form_step == "step1"
       end
