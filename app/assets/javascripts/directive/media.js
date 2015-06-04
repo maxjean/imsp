@@ -1,4 +1,4 @@
-app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserFactory, MediaTimelinesFactory, $routeParams,$timeout,$route, $websocket, WebSocket) {
+app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserFactory, MediaTimelinesFactory, MediaTranslationFactory, $routeParams,$timeout,$route, $websocket, WebSocket) {
     $rootScope.loading = true;
     $scope.slideshowID = $routeParams.id;
     $scope.spinnerLoad = true;
@@ -14,6 +14,27 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
     $scope.showRow;
     $scope.showRow2;
 
+    $scope.mediaTranslations = MediaTranslationFactory.getTranslations().then(function(translations){
+        $scope.mediaTranslations = translations;
+        moment.duration($scope.mediaTranslations.start_time).asSeconds();
+        var pop = Popcorn(document.querySelector('video'));
+        for (i=0; i<= $scope.mediaTranslations.length; i++) {
+            pop.subtitle({
+                start: moment.duration($scope.mediaTranslations[i].start_time).asSeconds(),
+                end: moment.duration($scope.mediaTranslations[i].end_time).asSeconds(),
+                text: $scope.mediaTranslations[i].text
+            });
+            pop.subtitle({
+                start: moment.duration($scope.mediaTranslations[i].start_time).asSeconds(),
+                end: moment.duration($scope.mediaTranslations[i].end_time).asSeconds(),
+                text: $scope.mediaTranslations[i].text,
+                target: "media_translation",
+                innerHTML: $scope.mediaTranslations[i].text
+            });
+        }
+    }, function(msg){
+        alert(msg);
+    });
 
     $scope.timelines = MediaTimelinesFactory.getTimelines().then(function(timelines){
         $scope.timelines = timelines;
@@ -28,10 +49,11 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
             });
         }
 
-        console.log("timelines",$scope.timelines);
     }, function(msg){
         alert(msg);
     });
+
+
 
     goAtThisTime = function(time){
         var pop = Popcorn(document.querySelector('video'));
