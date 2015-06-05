@@ -64,7 +64,7 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
 
     goAtThisTime = function(time){
         var pop = Popcorn(document.querySelector('video'));
-        pop.play(time);
+        pop.currentTime(time);
     };
 
     if(!$scope.slideshowID){

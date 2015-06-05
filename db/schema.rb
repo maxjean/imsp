@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605122724) do
+ActiveRecord::Schema.define(version: 20150605160502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,7 +133,28 @@ ActiveRecord::Schema.define(version: 20150605122724) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
+    t.string   "question"
+    t.string   "field1"
+    t.string   "field2"
+    t.string   "field3"
+    t.string   "field4"
+    t.string   "score_field1"
+    t.string   "score_field2"
+    t.string   "correct_field"
+    t.string   "correct_score_field"
+    t.datetime "limite_datetime"
+    t.boolean  "gives_results"
+    t.text     "correct_answer_descriptions"
   end
+
+  create_table "labels_users_answers", force: :cascade do |t|
+    t.uuid    "user_id"
+    t.integer "label_id"
+    t.string  "answer"
+  end
+
+  add_index "labels_users_answers", ["label_id"], name: "index_labels_users_answers_on_label_id", using: :btree
 
   create_table "media_categories", force: :cascade do |t|
     t.string   "name"
@@ -296,4 +317,5 @@ ActiveRecord::Schema.define(version: 20150605122724) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "labels_users_answers", "labels"
 end
