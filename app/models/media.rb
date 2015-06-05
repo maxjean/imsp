@@ -12,7 +12,7 @@ class Media < ActiveRecord::Base
   belongs_to :media_category
   has_one    :media_treatment
   has_many :bins
-  mount_uploader :video, VideoUploader
+  #mount_uploader :video, VideoUploader
 
     @encoding_state = ['start', 'succeed', 'failed']
 

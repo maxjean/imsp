@@ -259,6 +259,7 @@ DEPENDENCIES
   arel
   bcrypt (~> 3.1.7)
   byebug
+  carrierwave
   carrierwave-ftp
   coffee-rails (~> 4.1.0)
   daemons-rails (~> 1.2.1)

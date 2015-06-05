@@ -45,6 +45,13 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
                 target: "timeline",
                 title: $scope.timelines[i]["label"].title,
                 text: $scope.timelines[i]["label"].description,
+                innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime(" + $scope.timelines[i].time + ")'  href=#>" + $scope.timelines[i].time + "</a>"
+            });
+            pop.timeline({
+                start: $scope.timelines[i]["time"],
+                target: "timeline",
+                title: $scope.timelines[i]["document"].title,
+                text: "<iframe src=\""+$scope.timelines[i]['document']['file'].url+'\"width=\"100%\"'+'\"height=\"200\"'+'\"><iframe>\"',
                 innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime("+$scope.timelines[i].time+")'  href=#>"+$scope.timelines[i].time+"</a>"
             });
         }

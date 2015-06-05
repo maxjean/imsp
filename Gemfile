@@ -68,7 +68,7 @@ group :development, :test do
 
   gem 'wicked'
 
-  #gem 'carrierwave'
+  gem 'carrierwave'
   gem 'net-ssh', '~> 2.9.2'
   gem 'net-scp'
   #gem 'carrierwave-scp', '~> 0.0.1'
