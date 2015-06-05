@@ -1,6 +1,6 @@
 'use strict'
 
-var app = angular.module('MyApp',['ngRoute','spinnerLoader','angular-websocket','ngWebsocket']);
+var app = angular.module('MyApp',['ngRoute','spinnerLoader','angular-websocket','ngWebsocket','ngTwitter']);
 // app.config(function($httpProvider){
 //     //Enable cross domain calls
 //       $httpProvider.defaults.useXDomain = true;

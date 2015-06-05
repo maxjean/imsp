@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603211657) do
+ActiveRecord::Schema.define(version: 20150604134523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,11 +90,11 @@ ActiveRecord::Schema.define(version: 20150603211657) do
     t.integer  "bin_id"
     t.boolean  "is_display"
     t.string   "authors"
-    t.string   "file"
     t.string   "added_by"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "file"
   end
 
   create_table "events", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

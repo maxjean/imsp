@@ -17,10 +17,8 @@ app.factory('MediaTranslationFactory', function ($http, $q, $timeout){
                     var elems = factory.translations;
                     for (var i = 0; i < elems.length; i++){
                         var elem = elems[i];
-                        console.log(elem);
                         mediaTranslations.push(elem);
                     }
-                    console.log(mediaTranslations);
                     $timeout(function(){
                         deferred.resolve(mediaTranslations);
                     }, 2000)

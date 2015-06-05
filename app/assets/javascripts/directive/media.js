@@ -13,6 +13,10 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
     $scope.showNavigation;
     $scope.showRow;
     $scope.showRow2;
+    $scope.authKey = 'CbTiw0oQCNMivsZL02ankxGMk';
+    $scope.hashtag = '';
+
+
 
     $scope.mediaTranslations = MediaTranslationFactory.getTranslations().then(function(translations){
         $scope.mediaTranslations = translations;
@@ -20,6 +24,7 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
         var pop = Popcorn(document.querySelector('video'));
         for (i=0; i<= $scope.mediaTranslations.length; i++) {
             pop.subtitle({
+                target: "sub",
                 start: moment.duration($scope.mediaTranslations[i].start_time).asSeconds(),
                 end: moment.duration($scope.mediaTranslations[i].end_time).asSeconds(),
                 text: $scope.mediaTranslations[i].text
@@ -41,10 +46,18 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
         var pop = Popcorn(document.querySelector('video'));
         for (i=0; i<= $scope.timelines.length; i++) {
             pop.timeline({
+                id: "myid",
                 start: $scope.timelines[i]["time"],
                 target: "timeline",
                 title: $scope.timelines[i]["label"].title,
                 text: $scope.timelines[i]["label"].description,
+                innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime("+$scope.timelines[i].time+")'  href=#>"+$scope.timelines[i].time+"</a>"
+            });
+            pop.timeline({
+                start: $scope.timelines[i]["time"],
+                target: "timeline",
+                title: $scope.timelines[i]["document"].title,
+                text: "<iframe src=\""+$scope.timelines[i]['document']['file'].url+'\"width=\"100%\"'+'\"height=\"200\"'+'\"><iframe>\"',
                 innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime("+$scope.timelines[i].time+")'  href=#>"+$scope.timelines[i].time+"</a>"
             });
         }
@@ -57,7 +70,7 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
 
     goAtThisTime = function(time){
         var pop = Popcorn(document.querySelector('video'));
-        pop.play(time);
+        pop.currentTime(time);
     };
 
     if(!$scope.slideshowID){
