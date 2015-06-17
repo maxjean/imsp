@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605160502) do
+ActiveRecord::Schema.define(version: 20150617122425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,12 +146,16 @@ ActiveRecord::Schema.define(version: 20150605160502) do
     t.datetime "limite_datetime"
     t.boolean  "gives_results"
     t.text     "correct_answer_descriptions"
+    t.string   "label_type"
+    t.string   "quiz_url"
+    t.string   "img"
   end
 
   create_table "labels_users_answers", force: :cascade do |t|
     t.uuid    "user_id"
     t.integer "label_id"
     t.string  "answer"
+    t.string  "quiz_step"
   end
 
   add_index "labels_users_answers", ["label_id"], name: "index_labels_users_answers_on_label_id", using: :btree

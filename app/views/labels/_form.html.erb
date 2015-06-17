@@ -21,6 +21,12 @@
           <%= f.text_area :description %><br>
         </div>
         <div class="field">
+          <%= f.label :label_type %><br>
+          <%= f.select :label_type, options_for_select(['quiz', 'score']),{include_blank: true}, {:data => {:remote => true}} %>
+        </div>
+        <div class="field" data-type-label="<%= label_path(0) %>">
+        </div>
+        <div class="field">
           <%= f.label :is_display %><br>
           <%= f.check_box :is_display %><br>
         </div>
@@ -29,8 +35,8 @@
           <%= f.text_field :authors %><br>
         </div>
         <div class="field">
-          <%= f.label "img" %><br>
-          <%= f.file_field :file %><br>
+          <%= f.label :img %><br>
+          <%= f.file_field :img %><br>
         </div>
           <%= f.hidden_field :added_by, :value => current_user.name %><br>
           <%= f.hidden_field :bin_id, :value => params[:my_bin] %><br>

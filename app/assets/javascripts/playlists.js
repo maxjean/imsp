@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){ //init jquery
     var body = $("body.playlists");
     body.on("change","select[name='category[]']",function(){
-        $.post($(this).data("url"),{category_ids:$(this).val(),_method:"put"})
+        $.post($(this).data("url"),{category_ids:$(this).val(),_method:"get"})
     });
 
     $("body.playlists").change(function(){

@@ -14,6 +14,7 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
     $scope.showRow;
     $scope.showRow2;
 
+
     $scope.mediaTranslations = MediaTranslationFactory.getTranslations().then(function(translations){
         $scope.mediaTranslations = translations;
         moment.duration($scope.mediaTranslations.start_time).asSeconds();
@@ -24,13 +25,13 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
                 end: moment.duration($scope.mediaTranslations[i].end_time).asSeconds(),
                 text: $scope.mediaTranslations[i].text
             });
-            pop.subtitle({
+/*            pop.subtitle({
                 start: moment.duration($scope.mediaTranslations[i].start_time).asSeconds(),
                 end: moment.duration($scope.mediaTranslations[i].end_time).asSeconds(),
                 text: $scope.mediaTranslations[i].text,
                 target: "media_translation",
                 innerHTML: $scope.mediaTranslations[i].text
-            });
+            });*/
         }
     }, function(msg){
         alert(msg);
@@ -39,21 +40,37 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
     $scope.timelines = MediaTimelinesFactory.getTimelines().then(function(timelines){
         $scope.timelines = timelines;
         var pop = Popcorn(document.querySelector('video'));
+        var video = document.querySelector('video');
+        video.style.top = "15%";
+        $("#player").children().css("width","100%");
+
         for (i=0; i<= $scope.timelines.length; i++) {
-            pop.timeline({
-                start: $scope.timelines[i]["time"],
-                target: "timeline",
-                title: $scope.timelines[i]["label"].title,
-                text: $scope.timelines[i]["label"].description,
-                innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime(" + $scope.timelines[i].time + ")'  href=#>" + $scope.timelines[i].time + "</a>"
-            });
-            pop.timeline({
-                start: $scope.timelines[i]["time"],
-                target: "timeline",
-                title: $scope.timelines[i]["document"].title,
-                text: "<iframe src=\""+$scope.timelines[i]['document']['file'].url+'\"width=\"100%\"'+'\"height=\"200\"'+'\"><iframe>\"',
-                innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime("+$scope.timelines[i].time+")'  href=#>"+$scope.timelines[i].time+"</a>"
-            });
+            if ($scope.timelines[i]["label"].label_type !== undefined) {
+                pop.timeline({
+                    start: $scope.timelines[i]["time"],
+                    target: "timeline",
+                    title: $scope.timelines[i]["label"].title,
+                    text: $scope.timelines[i]["label"].description,
+                    innerHTML: "<img src=\"" + $scope.timelines[i]["label"]["img"]["thumb"].url + '\"width=\"95%\"' + 'height=\"150px\"' + "></img>" + "<br><a class='gotocurrenttime' onclick='goAtThisTime(" + $scope.timelines[i].time + ")'  href=#>" + $scope.timelines[i].time + "</a>"
+                });
+            } else if (($scope.timelines[i]["label"].label_type == "quiz") || ($scope.timelines[i]["label"].label_type == "score")) {
+                pop.timeline({
+                    start: $scope.timelines[i]["time"],
+                    target: "timeline",
+                    title: $scope.timelines[i]["label"].title,
+                    text: "<a class=\"quiz_url_link\" href=" + $scope.timelines[i]["label"].quiz_url + ">Go to quiz</a>",
+                    innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime(" + $scope.timelines[i].time + ")'  href=#>" + $scope.timelines[i].time + "</a>"
+                });
+            }
+            if ($scope.timelines[i]["document"]){
+                pop.timeline({
+                    start: $scope.timelines[i]["time"],
+                    target: "timeline",
+                    title: $scope.timelines[i]["document"].title,
+                    text: "<iframe src=\"" + $scope.timelines[i]['document']['file'].url + '\"width=\"95%\"' + '\"height=\"200\"' + '\"><iframe>\"',
+                    innerHTML: "<a class='gotocurrenttime' onclick='goAtThisTime(" + $scope.timelines[i].time + ")'  href=#>" + $scope.timelines[i].time + "</a></br>"
+                });
+            }
         }
 
     }, function(msg){
@@ -268,6 +285,7 @@ app.directive('mediaplayer', function(){
                     //watermark: "rtmp://10.20.77.238/vod/Url-logo.png", position: 'top-right',
                     //poster: "http://10.20.77.238/Url-logo.png",
                     plugins: {playback: [RTMP]}}
+                    //plugins: {'container': [SpeechControl]}}
 
             );
             //player.attachTo(playerElement);

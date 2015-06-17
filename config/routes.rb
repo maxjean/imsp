@@ -98,6 +98,8 @@ Rails.application.routes.draw do
 
   resources :events
 
+  match "quiz", :to => 'events#quiz', as: "quiz", via: %w(get post put)
+
   match "create_bin", controller: "events", via: ['get','post']
   match "modify_bin", controller: "events", via: ['get','post']
 

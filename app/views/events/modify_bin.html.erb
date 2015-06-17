@@ -3,7 +3,7 @@
       <h3 class="title col-xs-10 col-sm-4">Event Manager</h3>
     </div>
     <div class="row">
-      <div class="col-xs-12 col-sm-5 edit_bin">
+      <div class="col-xs-12 col-sm-6 edit_bin">
         <span class="modify-bin-text"></span>
         <%= form_tag(controller: "events", action: "modify_bin", method: "get", class: "edit_bin") do %>
             <h3 class="bin-header">Bin for event: <span class="my_event_title"><%=@my_event.title.capitalize %></span></h3>

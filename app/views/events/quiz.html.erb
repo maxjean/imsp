@@ -1,0 +1,33 @@
+ <div class="quiz-content">
+   <h1>Quiz</h1>
+   <hgroup class="quiz-title">
+     <h2 class="question"><%= @label.question %></h2>
+     <div class="answer"></div>
+   </hgroup>
+   <% if @label.label_type == "quiz" %>
+       <ul class="">
+
+       </ul>
+   <% elsif @label.label_type == "score" %>
+        <li><%= link_to "#{@label.quiz_url}&select_field=#{@label.field1}", :data => {field: @label.field1}, remote:true, :class => "answers-link" do %><span><%=@label.field1%></span><%end %></li>
+       <li><%= link_to "#{@label.quiz_url}&select_field=#{@label.field2}", remote:true, :class => "answers-link" do %><span><%=@label.field2%></span><% end %></li>
+       <li><%= link_to "#{@label.quiz_url}&select_field=#{@label.score_field1}", remote:true, :class => "answers-link" do %><span><%=@label.field3%></span><% end %></li>
+       <li><%= link_to "#{@label.quiz_url}&select_field=#{@label.score_field2}", remote:true, :class => "answers-link" do %><span><%=@label.field4%></span><% end %></li>
+
+       <td class=<%#=@label.id%>><%#= select_tag "quiz", options_for_select(%w(field1 field2 field3 field3)),:multiple => true, :data => {url: quiz_path(""), id: @label.id, :class=>"list-group-item"}%></td>
+
+    <% end %>
+
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+
+      </div>
+    </div>
+
+ </div>

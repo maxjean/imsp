@@ -281,6 +281,7 @@ DEPENDENCIES
   pry-rails
   railroady
   rails (= 4.2.0)
+  rmagick
   sdoc (~> 0.4.0)
   spring
   sqlite3

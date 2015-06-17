@@ -1,7 +1,9 @@
 /**
  * Created by maxclifordjean on 18/05/15.
  */
-
+var video = document.querySelector('video');
+video.style.top = "15%";
+$("#player").children().css("width","100%");
 /*
 $.ajax({
     url: "/test"
@@ -11,6 +13,7 @@ $.ajax({
 
 jQuery(document).ready(function($){ //init jquery
     $(".media-like-button").on("click", function(){
+        alert("work");
         $.post($(this).data("button-like"),{media_like_button:$(this).val(),_method:"get"})
     })
 });

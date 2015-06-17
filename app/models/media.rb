@@ -54,26 +54,73 @@ class Media < ActiveRecord::Base
   def self.addLikeToUserVideoViews(user, media)
     @user = user.user_video_views.find_by(media_id: media.id)
     @media = Media.find(media.id)
-    if UserVideoView.find_by(media_id: media.id)
-      if @user.dislike == false || nil && @user.like == false
-        @user.like = true
-        @media.like+=1
-      elsif @user.dislike == false && @user.like == true
-        @user.like = false
+    @user_video_view = user.user_video_views.find_by_media_id(media.id)
+    if @user_video_view.like != true
+      if @user_video_view.dislike == true
+        if @media.like == nil
+          @media.like = 1
+        elsif @media.like >= 0
+          @media.like+=1
+        end
+
+        if @media.dislike == nil #impossible
+          @media.dislike = 0
+        elsif @media.dislike > 0
+          @media.dislike-=1
+        end
+        @user_video_view.dislike = !@user_video_view.dislike
+      else
+        if @media.like == nil
+          @media.like = 1
+        elsif @media.like >= 0
+          @media.like+=1
+        end
+      end
+      @user_video_view.like = !@user_video_view.like
+    else
+      @user_video_view.like = !@user_video_view.like
+      if @media.like > 0
         @media.like-=1
-      elsif @user.dislike == true && @user.like == false
-        @user.like = true
-        @user.dislike = false
-        @media.like+=1
+      end
+    end
+    @user_video_view.save!
+    @media.save!
+  end
+
+  def self.addDislikeToUserVideoViews(user, media)
+    @user = user.user_video_views.find_by(media_id: media.id)
+    @media = Media.find(media.id)
+    @user_video_view = user.user_video_views.find_by_media_id(media.id)
+    if @user_video_view.dislike != true
+      if @user_video_view.like == true
+        if @media.dislike == nil
+          @media.dislike = 1
+        elsif @media.dislike >= 0
+          @media.dislike+=1
+        end
+
+        if @media.like == nil #impossible
+          @media.like = 0
+        elsif @media.like > 0
+          @media.like-=1
+        end
+        @user_video_view.like = !@user_video_view.like
+      else
+        if @media.dislike == nil
+          @media.dislike = 1
+        elsif @media.dislike >= 0
+          @media.dislike+=1
+        end
+      end
+      @user_video_view.dislike = !@user_video_view.dislike
+    else
+      @user_video_view.dislike = !@user_video_view.dislike
+      if @media.dislike > 0
         @media.dislike-=1
       end
     end
-  end
-
-
-  def self.addDislikeToUserVideoViews(user, media)
-    @user = user.user_video_views.find_by(user_id: user.id)
-    @media = Media.find(media.id)
+    @user_video_view.save!
+    @media.save!
   end
 
   #check if current_media has_alread_been_seen_by_this_user

@@ -117,6 +117,41 @@ class EventsController < ApplicationController
     end
   end
 
+  def quiz
+    @label = Label.find(params[:label])
+    if @label.is_display == true
+      if @label.labels_users_answers.find_by_user_id(current_user.id).present? && @label.gives_results == true
+        render :quiz_results #OKAY
+      else
+        render :quiz  #OKAY
+      end
+    else
+      "redirect_to the event viewing page"
+      "not yet accessible, please try again later."
+    end
+
+    if request.xhr?
+      if params[:select_field]
+        if !@label.labels_users_answers.find_by_user_id(current_user.id).present?
+          @label.labels_users_answers.create(:user_id => current_user.id, :answer => params[:select_field], :quiz_step => "quiz_results")
+          if @label.is_display == true && @label.gives_results == true
+            puts "render-quiz-results xhr"
+            render :quiz_results #OKAY
+          else
+            puts "redirect-quiz-results to viewing1"
+            render :quiz
+          end
+        else
+          puts "redirect-quiz-results to viewing2" #you already answered!, please back again to check result, in xxxtimes remaining
+          render :quiz
+        end
+      end
+      #binding.debugger
+    end
+
+    #binding.debugger
+  end
+
   def media_timeline_api
     current_event = session[:event]
     current_event_ref = current_event[0]["event_id"]
