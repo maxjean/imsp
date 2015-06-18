@@ -1,6 +1,7 @@
 class CategoryOfPlaylistsChannel < ActiveRecord::Base
   belongs_to :channel
   has_and_belongs_to_many :playlists
+  mount_uploader :cover, CategoryOfPlaylistsChannelUploader
 
   def self.addPlaylist(playlists_category, playlist)
     if playlists_category.playlists.find_by(id: playlist.id).nil?

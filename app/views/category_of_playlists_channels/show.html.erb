@@ -16,7 +16,7 @@
         <%= link_to playlist_path(plist.id) do %>
             <div class="row plist-categ-link">
                 <div class="thumbnail col-sm-4" style="visibility: visible">
-                    <%= image_tag("paysage4.jpg") %>
+                    <%= image_tag plist.cover_url(:thumb).to_s %>
                 </div>
                 <div class="plist-informations col-sm-8">
                   <span class="plist-name"><%= plist.title %></span>

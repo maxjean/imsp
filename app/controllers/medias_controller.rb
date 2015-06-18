@@ -4,6 +4,7 @@ class MediasController < ApplicationController
   def viewing
     if params[:m]
       @media = Media.find(params[:m])
+      session[:event] = nil
     end
 
     if params[:event]

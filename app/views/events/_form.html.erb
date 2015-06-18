@@ -53,6 +53,10 @@
               <%= f.label :description %><br>
               <%= f.text_area :description %><br>
             </div><br>
+            <div class="field">
+              <%= f.label :cover %><br>
+              <%= f.file_field :cover %><br>
+            </div><br>
 
             <div class="actions">
               <%= button_to("Update", "", {:class=>"btn btn-primary"}) %>

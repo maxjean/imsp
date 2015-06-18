@@ -3,6 +3,7 @@ class Playlist < ActiveRecord::Base
   has_and_belongs_to_many :category_of_playlists_channels
   has_and_belongs_to_many :events
   has_and_belongs_to_many :medias
+  mount_uploader :cover, PlaylistUploader
 
   def self.addMedia(playlist, media)
     if playlist.medias.find_by(id: playlist.id).nil?

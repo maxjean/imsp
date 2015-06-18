@@ -19,7 +19,7 @@
         <div class="playlist-link col-xs-12 col-sm-2">
           <div class=<%=playlist.id%>
               <%= link_to edit_playlist_path(playlist) do %>
-                  <span class="playlist-cover"><%= image_tag("unknown-media.jpg") %></span><br>
+                  <span class="playlist-cover"><%= image_tag playlist.cover %></span><br>
                   <div class="playlist-informations">
                     <span class="playlist-title"><%= playlist.title %></span><span class="playlist-medias-count"><%= playlist.medias.count %></span><br>
                     <span class="playlist-date"><%= playlist.created_at %></span><br>

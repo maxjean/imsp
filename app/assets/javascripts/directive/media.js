@@ -1,7 +1,7 @@
 app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserFactory, MediaTimelinesFactory, MediaTranslationFactory, $routeParams,$timeout,$route, $websocket, WebSocket) {
-    $rootScope.loading = true;
+    $rootScope.loading = false;
     $scope.slideshowID = $routeParams.id;
-    $scope.spinnerLoad = true;
+    $scope.spinnerLoad = false;
     $scope.slideshowLoad = false;
     $scope.loadingInfos = ["Loading datas, please wait...","null"];
     $scope.showPlayPause = false;
@@ -34,7 +34,7 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
             });*/
         }
     }, function(msg){
-        alert(msg);
+        //alert(msg);
     });
 
     $scope.timelines = MediaTimelinesFactory.getTimelines().then(function(timelines){
@@ -74,7 +74,7 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
         }
 
     }, function(msg){
-        alert(msg);
+       // alert(msg);
     });
 
 

@@ -20,7 +20,7 @@ app.factory('MediaTimelinesFactory', function ($http, $q, $timeout){
                     console.log(mediaTimelines);
                     $timeout(function(){
                         deferred.resolve(mediaTimelines);
-                    }, 2000)
+                    }, 0)
                 }).error(function(data, status){
                     deferred.reject("We can't access datas from your media timelines");
                 });

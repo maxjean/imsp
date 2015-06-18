@@ -17,7 +17,7 @@
       <% @medias.each do |media| %>
         <div class="media-links col-xs-12 col-sm-2">
             <%= link_to edit_media_path(media) do %>
-                <span class="media-cover"><%= image_tag("unknown-media.jpg") %></span><br>
+                <span class="media-cover"><%= image_tag media.img_url(:thumb).to_s %></span><br>
                 <div class="media-informations">
                     <span class="media-title"><%= media.title %></span><br>
                     <span class="media-date"><%= media.created_at %></span><br>

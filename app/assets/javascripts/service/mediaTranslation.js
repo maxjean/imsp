@@ -23,7 +23,7 @@ app.factory('MediaTranslationFactory', function ($http, $q, $timeout){
                     console.log(mediaTranslations);
                     $timeout(function(){
                         deferred.resolve(mediaTranslations);
-                    }, 2000)
+                    }, 0)
                 }).error(function(data, status){
                     deferred.reject("We can't access datas from your media timelines");
                 });

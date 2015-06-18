@@ -18,7 +18,7 @@ app.factory('UserFactory', function ($http, $q, $timeout){
                     console.log("elem",elem);
 
                         deferred.resolve(connectedUsersDatas);
-                    }, 2000)
+                    }, 0)
                 }).error(function(data, status){
                     deferred.reject("We can't access dataas");
                 });
