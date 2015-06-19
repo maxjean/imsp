@@ -21,7 +21,7 @@
       <div class="tools col-xs-8 col-sm-8 col-xs-offset-2">
         <ul class="nav nav-pills">
           <li ng-class="{active:$index==activeToolIndex}" ng-repeat="data in datas track by $index" ng-click="setTool($index)">
-            <a href="#">{{data["title"]}}</a>
+            <a href="#"><img src={{data["cover"].thumb.url}}><div class="category-label">{{data["title"]}}</div></a>
           </li>
         </ul>
       </div>

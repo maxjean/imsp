@@ -9,9 +9,7 @@
     height: 100%;
     z-index: 20;
     position: absolute;
-/*
     top: 0px;
-*/
     left: 0px;
     border-style: solid;
     border-color: black;
@@ -25,8 +23,9 @@
     height: 80%;
     border-color: black;
     border-style: solid;
-    background-image: url("paysage1.jpg");
-    background-repeat: no-repeat;
+    /*background-image: url("paysage1.jpg");
+    background-repeat: no-repeat;*/
+    background-color: rgb(76, 76, 76);
 }
 
 .slideshow .slide{
@@ -271,14 +270,24 @@
 }
 
 .slideshow .tools li a{
-    height: 90px;
-    background-image: url("paysage3.jpg");
-    background-size: 130px;
-    width: 130px;
+    /* height: 90px; */
+    /* background-image: url("paysage3.jpg"); */
+    /* background-size: 130px; */
+    /* width: 130px; */
     border-style: solid;
     text-align: center;
     text-transform: uppercase;
-    padding: 34px 10px 20px 10px;
+    /* padding: 34px 10px 20px 10px; */
+    padding: 0;
+}
+
+.category-label{
+    position: absolute;
+    bottom: 0;
+    text-align:center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding:5%;
 }
 
 .slider-nav .previousButton{

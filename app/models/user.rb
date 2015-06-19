@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :user_on_hold_videos
   has_many :user_video_views
   has_many :authorizations
+  mount_uploader :cover, ChannelUploader
 
   validates_presence_of :pseudo
   validates_uniqueness_of :pseudo

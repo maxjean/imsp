@@ -21,7 +21,7 @@
                 <span class="event-debut_date"><%= event.beginning_datetime.strftime("%v") %></span><br>
                 <span class="event-debut_hour"><%= event.finishing_datetime.strftime("%H:%M") %></span><br>
               </div>
-              <span class="event-cover"><%= image_tag("unknown-media.jpg") %></span><br>
+              <span class="event-cover"><%= image_tag event.cover_url(:thumb).to_s %></span><br>
               <div class="event-informations">
                 <span class="event-title"><%= event.title %></span>
                 <div class="event-location">

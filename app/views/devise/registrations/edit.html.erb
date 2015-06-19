@@ -32,6 +32,11 @@
             <%= f.password_field :current_password, autocomplete: "off" %>
         </div>
 
+        <div class="field">
+          <%= f.label :cover %><br>
+          <%= f.file_field :cover %>
+        </div>
+
         <div class="actions">
           <%= button_to "Update", {action: "edit"}, {:class=>"btn btn-primary"} %>
         </div>
