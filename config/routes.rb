@@ -91,6 +91,10 @@ Rails.application.routes.draw do
   resources :medias
   resources :media_steps
 
+  match "search", :to => 'application#search', as: "search", via: %w(get post)
+  get "search", controller: "application", :only => [:show]
+
+
   get "playlists_management", :to => "playlists_management#show", as: "playlists_management", via: 'get'
 
   resources :playlists

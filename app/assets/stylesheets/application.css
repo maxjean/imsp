@@ -45,10 +45,14 @@ body{
 }
 
 .container{
-    margin-top: 55px;
+    margin-top: 52px;
     background: white;
     box-shadow: 0px 2px 11px #565656;
     min-height: 645px;
+}
+
+.search-forms{
+    float:left;
 }
 
 /*

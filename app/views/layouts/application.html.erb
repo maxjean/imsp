@@ -40,16 +40,11 @@
                 </ul>
               </li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-              </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+
             <% if user_signed_in? %>
                 <ul class="nav navbar-nav user_nav">
                   <% if current_user.cover != nil %>
-                      <li class="dropdown"><a href="#" class="dropdown-toggle user_cover_link" data-toggle="dropdown" role="button" aria-expanded="false"><%=image_tag(current_user.cover,:class =>"user_cover")%> <span class="caret"></span></a>
+                      <li class="dropdown"><a href="#" class="dropdown-toggle user_cover_link" data-toggle="dropdown" role="button" aria-expanded="false"><%=image_tag("#{current_user.cover}",:class =>"user_cover")%> <span class="caret"></span></a>
                   <% else %>
                       <li class="dropdown"><a href="#" class="dropdown-toggle user_pseudo_link" data-toggle="dropdown" role="button" aria-expanded="false"><%= current_user.pseudo %> <span class="caret"></span></a>
                   <% end %>
@@ -87,6 +82,12 @@
                         </ul>
                       </li>
                     </ul>
+                </div>
+            <% end %>
+            <%= form_tag(controller: "application", action: "search", method: "post") do %>
+                <div class="form-group search-form">
+                  <%= text_field_tag(:query, "", :class =>"title-field")%>
+                  <%= button_tag("Search", :class => "btn btn-default") %>
                 </div>
             <% end %>
           </div><!-- /.navbar-collapse -->

@@ -45,6 +45,7 @@
 .medias .media-links .media-cover img{
     width: 100%;
     max-height: 180px;
+    height: 120px;
 }
 
 .medias .media-links .media-informations{

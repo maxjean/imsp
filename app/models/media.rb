@@ -1,6 +1,9 @@
 class Media < ActiveRecord::Base
+
   require 'streamio-ffmpeg'
   require 'transfer'
+
+
 
 
   has_many :comments, as: :commentable
@@ -15,7 +18,29 @@ class Media < ActiveRecord::Base
   #mount_uploader :video, VideoUploader
   mount_uploader :img, MediaUploader
 
-    @encoding_state = ['start', 'succeed', 'failed']
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+  class << self
+
+    def custom_search(query)
+      __elasticsearch__.search(query: multi_match_query(query))
+    end
+
+    def multi_match_query(query)
+      {
+          multi_match: {
+              query: query,
+              fields: ['tags','added_by','authors','title^10', 'description']
+          }
+      }
+    end
+
+
+  end
+
+
+  @encoding_state = ['start', 'succeed', 'failed']
 
 
   @transcoding_state = ['start', 'succeed', 'failed']

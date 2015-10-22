@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="search col-xs-12 col-sm-8 col-sm-offset-2">
+    <% case !@results[0].empty? %>
+        <% when !@results[0]["medias"].empty? %>
+            <% @results[0]["medias"].each do|media| %>
+                <div class="row result-link">
+                  <%= link_to "#{viewing_path}?m=#{media["id"]}" do %>
+                      <div class="thumbnail col-sm-4" style="visibility: visible">
+                        <%= image_tag media["img"] %>
+                      </div>
+                      <div class="result-informations col-sm-8">
+                        <span class="result-title"><%= media["title"]%></span>
+                        <span class="result-added_by"><%= media["added_by"] %></span><br>
+                        <span class="result-created_at"><%= media["created_at"] %></span><br>
+                        <span class="result-nb_views"><%= media["nb_views"] %></span><br>
+                        <span class="result-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                      </div>
+                  <% end %>
+                </div>
+            <% end %>
+        <% when !@results[0]["playlists"].empty? %>
+            <% @results[0]["playlists"].each do|playlist| %>
+            <div class="row result-link">
+              <%= link_to playlist_path(playlist["id"])do %>
+                  <div class="thumbnail col-sm-4" style="visibility: visible">
+                    <%= image_tag playlist["cover"] %>
+                  </div>
+                  <div class="result-informations col-sm-8">
+                    <span class="result-title"><%= playlist["title"]%></span>
+                    <span class="result-created_at"><%= playlist["created_at"] %></span><br>
+                  </div>
+              <% end %>
+            </div>
+            <% end %>
+        <% when !@results[0]["channels"].empty? %>
+            <% @results[0]["channels"].each do|channel| %>
+                <div class="row result-link">
+                  <%= link_to user_channel_path(channel["id"]) do %>
+                      <div class="thumbnail col-sm-4" style="visibility: visible">
+                        <%= image_tag channel["img"] %>
+                      </div>
+                      <div class="result-informations col-sm-8">
+                        <span class="result-title"><%= channel["title"]%></span>
+                        <span class="result-added_by"><%= Channel.find(channel["id"]).user.pseudo %></span><br>
+                        <span class="result-created_at"><%= channel["created_at"] %></span><br>
+                        <span class="result-nb_views"><%= channel["nb_views"] %></span><br>
+                        <span class="result-added_by"><%= channel["presentation_text"] %></span><br>
+                      </div>
+                  <% end %>
+                </div>
+            <% end %>
+        <% else %>
+            <p>Nothing matches!!!</p>
+    <% end %>
+  </div>
+</div>
+

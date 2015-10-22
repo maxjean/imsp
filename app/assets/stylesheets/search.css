@@ -1,0 +1,21 @@
+.search .result-link{
+    border-style: double;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 1%;
+    padding: 15px;
+}
+
+.search .result-link:hover{
+    background-color: #ddd;
+    border: white;
+    padding: 15px;
+    border-style: double;
+}
+
+.search .result-link .thumbnail{
+    max-width: 320px;
+    max-height: 220px;
+    height: 160px;
+}

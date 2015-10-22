@@ -91,6 +91,19 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    elasticsearch (1.0.14)
+      elasticsearch-api (= 1.0.14)
+      elasticsearch-transport (= 1.0.14)
+    elasticsearch-api (1.0.14)
+      multi_json
+    elasticsearch-model (0.1.8)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.8)
+    elasticsearch-transport (1.0.14)
+      faraday
+      multi_json
     erubis (2.7.0)
     execjs (2.3.0)
     faraday (0.9.1)
@@ -266,6 +279,8 @@ DEPENDENCIES
   delayed_job (~> 4.0.6)
   delayed_job_active_record
   devise
+  elasticsearch-model
+  elasticsearch-rails
   fileutils (~> 0.7)
   jbuilder (~> 2.0)
   jquery-rails

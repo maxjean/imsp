@@ -11,7 +11,8 @@
 }
 
 .playlists .cover img{
-    width: 180px;
+    width: 176px;
+    height: 120px;
 }
 
 .playlists table tr th{
@@ -81,8 +82,8 @@
     -moz-transition: all .1s linear;
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
-    box-shadow: -1px 0 12px #555;
-    transform: rotate(-2deg);
+    /*box-shadow: -1px 0 12px #555;*/
+    /*transform: rotate(-2deg);*/
 }
 
 .playlists .playlists-items .playlist-link:hover{
@@ -93,6 +94,7 @@
 .playlists .playlists-items .playlist-cover img {
     width: 100%;
     max-height: 180px;
+    height:120px;
 }
 
 .playlists .playlists-items .playlist-link .playlist-informations{

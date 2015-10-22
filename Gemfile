@@ -37,6 +37,9 @@ gem 'omniauth-twitter'
 
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'elasticsearch-rails'
+gem 'elasticsearch-model'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt'
 
