@@ -38,6 +38,8 @@ class ApplicationController < ActionController::Base
   end
 
   def home
+    @popular = Media.popularMedias(5)
+    @recent = Media.recentMedias(5)
   end
 
   def content

@@ -36,8 +36,21 @@ class Media < ActiveRecord::Base
       }
     end
 
+    def popularMedias(limit=5)
+      Media.where.not('nb_views' => nil).order(nb_views: :desc, like: :desc, created_at: :desc).limit(limit)
+    end
 
+    def recentMedias(limit=5)
+      Media.where("nb_views >= ? AND created_at >?", "0","#{DateTime.now.year}-#{DateTime.now.month-7}-#{DateTime.now.day}").order(nb_views: :desc, like: :desc, created_at: :desc).limit(limit)
+    end
+
+    def categoryMedias(limit=5)
+      category = []
+      MediaCategory.all.each{|m| category << {m.name => [m.medias.where.not('nb_views' => nil).order(nb_views: :desc, like: :desc, created_at: :desc).limit(limit)]} unless m.medias.count == 0}
+      return category
+    end
   end
+
 
 
   @encoding_state = ['start', 'succeed', 'failed']

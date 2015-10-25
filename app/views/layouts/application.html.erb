@@ -34,9 +34,9 @@
                   <% if user_signed_in? %>
                       <li><%= link_to 'Recommanded', "#" %></li>
                   <% end %>
-                  <li><%= link_to 'Recently added', "#" %></li>
-                  <li><%= link_to 'Popular', "#" %></li>
-                  <li><%= link_to 'Genres', "#" %></li>
+                  <li><%= link_to 'Recently added', recent_medias_path %></li>
+                  <li><%= link_to 'Popular', popular_medias_path %></li>
+                  <li><%= link_to 'Category', category_medias_path %></li>
                 </ul>
               </li>
             </ul>

@@ -23,7 +23,7 @@
         <% when !@results[0]["playlists"].empty? %>
             <% @results[0]["playlists"].each do|playlist| %>
             <div class="row result-link">
-              <%= link_to playlist_path(playlist["id"])do %>
+              <%= link_to "#{viewing_path}?m=#{Playlist.find(playlist["id"]).medias.first.id}&plist=#{playlist["id"]}" do %>
                   <div class="thumbnail col-sm-4" style="visibility: visible">
                     <%= image_tag playlist["cover"] %>
                   </div>

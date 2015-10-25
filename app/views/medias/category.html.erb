@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="medias col-xs-12 col-sm-12">
+    <% @category.each_with_index do |x,i| %>
+        <div class="row">
+            <h3><%=x.keys[0]%></h3>
+            <hr>
+            <% x[x.keys[0]][0].each do |y|%>
+                <div class="media-links col-xs-12 col-sm-2">
+                <%= link_to "#{viewing_path}?m=#{y["id"]}" do %>
+                    <span class="media-cover" style="visibility: visible">
+                      <%= image_tag y["img"]["url"] %>
+                    </span>
+                    <div class="media-informations col-sm-8">
+                      <span class="media-title"><%= y["title"]%></span>
+                      <span class="media-added_by"><%= y["added_by"] %></span><br>
+                      <span class="media-created_at"><%= y["created_at"] %></span><br>
+                      <span class="media-nb_views"><%= y["nb_views"] %></span><br>
+                      <span class="media-description"><%= y["description"] %></span>
+                    </div>
+                <% end %>
+              </div>
+            <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>
+

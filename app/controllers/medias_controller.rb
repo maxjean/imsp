@@ -1,7 +1,17 @@
 class MediasController < ApplicationController
   before_action :set_media, only: [:show, :edit, :update, :destroy]
 
+  def category
+    @category = Media.categoryMedias.as_json
+  end
 
+  def popular
+    @popular = Media.popularMedias(10)
+  end
+
+  def recent
+    @recent = Media.recentMedias(10)
+  end
 
   def viewing
     if params[:m]
@@ -117,7 +127,11 @@ class MediasController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_media
       #@media = Media.find(params[:channel_id])
-      @media = Media.find(params[:id])
+      if params[:id] == "popular"
+        @popular = Media.popularMedias(3)
+      else
+        @media = Media.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

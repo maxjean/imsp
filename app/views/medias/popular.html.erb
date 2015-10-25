@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="popular col-xs-12 col-sm-8 col-sm-offset-2">
+    <% @popular.each do|popular| %>
+        <div class="row result-link">
+          <%= link_to "#{viewing_path}?m=#{popular.id}" do %>
+              <div class="thumbnail col-sm-4" style="visibility: visible">
+                <%= image_tag popular.img %>
+              </div>
+              <div class="result-informations col-sm-8">
+                <span class="result-title"><%= popular.title%></span>
+                <span class="result-added_by"><%= popular.added_by %></span><br>
+                <span class="result-created_at"><%= popular.created_at %></span><br>
+                <span class="result-nb_views"><%= popular.nb_views %></span><br>
+                <span class="result-description"><%= popular.description %></span>
+              </div>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>
+

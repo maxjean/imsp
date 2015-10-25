@@ -88,7 +88,18 @@ Rails.application.routes.draw do
   match "channel/:id", :to => 'users#show', as: "channel", via: 'get'
 
   match "viewing", :to => 'medias#viewing', as: "viewing", via: 'get'
-  resources :medias
+
+  resource :medias
+  resource :medias, only: :index do
+    get "popular", to: 'medias#popular', :as => "popular"
+    get "recent", to: 'medias#recent', :as => "recent"
+    get "category", to: 'medias#category', :as => "category"
+  end
+
+=begin
+  match "medias/popular", :to => 'medias#popular', as: "popular", via: 'get'
+=end
+
   resources :media_steps
 
   match "search", :to => 'application#search', as: "search", via: %w(get post)
