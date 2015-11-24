@@ -16,6 +16,7 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
 
 
     $scope.mediaTranslations = MediaTranslationFactory.getTranslations().then(function(translations){
+        debugger;
         $scope.mediaTranslations = translations;
         moment.duration($scope.mediaTranslations.start_time).asSeconds();
         var pop = Popcorn(document.querySelector('video'));
@@ -178,20 +179,20 @@ app.controller('MediaController', function($scope,$rootScope, InfoFactory, UserF
                 $scope.showPause = false;
                 $timeout.cancel(slidePlayTimer);
             }, 1000);
-    }
+    };
 
     $scope.pause = function(){
         $timeout.cancel(slideTimer);
         $scope.showPlayPause = true;
         $scope.showPause = true;
         $scope.showPlay = false;
-    }
+    };
 
     $scope.displayNewUserConnected = function(){
         $timeout(function() {
             $scope.showNewUserConnected = true;
         }, 3000);
-    }
+    };
 
 
     /*
@@ -269,7 +270,8 @@ app.directive('mediaplayer', function(){
             var playerElement = document.getElementById("player");
             var video_id = window.location.search.slice(3,39);
             var video_format = "640x360";
-            var video_server_url = "http://195.154.67.219:80/imsp"
+            var video_server_url = "http://195.154.67.219:80/imsp";
+            var elem = video_server_url+"/"+video_id+"/"+video_id+"_"+video_format+".mp4";
             var player = new Clappr.Player({
                     //source: "rtmp://10.20.77.238/vod/terminator.mp4", //flash player & for external links(embedded video)
                     source: video_server_url+"/"+video_id+"/"+video_id+"_"+video_format+".mp4", //in case of hls streaming, compati\ble anywhere(HTML5)
@@ -284,8 +286,10 @@ app.directive('mediaplayer', function(){
                     hideMediaControl: true, //auto hide/display the player bar
                     //watermark: "rtmp://10.20.77.238/vod/Url-logo.png", position: 'top-right',
                     //poster: "http://10.20.77.238/Url-logo.png",
-                    plugins: {playback: [RTMP]}}
-                    //plugins: {'container': [SpeechControl]}}
+                   // plugins: {playback: [RTMP]}
+                    //plugins: {'container': [SpeechControl]}
+
+                }
 
             );
             //player.attachTo(playerElement);
@@ -441,7 +445,7 @@ app.directive('onsettings', function () {
                 }else if(($(".my-settings .row").is(":visible")) == true){
                     closeSettingSection();
                 }
-            })
+            });
 
             $(".close-settings").bind('click', function(){
                 closeSettingSection();

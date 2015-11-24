@@ -89,7 +89,7 @@ Rails.application.routes.draw do
 
   match "viewing", :to => 'medias#viewing', as: "viewing", via: 'get'
 
-  resource :medias
+  resources :medias
   resource :medias, only: :index do
     get "popular", to: 'medias#popular', :as => "popular"
     get "recent", to: 'medias#recent', :as => "recent"
