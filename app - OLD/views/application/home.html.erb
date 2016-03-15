@@ -1,0 +1,45 @@
+<h3>Popular</h3>
+<div class="row">
+  <div class="medias col-xs-12 col-sm-12">
+    <hr>
+    <% @popular.each do |popular| %>
+        <div class="media-links col-xs-12 col-sm-2">
+          <%= link_to "#{viewing_path}?m=#{popular.id}" do %>
+              <span class="media-cover" style="visibility: visible">
+                <%= image_tag popular.img %>
+              </span>
+              <div class="media-informations col-sm-8">
+                <span class="result-title"><%= popular.title%></span>
+                <span class="result-added_by"><%= popular.added_by %></span><br>
+                <span class="result-created_at"><%= popular.created_at %></span><br>
+                <span class="result-nb_views"><%= popular.nb_views %></span><br>
+                <span class="result-description"><%= popular.description %></span>
+              </div>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>
+<h3>Recent</h3>
+<div class="row">
+  <div class="medias col-xs-12 col-sm-12">
+    <hr>
+    <% @recent.each do |recent| %>
+        <div class="media-links col-xs-12 col-sm-2">
+          <%= link_to "#{viewing_path}?m=#{recent.id}" do %>
+              <span class="media-cover" style="visibility: visible">
+                <%= image_tag recent.img %>
+              </span>
+              <div class="media-informations col-sm-8">
+                <span class="result-title"><%= recent.title%></span>
+                <span class="result-added_by"><%= recent.added_by %></span><br>
+                <span class="result-created_at"><%= recent.created_at %></span><br>
+                <span class="result-nb_views"><%= recent.nb_views %></span><br>
+                <span class="result-description"><%= recent.description %></span>
+              </div>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,74 @@
+<div class="medias-management">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+            <div class="video" style="width:100%">
+              <iframe style="float:left" width="100%" height="380" src=<%="#{content_path(params[:id])}" %>  frameborder="0" allowfullscreen></iframe>
+            </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <%= render partial: "form_informations" %>
+      </div>
+      <hr class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2">
+    </div>
+    <%= form_for(@media) do |f| %>
+        <% if @media.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@media.errors.count, "error") %> prohibited this media from being saved:</h2>
+
+              <ul>
+                <% @media.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <h4>Media informations</h4>
+                <div class="field">
+                  <%= f.label :title %><br>
+                  <%= f.text_field :title %>
+                </div>
+                <div class="field">
+                    <%= f.label :media_category_id %><br>
+                    <%= f.select :media_category_id, MediaCategory.all.map {|mc| [mc.name,mc.id]},{prompt: ''}%>
+                </div>
+                <div class="field">
+                  <%= f.label :authors %><br>
+                  <%= f.text_area :authors %>
+                </div>
+                <div class="field">
+                  <%= f.label :description %><br>
+                  <%= f.text_area :description, :size => "40", :maxlength => "100" %>
+                </div>
+                <div class="field">
+                    <%= f.label :tags %><br>
+                    <%= f.text_area :tags %>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                  <h4>How do you want to stream the video?</h4>
+                  <div class="field">
+                    <%= f.label :Live? %>
+                    <%= f.check_box :is_live %>
+                  </div>
+                  <div class="field">
+                    <%= f.label :img %><br>
+                    <%= f.file_field :img %>
+                  </div>
+                  <div class="field list-group">
+                    <label>Associate to playlists</label>
+                    <%= f.select :playlist_ids, current_user.playlists.map{|c|[c.title, c.id]},{prompt: ''}, :multiple => true, :class=>"list-group-item" %>
+                  </div>
+<!--                <div class="field">
+                    <label>Upload Translation files</label>
+                    <%#= f.select.media_translate.language :language %>
+                    <%#= f.media_translate.file_field :file %>
+                </div>-->
+            </div>
+        </div>
+        <div class="actions">
+            <%= button_to "Update", {:class=>"btn btn-primary"} %>
+        </div>
+    <% end %>
+</div>

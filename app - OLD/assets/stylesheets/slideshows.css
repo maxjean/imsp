@@ -1,0 +1,518 @@
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('/assets/fonts/glyphicons-halflings-regular.eot');
+    src: url('/assets/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/assets/stylesheets/glyphicons/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/stylesheets/glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+#layer-slider{
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-style: solid;
+    border-color: black;
+    background: black;
+}
+
+.slideshow{
+    position: relative;
+    top: 8%;
+    width: 100%;
+    height: 80%;
+    border-color: black;
+    border-style: solid;
+    /*background-image: url("paysage1.jpg");
+    background-repeat: no-repeat;*/
+    background-color: rgb(76, 76, 76);
+}
+
+.slideshow .slide{
+    height:100%;
+    width:100%;
+}
+
+.slide-number{
+    color: white;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    border-radius: 5px 8px 0 6px;
+    border: 2px solid;
+    width: 60px;
+    text-align: center;
+}
+
+.slide-appname{
+    color: white;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    border-radius: 5px 8px 0 6px;
+    border: 2px solid;
+    width: 188px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#menu .settings{
+    color:white;
+}
+.my-settings{
+    position: absolute;
+    top: 8%;
+    width: 100%;
+    height: 80%;
+}
+
+.my-settings .navigation{
+    margin: 0px 20px;
+    height: 20px;
+}
+
+.my-settings .navigation a{
+
+}
+
+.my-settings .navigation .previous-section{
+    float:left;
+}
+
+.my-settings .navigation .close-settings{
+    float:right;
+}
+
+.my-settings .row{
+    height: 17em;
+    left: 9.2em;
+    position: absolute;
+    top: 25%;
+    white-space: nowrap;
+/*    width: 25%;*/
+    border-style: solid;
+/*    padding: 0.5em;*/
+    border: 2px solid;
+    border-radius: 6%;
+}
+
+.my-settings .row .item{
+    -webkit-transform: translateX(0%) translateZ(0px);
+    -webkit-transition: none 0s;
+    transition: none 0s;
+    background-color: #fff;
+    height: 100%;
+    padding:4%;
+    max-width: 285px;
+    border-radius: 5%;
+}
+
+.my-settings .row .item .content .title{
+    font-size: 2.8em;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.itemOnHoverOrSelect{
+    border-color: gainsboro;
+}
+
+.my-settings a {
+    color:gray !important;
+}
+.my-settings .row .item .content .icon{
+    background-image: url("dial-icon.png");
+    background-size: 1.5em;
+    color: #fff;
+    font-size: 7em;
+    height: 0.5em;
+    margin-top: .1em;
+    text-align: center;
+    background-repeat: no-repeat;
+    padding: 0.1em;
+    margin: 0px 10%;
+}
+
+.my-settings .row .item .content .description{
+    bottom: -3.4em;
+    box-sizing: border-box;
+    font-size: 1.5em;
+    padding: 0 0.7em;
+    /* position: absolute; */
+    text-align: center;
+    white-space: normal;
+    width: 100%;
+    margin-top: 0.5em;
+}
+
+.my-settings .row2{
+    /*height: 100%;*/
+}
+
+.my-settings .row2 .item{
+    height: 100%;
+}
+
+.my-settings .row2 .pairing-content{
+    text-align: center;
+    color:white;
+    margin: 20%;
+}
+
+.my-settings .row2 .pairing-content .indication-text{
+    text-transform: uppercase;
+    font-size: 3em;
+    background-color: white;
+    color: black;
+    /*opacity: 0.4;*/
+}
+
+.my-settings .row2 .pairing-content .pairing-icon{
+}
+
+.my-settings .row2 .pairing-content .pairing-infos{
+    font-size: 0.8em;
+}
+
+.my-settings .row2 .pairing-content .pairing-infos span{
+    font-size: 2em;
+}
+
+.imgLiquid img {
+    width: 100%;
+    height: 100%;
+}
+
+.liquidConfigurations{
+    height:100%;
+    width:100%;
+}
+
+.liquidConfiguration{
+    height:100%;
+    width:100%;
+}
+
+.imgLiquid figcaption{
+    position: absolute;
+    color: white;
+    text-align: right;
+    left: 0px;
+    bottom: 25%;
+    margin: 0;
+    line-height: 1.3em;
+    padding: 5px 5px 5px 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-align: left;
+    font-size: 1.0em;
+    width: auto;
+    max-width: 770px;
+    min-width: 336px;
+
+}
+
+.serverInfo{
+    width: 100%;
+    display: inline-block;
+}
+
+.serverInfo .serverInfo-serverName-label,.serverInfo-appName-label,.serverInfo-nbServers-label,.slideshow-currentSlide-number-label{
+    float: left;
+    padding: 2px 2px 2px 2px;
+    width: 51%;
+}
+
+.serverInfo .slideshow-currentSlide-number-field{
+    text-align: right;
+}
+
+.serverInfo .serverInfo-serverName-field{
+    text-align: right;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+.serverInfo .serverInfo-serverName-field,.serverInfo-appName-field,.serverInfo-nbServers-field,.slideshow-currentSlide-number-field{
+    float: left;
+    width: 100%;
+    text-align: left;
+}
+
+.slide-servername{
+    color: white;
+    text-align: center;
+    margin-bottom: 1%;
+    border-radius: 5px 8px 0 6px;
+    border: 2px solid;
+    width: 75px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+.slider-nav{
+    float:right;
+    top: 42%;
+    width: 100%;
+    opacity: .7;
+
+}
+
+.slideshow .tools{
+    padding: 14px 5px 5px 5px;
+}
+
+.slideshow .tools li a{
+    /* height: 90px; */
+    /* background-image: url("paysage3.jpg"); */
+    /* background-size: 130px; */
+    /* width: 130px; */
+    border-style: solid;
+    text-align: center;
+    text-transform: uppercase;
+    /* padding: 34px 10px 20px 10px; */
+    padding: 0;
+}
+
+.category-label{
+    position: absolute;
+    bottom: 0;
+    text-align:center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding:5%;
+}
+
+.slider-nav .previousButton{
+    float: left;
+    opacity: .7;
+}
+
+.slider-nav .nextButton{
+    float: right;
+    opacity: .7;
+}
+
+.previousButton:hover,.nextButton:hover{
+    opacity: 1;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.slider-nav.ng-enter.ng-enter-active,
+.slider-nav.ng-leave{
+    opacity: 1;
+    height:80px;
+    overflow: hidden;
+}
+
+.slider-nav.ng-leave.ng-leave-active,
+.slider-nav.ng-enter{
+    opacity: 0;
+    height:0;
+    overflow: hidden;
+}
+
+.glyphicon-remove-circle{
+    font-size: 1.6em;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.glyphicon-arrow-left{
+    font-size: 1.6em;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.glyphicon-remove-circle:hover{
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    color:white;
+}
+
+.glyphicon-arrow-left:hover{
+    color:white;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.glyphicon-chevron-left{
+    zoom: 2.2;
+    position: absolute;
+    color: white;
+    text-align: right;
+    left: 0px;
+    margin: 0;
+    line-height: 1.3em;
+    padding: 5px 5px 5px 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-align: left;
+}
+
+.glyphicon-chevron-right{
+    zoom: 2.2;
+    position: absolute;
+    color: white;
+    text-align: right;
+    right: 0px;
+    margin: 0;
+    line-height: 1.3em;
+    padding: 5px 5px 5px 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-align: left;
+}
+
+.slide.ng-hide-add,
+.slide.ng-hide-remove {
+    -webkit-transition: all 1.3s ease-in-out;
+    -moz-transition: all 1.3s ease-in-out;
+    -o-transition: all 1.3s ease-in-out;
+    transition: all 1.3s ease-in-out;
+    display: block!important;
+}
+.slide.ng-hide-add.ng-hide-add-active,
+.slide.ng-hide-remove {
+    opacity: 0;
+}
+.slide.ng-hide-add,
+.slide.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}
+
+.my-spinner{
+    position: absolute;
+    width: 100%;
+    top: 35%;
+    max-width: 383px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+#spinner{
+    width: 100%;
+    padding: 30px;
+}
+.my-spinner .datas-infos{
+    font-size: 1.8em;
+/*    left: 0;
+    right: 0;
+    position: absolute;*/
+}
+
+.my-spinner .loader{
+    margin: 0 auto;
+}
+
+.slide-play-pause{
+/*    height: 100%;
+*/    width: 100%;
+}
+
+.slide-play-pause .slide-play{
+    position: absolute;
+    text-align: center;
+    top: 45%;
+    width: 100%;
+}
+
+.slide-play-pause .slide-play span{
+    font-size: 12em;
+    color: gainsboro;
+    width: 1em;
+    text-align: center;
+}
+
+
+.slide-play-pause .slide-pause{
+    position: absolute;
+    text-align: center;
+    top: 45%;
+    width: 100%;
+}
+
+.slide-play-pause .slide-pause span{
+    font-size: 12em;
+    color: gainsboro;
+    width: 1em;
+    text-align: center;
+}
+
+.slideshow-blur{
+    position: relative;
+    top: 8%;
+    width: 100%;
+    height: 80%;
+    opacity: 0.5;
+    -webkit-filter: blur(30px);
+}
+
+.displayNewUserConnected{
+    position: absolute;
+    width: 15%;
+    margin: 0 auto;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    height: auto;
+    padding: 1%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.settings-gray{
+    background-image: url("settings_gray.png");
+    height: 40px;
+    background-size: 1.5em;
+    color: #fff;
+    font-size: 2em;
+    /* text-align: center; */
+    background-repeat: no-repeat;
+    padding: 0.1em;
+    width: 5%;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.settings-gray:hover{
+    background-image: url("settings_white.png");
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+
+

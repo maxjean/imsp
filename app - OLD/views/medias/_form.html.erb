@@ -1,0 +1,28 @@
+<%= form_for(@media) do |f| %>
+  <% if @media.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@media.errors.count, "error") %> prohibited this media from being saved:</h2>
+
+      <ul>
+      <% @media.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <!--What kind of stream do you want?-->
+    <h4>How do you want to stream the video?</h4>
+    <p>Please check if you want to stream it by live streaming or uncheck it if not, you could also change it later.</p>
+    <div class="field">
+      <%= f.label :Live? %><br>
+      <%= f.check_box :is_live %>
+    </div>
+    <div class="field">
+      <%= f.hidden_field :system_profil_id, value: 1 %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

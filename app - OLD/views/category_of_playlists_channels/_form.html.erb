@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+  <%= form_for(@category_of_playlists_channel) do |f| %>
+      <% if @category_of_playlists_channel.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@category_of_playlists_channel.errors.count, "error") %> prohibited this category_of_playlists_channel from being saved:</h2>
+          <ul>
+          <% @category_of_playlists_channel.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+        <div class="field">
+          <%= f.label :title %><br>
+          <%= f.text_field :title %>
+        </div><br>
+        <div class="field">
+          <%= f.label :cover %><br>
+          <%= f.file_field :cover %>
+        </div><br>
+        <div class="field">
+          <%= f.label :description %><br>
+          <%= f.text_area :description %>
+        </div><br>
+
+        <%= f.hidden_field :channel_id, :value => current_user.channel.id %>
+
+        <div class="actions">
+          <%= button_to("Update", "", {:class=>"btn btn-primary"}) %>
+        </div><br>
+    <% end %>
+   </div>
+</div>
+

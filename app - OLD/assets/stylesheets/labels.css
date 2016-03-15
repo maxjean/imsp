@@ -1,0 +1,26 @@
+.labels  .title{
+    text-align: center;
+    color: #30373b;
+}
+.labels .edit_label, .new_label{
+    border: 1px solid #e5e5e5;
+    padding: 2.8125em;
+    background: #FCFCFC;
+    color:gray;
+}
+
+.labels .edit_label label, .new_label label{
+    text-transform: uppercase;
+}
+
+.edit_label input, .new_label input {
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+.edit_label .actions, .new_label .actions {
+    width: 30%;
+    margin-top:10px;
+}

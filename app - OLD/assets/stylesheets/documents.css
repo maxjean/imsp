@@ -1,0 +1,26 @@
+.documents  .title{
+    text-align: center;
+    color: #30373b;
+}
+.documents .edit_document, .new_document{
+    border: 1px solid #e5e5e5;
+    padding: 2.8125em;
+    background: #FCFCFC;
+    color:gray;
+}
+
+.documents .edit_document label, .new_document label{
+    text-transform: uppercase;
+}
+
+.edit_document input, .new_document input {
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+.edit_document .actions, .new_document .actions {
+    width: 30%;
+    margin-top:10px;
+}

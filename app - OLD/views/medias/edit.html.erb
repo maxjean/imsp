@@ -1,0 +1,9 @@
+<h1>Editing Media</h1>
+
+<% if @media.next_step == "done" %>
+    <%= render partial: "form_update" %>
+<% else %>
+    <%= render partial: "form_#{@media.next_step}" %>
+<% end %>
+
+<%= link_to 'Back', medias_path, data: { confirm: 'Are you sure?' }%>

@@ -1,0 +1,143 @@
+<p id="notice"><%= notice %></p>
+
+<div class="media-layer" ng-controller="MediaController">
+  <div class="col-xs-4 my-spinner">
+    <div spinner class="loader" ng-show="spinnerLoad">
+      <canvas id="spinner"></canvas>
+      <span class="datas-infos">{{loadingInfos[0]}}</span>
+    </div>
+  </div>
+  <!--<div class="menu col-xs-12 col-sm-12">
+    <a href="#" class="settings">
+      <div class="settings-gray"></div>
+    </a>
+  </div>-->
+  <div onsettings class="my-settings col-xs-12 col-sm-12">
+    <div class="navigation">
+      <a class="previous-section" href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+      <a class="close-settings" href="#"><span class="glyphicon glyphicon-remove-circle"></span></a>
+    </div>
+    <div rowonhoverorselect class="row">
+      <div class="item">
+        <a href="#" class="content">
+          <div class="title">Pairing</div>
+          <div class="icon"></div>
+          <div class="description">Take control of the slideshow with a remote</div>
+
+        </a>
+      </div>
+    </div>
+    <div class="row2" ng-controller="PairingController">
+      <div class="item">
+        <div class="pairing-content">
+          <div class="indication-text">Pairing your device?</div>
+          <div class="pairing-icon"></div>
+          <div class="pairing-infos">
+            <span>Go to <a href={{pairingUrl}}>{{pairingUrl}}</a> page and enter this key: </span><br>
+            <span>{{currentPainringKey}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="subtitle"></div>
+<div class="row row_top">
+  <div class="col-xs-12 col-sm-3">
+    <div class="col-media-comments">
+        <div class="media-comments"><%= @media.description %></div>
+    </div>
+    <div class="col-media-timeline">
+      <div mediatimeline id="timeline"></div>
+      <div id="documents-timeline"></div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-media">
+    <div class="media" ng-controller="MediaController" ng-class="{'media-blur' : showSettings == true }">
+      <div mediaplayer>
+        <div id="player"></div>
+      </div>
+      <div class="row">
+        <div id="media_translation" style="text-align:center;min-height:45px;"></div>
+      </div>
+      <div class="row">
+        <div class="media-datas col-xs-12 col-sm-12">
+          <div class="media-informations col-xs-8 col-sm-8">
+              <span class="media-title"><%=@media.title.capitalize%></span><br>
+              <span>Added on: <%=@media.created_at%></span><br>
+              <span><%=@media.user.pseudo%></span>
+          </div>
+          <div class="media-statistics col-xs-4 col-sm-4">
+            <div class="media-nb-views"><span class="glyphicon glyphicon-stats"><%=@media.nb_views%> views</span></div>
+            <div class="media-vote">
+              <button class="glyphicon glyphicon-thumbs-up media-like-button" %>
+                  <span><%=@media.like %></span>
+              </button>
+              <button class="glyphicon glyphicon-thumbs-down media-dislike-button" %>
+                  <span><%=@media.dislike %></span>
+              </button>
+            </div>
+          </div>
+        <div>
+      </div>
+      <div class="slide-play-pause" ng-show="showPlayPause">
+        <div class="slide-play" ng-show="showPlay"><a href="#" ng-click="play()"><span class="glyphicon glyphicon-play"></span></a></div>
+        <div class="slide-pause" ng-show="showPause"><a href="#" ng-click="pause()"><span class="glyphicon glyphicon-pause"></span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  <% if @playlist %>
+    <div class="col-xs-12 col-sm-3 col-media-playlist">
+      <div class="media-playlist">
+        <div class="row">
+<!--
+          <div class="col-xs-12 col-sm-2"><span class="glyphicon glyphicon-list plist-icon"></span></div>
+-->
+          <div class="col-xs-12 col-sm-12">
+              <span class="plist-title"><%= link_to(Playlist.find(params[:plist]).title, playlist_path(Playlist.find(params[:plist]))) %></span><br>
+              <span>From <%= link_to(Playlist.find(params[:plist]).user.pseudo.upcase, channel_path(Playlist.find(params[:plist]).user.channel), :class => "user-media-pseudo-link") %></span>
+          </div>
+        </div>
+        <div class="row media-playlist-list">
+            <table class="col-xs-12 col-sm-12 table table-striped media-playlist-table">
+              <tbody class="medias-list-body">
+                <% @playlist.medias.each_with_index do |media, i| %>
+                    <% if media.id == params[:m] %>
+                         <tr>
+                           <td>
+                               <%= link_to "#{viewing_path}?m=#{media.id}&plist=#{params[:plist]}" do %>
+                                 <div class="col-xs-1 col-sm-1 media-playing-icon"><span class="glyphicon glyphicon-play"></span></div>
+                                 <div class="media-cover col-xs-3 col-sm-3"><%= image_tag media.img_url(:thumb).to_s %></div>
+                                 <div class="media-details col-xs-5 col-sm-5">
+                                    <span class="media-title"><%= media.title.capitalize %></span><br>
+                                    <span class="user-media-pseudo"><%= link_to(media.user.pseudo.upcase, channel_path(media.user.channel), :class => "user-media-pseudo-link") %></span>
+                                 </div>
+                               <% end %>
+                           </td>
+                         </tr>
+                    <% else %>
+                      <tr>
+                        <td>
+                            <%= link_to "#{viewing_path}?m=#{media.id}&plist=#{params[:plist]}" do %>
+                              <div class="col-xs-1 col-sm-1 media-index"><%= i+1 %>.</div>
+                              <div class="media-cover col-xs-3 col-sm-3"><%= image_tag media.img_url(:thumb).to_s %></div>
+                              <div class="media-details col-xs-5 col-sm-5">
+                                <span class="media-title"><%= media.title.capitalize %></span><br>
+                                <span class="user-media-pseudo"><%= link_to(media.user.pseudo.upcase, channel_path(media.user.channel), :class => "user-media-pseudo-link") %></span>
+                              </div>
+                            <% end %>
+                        </td>
+                    <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>
+
+

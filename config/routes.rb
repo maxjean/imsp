@@ -126,6 +126,11 @@ Rails.application.routes.draw do
   resources :bins, only: [:destroy]
 
   get "channel", controller: "application"
+  #get "discover", controller: "application"
+  Rails.application.routes.draw do   get 'discover' => 'discover#index' end
+
+
+  get "popular_medias_api", controller: "application", :only => [:show], :defaults => { :format => 'json' }
 
   get "category_plist_channels_api", controller: "users", :only => [:show], :defaults => { :format => 'json' }
   get "media_timeline_api", controller: "events", :only => [:show], :defaults => { :format => 'json' }

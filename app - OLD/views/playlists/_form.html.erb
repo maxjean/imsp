@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+        <%= form_for(@playlist) do |f| %>
+          <% if @playlist.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@playlist.errors.count, "error") %> prohibited this playlist from being saved:</h2>
+
+              <ul>
+              <% @playlist.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+            <!--What kind of stream do you want?-->
+            <h4>How do you want to stream the video?</h4>
+            <p>Please check if you want to stream it by live streaming or uncheck it if not, you could also change it later.</p>
+            <div class="field">
+              <%= f.label :title %><br>
+              <%= f.text_field :title %>
+            </div><br>
+            <div class="field">
+              <%= f.label :cover %><br>
+              <%= f.file_field :cover %>
+            </div><br>
+            <div class="field">
+              <%= f.label :tags %><br>
+              <%= f.text_field :tags %>
+            </div><br>
+
+        <div class="actions">
+          <%= button_to "Update", {:class=>"btn btn-primary"} %>
+        </div><br>
+        <% end %>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<%= fields_for "bin[media_timeline_attributes][]", @my_bin.media_timelines.create  do |media_timeline_form| %>
+<tr>
+  <td colspan="#" style="width:128px;"><%= media_timeline_form.time_field :time, :step => 1 %></td>
+  <td colspan="#" style="width:90px;"><%= media_timeline_form.collection_select :label_id, @my_bin.labels, :id, :title, {:prompt => ''} %></td>
+  <td colspan="#" style="width:115px;"><%= media_timeline_form.collection_select :document_id, @my_bin.documents, :id, :title, {:prompt => ''} %></td>
+  <td style="width:30px"><%= media_timeline_form.check_box '_destroy' %></td>
+  <td colspan="#" style="width:60px;"><%= link_to '', '', :class => "add-media-timeline-afterElement glyphicon glyphicon-plus-sign" %></td>
+  <td></td>
+</tr>
+<% end %>
+

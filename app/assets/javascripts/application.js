@@ -14,6 +14,13 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require angular
-//= require turbolinks
-//= require_tree .
-//= require underscore-min.js
+//= require angular-rails-templates.js.erb
+/*require_tree .*/
+//= require underscore-min
+
+
+//= require angular-app/app/app.module
+//= require_tree ./angular-app/app/core
+//= require_tree ./angular-app/app/blocks/router
+// = require_tree ./angular-app/app/layout
+//= require_tree ./angular-app/app/video

@@ -1,0 +1,176 @@
+.category_of_playlists_channels .title{
+    text-align: center;
+    color: #30373b;
+}
+
+.category_of_playlists_channels .edit_category_of_playlists_channel, .new_category_of_playlists_channel{
+    border: 1px solid #e5e5e5;
+    padding: 2.8125em;
+    background: #FCFCFC;
+    color:gray;
+}
+
+.category_of_playlists_channels .edit_category_of_playlists_channel label, .category_of_playlists_channels .new_category_of_playlists_channel label{
+    text-transform: uppercase;
+}
+
+.category_of_playlists_channels .edit_category_of_playlists_channel input, .category_of_playlists_channels .new_category_of_playlists_channel input{
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+
+.category_of_playlists_channels .edit_category_of_playlists_channel textarea, .category_of_playlists_channels .new_category_of_playlists_channel textarea{
+    width: 100%;
+    height: 90px;
+    padding: 10px;
+    margin-bottom:10px;
+}
+
+.category_of_playlists_channels .actions{
+    width: 30%;
+    margin-top:10px;
+}
+
+.plist-presentation{
+    margin-bottom: 1%;
+}
+.plist-categ-name{
+    text-align: left;
+    color: gray;
+}
+
+.plist-categs nav{
+    margin: 5px;
+}
+
+.plist-categ-link .plist-date, .plist-user {
+    color: gray;
+}
+
+.plist-categ-link{
+    border-style: double;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 1%;
+    padding: 15px;
+}
+
+.plist-categ-link .glyphicon-chevron-right{
+    zoom: 0 !important;
+}
+
+.plist-categ-link .thumbnail{
+    max-width: 320px;
+    max-height: 220px;
+    height: 169px;
+}
+
+.plist-categ-link .plist-informations .plist-name{
+    text-transform: uppercase;
+}
+
+.plist-categ-link .plist-description{
+    color: gray;
+}
+
+.plist-categ-informations {
+    text-transform: uppercase;
+    margin-bottom: 2%;
+}
+
+.plist-categ-user, .plist-categ-date, .plist-categ-presentation{
+    color: gray;
+}
+
+.plist-categ-link:hover{
+    background-color: #ddd;
+    border: white;
+    padding: 15px;
+    border-style: double;
+}
+
+/*Category Of Playlists Channels #index*/
+.plist-categories-management-header .title{
+    font-size: 2.5em;
+}
+
+.plist-categories-management-header .plist-categories-count{
+    background-color: gray;
+    border-radius: 50%;
+    color: white;
+    padding: 3px;
+    top: 13px;
+    position: absolute;
+    font-size: 0.9em;
+    margin-left: 2px;
+    width: 20px;
+    text-align: center;
+}
+
+.plists-categories .plist-category-links{
+    background: #FCFCFC;
+    color: gray;
+    padding: 0;
+    margin: 10px;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 5px #e0e0e0;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+    height: 260px;
+    overflow: hidden;
+}
+
+.plists-categories .plist-category-links:hover{
+    background-color: #f5f5f5;
+    transition: all .5s linear;
+}
+.plists-categories .plist-category-links .plist-category-cover img{
+    width: 100%;
+    max-height: 180px;
+    height: 130px;
+}
+
+.plists-categories .plist-category-links .plist-category-informations{
+    padding: 5px;
+    text-transform: capitalize;
+    color: gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.plists-categories .plist-category-links .plist-category-title{
+    text-transform: capitalize;
+    color: rgb(103, 103, 103);
+}
+
+.plists-categories .plist-category-links .delete-plist-category{
+    float: right;
+    padding: 5px;
+    color: gray;
+    top: -10px;
+}
+
+.plists-categories .plist-category-links .show-plist-category{
+    float: right;
+    padding: 5px;
+    color: gray;
+    top: -10px;
+}
+
+.plists-categories .plist-category-nbplists{
+    background-color: gray;
+    border-radius: 50%;
+    color: white;
+    padding: 1px;
+    position: absolute;
+    font-size: 0.8em;
+    margin-left: 2px;
+    width: 15px;
+    text-align: center;
+}

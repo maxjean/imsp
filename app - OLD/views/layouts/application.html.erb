@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Imsp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-no-turbolinks-track' => false %>
+  <%= javascript_include_tag 'application' %>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/clappr.playback-name/latest/playbackname.min.js"></script>
+  <script type="text/javascript" src="http://cdn.clappr.io/latest/clappr.min.js"></script>
+  <script type="text/javascript" src="http://cdn.jsdelivr.net/clappr.rtmp/0.0.2/rtmp.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="./clappr_dash.js"></script>
+  <%= csrf_meta_tags %>
+</head>
+<% if params[:action] != "content" %>
+    <body data-no-turbolink="true" ng-app="MyApp" class=<%= controller.controller_path.gsub('/', ' ') %>>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <%= link_to("IMSP", root_url, :class => "navbar-brand") %>
+            <%= link_to("Discover", discover_url, :class => "navbar-brand") %>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav videos_nav">
+              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">VIDEOS <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <% if user_signed_in? %>
+                      <li><%= link_to 'Recommanded', "#" %></li>
+                  <% end %>
+                  <li><%= link_to 'Recently added', recent_medias_path %></li>
+                  <li><%= link_to 'Popular', popular_medias_path %></li>
+                  <li><%= link_to 'Category', category_medias_path %></li>
+                </ul>
+              </li>
+            </ul>
+
+            <% if user_signed_in? %>
+                <ul class="nav navbar-nav user_nav">
+                  <% if current_user.cover != nil %>
+                      <li class="dropdown"><a href="#" class="dropdown-toggle user_cover_link" data-toggle="dropdown" role="button" aria-expanded="false"><%=image_tag("#{current_user.cover}",:class =>"user_cover")%> <span class="caret"></span></a>
+                  <% else %>
+                      <li class="dropdown"><a href="#" class="dropdown-toggle user_pseudo_link" data-toggle="dropdown" role="button" aria-expanded="false"><%= current_user.pseudo %> <span class="caret"></span></a>
+                  <% end %>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><%= link_to 'My profile', user_channel_path(current_user) %></li>
+                      <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+                      <li class="divider"></li>
+                      <li><%= link_to 'My Channel', user_channel_path(current_user) %></li>
+                      <li><%= link_to 'My videos', medias_path %></li>
+                      <li><%= link_to 'My Playlists', playlists_path %></li>
+                      <li><%= link_to 'My Categories', category_of_playlists_channels_path %></li>
+                      <li><%= link_to 'My Events',events_path %></li>
+                      <li><%= link_to 'My Subscriptions',events_path %></li>
+                      <li class="divider"></li>
+                      <li><%= link_to "Log out", destroy_user_session_path, method: :delete  %></li>
+                    </ul>
+                  </li>
+                </ul>
+            <% else %>
+                <div class="user-connexion">
+                    <ul class="nav navbar-nav log_in_nav">
+                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Log in <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><%= link_to "Log in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
+                          <li><%= link_to "Log in in with Twitter", user_omniauth_authorize_path(:twitter) %></li>
+                          <li class="divider"></li>
+                          <li><%= link_to "Log in", new_user_session_path %></li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <ul class="nav navbar-nav sign_in_nav">
+                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sign up <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><%= link_to "Sign up", new_user_registration_path %></li>
+                        </ul>
+                      </li>
+                    </ul>
+                </div>
+            <% end %>
+            <%= form_tag(controller: "application", action: "search", method: "post") do %>
+                <div class="form-group search-form">
+                  <%= text_field_tag(:query, "", :class =>"title-field")%>
+                  <%= button_tag("Search", :class => "btn btn-default") %>
+                </div>
+            <% end %>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <div class="container">
+
+          <% flash.each do |name, msg| %>
+              <%= content_tag :div, msg, id: "flash_#{name}" %>
+          <% end %>
+          <%= yield %>
+          <div ng-view></div>
+
+      </div>
+
+    </body>
+<% else params[:action] == "content" %>
+<body style="min-height: 100%;">
+    <div style="position: absolute;width: 100%">
+        <%= render partial: "content" %>
+    </div>
+</body>
+<% end %>
+
+</html>

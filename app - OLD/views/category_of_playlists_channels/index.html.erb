@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 plist-categories-management-header">
+    <span class="title">Playlists Categories</span><span class="plist-categories-count"><%= @category_of_playlists_channels.count %></span>
+  </div>
+</div>
+
+<div class="row">
+  <%= link_to new_category_of_playlists_channel_path, :class=>"col-xs-12 col-sm-3" do %>
+      <span class="glyphicon glyphicon-plus-sign "></span>
+      <span class="create-plist-category">Create a playlist category</span>
+  <% end %>
+</div>
+<hr>
+<div class="row">
+  <div class="plists-categories col-xs-12 col-sm-12">
+      <% @category_of_playlists_channels.each do |categ_playlist| %>
+        <div class="plist-category-links col-xs-12 col-sm-2">
+          <%= link_to edit_category_of_playlists_channel_path(categ_playlist) do %>
+              <span class="plist-category-cover"><%= image_tag categ_playlist.cover_url(:thumb).to_s %></span><br>
+              <div class="plist-category-informations">
+                <span class="plist-category-title"><%= categ_playlist.title %></span><span class="plist-category-nbplists"><%= categ_playlist.playlists.count %></span><br>
+                <span class="plist-category-date"><%= categ_playlist.created_at %></span><br>
+                <span class="plist-category-description"><%= categ_playlist.description %></span><br>
+              </div>
+          <% end %>
+          <hr>
+          <%= link_to '', categ_playlist, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete-plist-category glyphicon glyphicon-trash" %>
+          <%= link_to '', categ_playlist, method: :get, :class => "show-plist-category glyphicon glyphicon-eye-open" %>
+        </div>
+      <% end %>
+  </div>
+</div>

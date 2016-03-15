@@ -1,0 +1,93 @@
+<%= render partial: "header" %>
+
+<div id="layer-slider" ng-controller="SliderController">
+  <div class="col-xs-4 my-spinner">
+    <div spinner class="loader" ng-show="spinnerLoad">
+      <canvas id="spinner"></canvas>
+      <span class="datas-infos">{{loadingInfos[0]}}</span>
+    </div>
+  </div>
+<!--  <div class="menu">
+    <a href="#" class="settings">
+      <div class="settings-gray"></div>
+    </a>
+  </div>-->
+
+  <div class="slideshow" ng-controller="SliderController" ng-show="slideshowLoad" ng-class="{'slideshow-blur' : showSettings == true }">
+    <!--    <div class="displayNewUserConnected" ng-show="true">
+          <span class="userInfos">{{UsersDatas.pseudo}} has join the session.</span>
+        </div>-->
+    <div class="row" ng-if="datas">
+      <div class="tools col-xs-8 col-sm-8 col-xs-offset-2">
+        <ul class="nav nav-pills">
+          <li ng-class="{active:$index==activeToolIndex}" ng-repeat="data in datas track by $index" ng-click="setTool($index)">
+            <a href="#"><img src={{data["cover"].thumb.url}}><div class="category-label">{{data["title"]}}</div></a>
+          </li>
+        </ul>
+      </div>
+      <div showonhoverparent>
+        <div class="slider-nav" ng-click="countClicks()" on-doubletap="actionOnDoubletap()">
+          <a href="#" ng-click="prev()"><span class="glyphicon glyphicon-chevron-left previousButton"></span></a>
+          <a href="#" ng-click="next()"><span class="glyphicon glyphicon-chevron-right nextButton"></span></a>
+        </div>
+      </div>
+    </div>
+    <div class="slide" ng-repeat="(key, data) in datas track by $index" ng-class="{active: key == activeToolIndex}" ng-hide="key != activeToolIndex">
+      <div ng-repeat="liquidConfiguration in liquidConfigurations" class="liquidConfigurations">
+        <div liquid="liquidConfiguration" class="imgLiquidFill imgLiquid liquidConfiguration">
+          <img ng-src="{{data}}"/>
+          <figcaption>
+            <div class="serverInfo">
+              <span class="serverInfo-serverName-field">{{data.title}}</span>
+              <span class="slideshow-description-field">{{data.description}}</span><br>
+              <span class="see-link"><a href={{window.location.origin}}/category_of_playlists_channels/{{data.id}}>See</a></span>
+              <span class="slideshow-currentSlide-number-field">{{key+1}}/{{datas.length}}</span>
+            </div>
+          </figcaption>
+        </div>
+      </div>
+    </div>
+    <div class="slide-play-pause" ng-show="showPlayPause">
+      <div class="slide-play" ng-show="showPlay"><a href="#" ng-click="play()"><span class="glyphicon glyphicon-play"></span></a></div>
+      <div class="slide-pause" ng-show="showPause"><a href="#" ng-click="pause()"><span class="glyphicon glyphicon-pause"></span></a></div>
+    </div>
+  </div>
+  <div onsettings class="my-settings">
+    <div class="navigation">
+      <a class="previous-section" href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+      <a class="close-settings" href="#"><span class="glyphicon glyphicon-remove-circle"></span></a>
+    </div>
+    <div rowonhoverorselect class="row">
+      <div class="item">
+        <a href="#" class="content">
+          <div class="title">Pairing</div>
+          <div class="icon"></div>
+          <div class="description">Take control of the slideshow with a remote</div>
+        </a>
+      </div>
+    </div>
+    <div class="row2" ng-controller="PairingController">
+      <div class="item">
+        <div class="pairing-content">
+          <div class="indication-text">Pairing your device?</div>
+          <div class="pairing-icon"></div>
+          <div class="pairing-infos">
+            <span>Go to <a href={{pairingUrl}}>{{pairingUrl}}</a> page and enter this key: </span><br>
+            <span>{{currentPainringKey}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="">
+  <%= link_to 'Back', root_url %>
+</div>
+
+
+

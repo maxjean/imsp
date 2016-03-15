@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+<p><strong><%= link_to @user.pseudo, user_channel_path %></strong></p>
+<div class="channel-menu">
+  <strong><%= link_to "Videos", user_videos_path %></strong> |
+  <strong><%= link_to "Comments", user_comments_path %></strong> |
+  <strong><%= link_to "About", user_about_path %></strong>
+</div>

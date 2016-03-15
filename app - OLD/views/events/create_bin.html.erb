@@ -1,0 +1,13 @@
+<div class="row"><h1 class="title col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">New Bin For Your Event: <span class="your_event_title"><%#=@your_event.title.capitalize %></span></h1></div>
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+      <div class="create_bin_form">
+        <%= form_tag(controller: "events", action: "create_bin", method: "get", :class => "create_bin_form") do %>
+            <span><%= text_field_tag(:title,"",:placeholder => "Name your bin")%></span><br>
+            <span>Is current?<%= hidden_field_tag(:event_id, params[:your_event])%></span>
+            <%= check_box_tag(:is_display)%><br>
+            <%= button_tag("Create", :name=> "my_event[#{params[@your_event]}]", :class => "btn btn-primary") %>
+        <% end %>
+      </div>
+  </div>
+</div>

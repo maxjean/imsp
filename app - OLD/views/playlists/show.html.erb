@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="playlist-infos col-xs-12 col-sm-8 col-sm-offset-2">
+      <h3><%= @playlist.title %></h3>
+      <h6>artist-name</h6>
+      <div class="cover">
+        <%=image_tag @playlist.cover%>
+      </div>
+  </div>
+</div>
+<div class="row">
+  <div class="playlist-medias-infos col-xs-12 col-sm-8 col-sm-offset-2">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th></th>
+              <th></th>
+              <th>Title</th>
+              <th></th>
+              <th><%=image_tag("glyphicons/glyphicons/png/glyphicons-55-clock.png")%></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+                <% @playlist.medias.each_with_index do |media,i| %>
+                    <tr>
+                      <td><%= i+1 %></td>
+                      <td><%#= image_tag(media.img) %></td>
+                      <td><%= link_to(image_tag("glyphicons/glyphicons/png/glyphicons-433-plus.png"), url_for("")) %></td>
+                      <td><%= media.title %></td>
+                      <td><%= media.authors %></td>
+                      <td><%= media.duration %></td>
+                      <td><%= media.nb_views %></td>
+                      <td><%= link_to (image_tag("glyphicons/glyphicons/png/glyphicons-52-eye-open.png")), "#{viewing_path}?m=#{media.id}&plist=#{params[:id]}" %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<p class="playlist-medias-count col-xs-12 col-sm-8 col-sm-offset-2">Total: <%= @playlist.medias.count %></p>
+

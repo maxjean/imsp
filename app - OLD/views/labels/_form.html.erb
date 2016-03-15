@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+    <%= form_for(@label, :html => { :multipart => true } ) do |f| %>
+      <% if @label.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@label.errors.count, "error") %> prohibited this label from being saved:</h2>
+
+          <ul>
+          <% @label.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+        <div class="field">
+          <%= f.label :title %><br>
+          <%= f.text_field :title %><br>
+        </div>
+        <div class="field">
+          <%= f.label :description %><br>
+          <%= f.text_area :description %><br>
+        </div>
+        <div class="field">
+          <%= f.label :label_type %><br>
+          <%= f.select :label_type, options_for_select(['quiz', 'score']),{include_blank: true}, {:data => {:remote => true}} %>
+        </div>
+        <div class="field" data-type-label="<%= label_path(0) %>">
+        </div>
+        <div class="field">
+          <%= f.label :is_display %><br>
+          <%= f.check_box :is_display %><br>
+        </div>
+        <div class="field">
+          <%= f.label :authors  %><br>
+          <%= f.text_field :authors %><br>
+        </div>
+        <div class="field">
+          <%= f.label :img %><br>
+          <%= f.file_field :img %><br>
+        </div>
+          <%= f.hidden_field :added_by, :value => current_user.name %><br>
+          <%= f.hidden_field :bin_id, :value => params[:my_bin] %><br>
+
+        <div class="actions">
+          <%= button_to("Create", "", {:class=>"btn btn-primary"}) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

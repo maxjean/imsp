@@ -1,0 +1,145 @@
+<div class="bin-management">
+    <div class="row">
+      <h3 class="title col-xs-10 col-sm-4">Event Manager</h3>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 edit_bin">
+        <span class="modify-bin-text"></span>
+        <%= form_tag(controller: "events", action: "modify_bin", method: "get", class: "edit_bin") do %>
+            <h3 class="bin-header">Bin for event: <span class="my_event_title"><%=@my_event.title.capitalize %></span></h3>
+            <label><span>Bin title</span><span><%= text_field_tag(:title,"",:value => @my_bin.title, :class =>"title-field")%></span></label>
+            <label><span>Display it?</span><span><%= check_box_tag(:is_display)%></span></label><br>
+            <label><span>Is current?</span><span><%= check_box_tag(:is_current)%></span></label><br>
+            <label><span>Add Media</span><span><%= collection_select :media, :id, current_user.medias, :id, :title %></span></label><br>
+            <span style="float:right;"><%= link_to '', '', :class => "add-media-timeline-OnTop glyphicon glyphicon-plus-sign", remote: true %></span>
+            <table class="table table-striped media_timelines-table">
+              <thead class="media_timelines-table-head">
+                  <tr>
+                    <th colspan="#" style="width:128px;text-align:center;">Time</th>
+                    <th colspan="#" style="width:90px;text-align:center;">Label</th>
+                    <th colspan="#" style="width:115px;text-align:center;">Document</th>
+                    <th colspan="#" style="width:60px;text-align:center;"><span class="glyphicon glyphicon-trash"></span></th>
+                    <th colspan="#" style="width:60px;text-align:center;"></th>
+                  </tr>
+              </thead>
+              <tbody class="media_timelines-list-body">
+                <% for media_timeline in @my_bin.media_timelines %>
+                    <%= fields_for "bin[media_timeline_attributes][]", media_timeline do |media_timeline_form| %>
+                          <tr>
+                            <td colspan="#" style="width:128px;"><%= media_timeline_form.time_field :time, :max => (Time.parse(@my_bin.media.duration.to_s) unless !nil?), :step => 1 %></td>
+                            <td colspan="#" style="width:90px;"><%= media_timeline_form.collection_select :label_id, @my_bin.labels, :id, :title, {:prompt => ''} %></td>
+                            <td colspan="#" style="width:115px;"><%= media_timeline_form.collection_select :document_id, @my_bin.documents, :id, :title, {:prompt => ''} %></td>
+                            <td colspan="#" style="width:60px"><%= media_timeline_form.check_box '_destroy' %></td>
+                            <td colspan="#" style="width:60px;"><%= link_to '', media_timeline_path(media_timeline), method: :delete, data: { confirm: 'Are you sure?' }, :class => "add-media-timeline-afterElement glyphicon glyphicon-plus-sign" %></td>
+                            <td></td>
+                          </tr>
+                    <% end %>
+                <% end %>
+                <%= hidden_field_tag(:event_id, params[:my_event])%>
+                <%= hidden_field_tag(:my_bin, params[:my_bin])%>
+              </tbody>
+            </table>
+            <hr>
+            <%= button_tag("Save", :class => "btn btn-primary") %>
+        <% end %>
+      </div>
+    </div>
+    <hr class="col-xs-10  col-sm-10 col-sm-offset-1">
+    <div class="row manager-section">
+        <div class="col-xs-12 col-sm-4 right-section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 bin-informations">
+                <h3>What can you do?</h3>
+                <p>The specificity of this page is that it give you the possibility to manage this bin which can be available during your event. You have two possibilities here:</p>
+                <ul>
+                  <li> Manage labels</li>
+                  <li> Manage documents</li>
+                </ul>
+                <p>When you create labels or  documents they will be automatically associated to this bin. You will be able to call them and display them at precise times of your event and in same time as your video is playing.</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-8 left-section">
+          <div class="row">
+              <div class="col-xs-9 col-sm-5 col-sm-offset-2 labels-list">
+                  <h3 class="bin-labels-header"><span class="labels-title">Associated labels</span><span class="bin-labels-count"><%= @my_bin.labels.count %></span></h3>
+                  <table class="table table-striped labels-table">
+                    <thead class="labels-table-head">
+                        <tr>
+                          <th colspan="#" style="width:40px;">#</th>
+                          <th colspan="#" style="width:135px;">Title</th>
+                          <th colspan="#" style="width:70px;">Display?</th>
+                          <th colspan="#" style="width:30px;"></th>
+                          <th colspan="#" style="width:30px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="labels-list-body">
+                        <% @my_bin.labels.each_with_index do |label, i| %>
+                            <tr>
+                              <td colspan="#" style="width:40px;"><%= i+1 %></td>
+                              <td colspan="#" style="width:135px;"><%= label.title %></td>
+                              <% if label.is_display  %>
+                                  <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
+                              <% else %>
+                                  <td class="glyphicon glyphicon-remove" style="width:70px;"></td>
+                              <% end %>
+                              <td style="width:30px"><%= link_to '', edit_label_path(label,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), :class => "glyphicon glyphicon-pencil" %></td>
+                              <td style="width:30px"><%= link_to '', label_path(label,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), method: :delete, data: { confirm: 'Are you sure?' }, :class => "glyphicon glyphicon-trash" %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                  </table>
+                  <hr>
+                  <%= link_to 'Create', new_label_path(my_bin: "#{params[:my_bin]}"), :class => "add-label glyphicon glyphicon-plus-sign" %>
+              </div>
+              <div class="col-xs-3 col-sm-4 indication-text-labels-list">
+                <span class="">Manage labels for this bin</span><br>
+                <span class=""><%= image_tag("icons/arrow-129.png") %></span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-xs-9 col-sm-5 col-sm-offset-2 documents-list">
+                  <h3 class="bin-documents-header"><span class="documents-title">Associated documents</span><span class="bin-documents-count"><%= @my_bin.documents.count %></span></h3>
+                  <table class="table table-striped documents-table">
+                    <thead class="documents-table-head">
+                    <tr>
+                      <th colspan="#" style="width:40px;">#</th>
+                      <th colspan="#" style="width:135px;">Title</th>
+                      <th colspan="#" style="width:70px;">Display?</th>
+                      <th colspan="#" style="width:30px;"></th>
+                      <th colspan="#" style="width:30px;"></th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="documents-list-body">
+                    <% @my_bin.documents.each_with_index do |document, i| %>
+                        <tr>
+                          <td colspan="#" style="width:40px;"><%= i+1 %></td>
+                          <td colspan="#" style="width:135px;"><%= document.title %></td>
+                          <% if document.is_display  %>
+                              <td class="glyphicon glyphicon-ok" style="width:70px;"></td>
+                          <% else %>
+                              <td class="glyphicon glyphicon-remove" style="width:70px;"></td>
+                          <% end %>
+                          <td style="width:30px"><%= link_to '', edit_document_path(document,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), :class => "glyphicon glyphicon-pencil" %></td>
+                          <td style="width:30px"><%= link_to '', document_path(document,my_bin: "#{params[:my_bin]}", my_event: "#{params[:my_event]}"), method: :delete, data: { confirm: 'Are you sure?' }, :class => "glyphicon glyphicon-trash" %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                  <hr>
+                  <%= link_to 'Add', new_document_path(my_bin: "#{params[:my_bin]}"), :class => "add-document glyphicon glyphicon-plus-sign" %>
+              </div>
+              <div class="col-xs-3 col-sm-4 indication-text-documents-list">
+                <span class="">Manage documents for this bin</span><br>
+                <span class=""><%= image_tag("icons/arrow-129.png") %></span>
+              </div>
+          </div>
+          <div class="media-timeline">
+            <div class="row">
+
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
