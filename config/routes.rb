@@ -129,4 +129,7 @@ Rails.application.routes.draw do
 
   get "category_plist_channels_api", controller: "users", :only => [:show], :defaults => { :format => 'json' }
   get "media_timeline_api", controller: "events", :only => [:show], :defaults => { :format => 'json' }
+
+  match "discover", :to => 'application#discover', as: "discover", via: 'get'
+
 end

@@ -48,6 +48,10 @@ class ApplicationController < ActionController::Base
 
   def channel
   end
+
+  def discover
+    
+  end
   protected
 
   def current_user_channel
